@@ -280,6 +280,23 @@ public:
 
 		return nearestNodes;
 	}
+
+	void PrintInfo()
+	{
+		for (int i = 0; i < allNodes.size(); i++)
+		{
+			printf("Index: %d\n\t", i);
+
+			for (auto& n : allNodes[i]->GetNeighboursVectorAtLayer(0))
+			{
+				printf("%d ", n);
+			}
+
+			printf("\n");
+		}
+
+		printf("\n");
+	}
 	
 };
 

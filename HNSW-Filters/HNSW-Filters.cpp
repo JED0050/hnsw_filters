@@ -5,10 +5,10 @@
 #include "Hnsw.h"
 #include <chrono>
 
-#define FILE_NAME "points3.txt"
-#define QFILE_NAME "query_points.txt"
-#define AFILE_NAME "answer_points_j.txt"
-#define UFILE_NAME "answer_points_u.txt"
+#define FILE_NAME "Files\\space_points.txt"
+#define QFILE_NAME "Files\\query_points.txt"
+#define AFILE_NAME "Files\\answer_points_j.txt"
+#define UFILE_NAME "Files\\answer_points_u.txt"
 #define QUERY_POINT "16 8943 561 84 651"
 #define QUERY_POINT_DEFAULT "16 8943 561 84 651"
 
@@ -249,13 +249,27 @@ void CompareFiles(string f1, string f2)
     cout << "shoda: " << rL << ", " << " neshoda: " << wL << endl;
 }
 
+void HNSWPrint()
+{
+    vector<Node*> nodes = LoadNodesFromFile(FILE_NAME);
+    Hnsw hG = Hnsw(16, 16, 16);  //efc 16 - 9.7s, efc 200 - 150.6s
+
+    auto start = high_resolution_clock::now();
+    for (auto& n : nodes)
+    {
+        hG.Insert(n);
+    }
+
+    hG.PrintInfo();
+}
+
 int main()
 {
     //GeneratePoints(10000, 5, 0, 50000);
     //HNSW();
     //HNSWQueryTest();
-
-    CompareFiles(AFILE_NAME, UFILE_NAME);
+    HNSWPrint();
+    //CompareFiles(AFILE_NAME, UFILE_NAME);
 
     return 0;
 }
