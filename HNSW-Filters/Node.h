@@ -42,7 +42,7 @@ public:
 
 	//~Node()
 	//{
- 	//	for (auto& n : neighbours)
+	//	for (auto& n : neighbours)
 	//	{
 	//		delete n;
 	//	}
@@ -141,9 +141,9 @@ public:
 		return distance;
 		//return sqrt(distance);
 	}
-	
 
-	
+
+
 	vector<Node*> neighbours;
 
 	void InsertNode(Node& node)
@@ -159,7 +159,7 @@ class SortedNodes
 public:
 	vector<int> nodes;
 	int K;
-	
+
 	int minI;
 	int maxI;
 
@@ -203,7 +203,7 @@ public:
 					minV = node;
 					minI = nodeLastIndex;
 				}
-				
+
 				if (hnswNodes[node]->distance > hnswNodes[maxV]->distance)
 				{
 					maxV = node;
@@ -216,13 +216,13 @@ public:
 		{
 			nodes[maxI] = node;
 			maxV = node;
-			
-		    if (hnswNodes[node]->distance < hnswNodes[minV]->distance)
+
+			if (hnswNodes[node]->distance < hnswNodes[minV]->distance)
 			{
 				minI = maxI;
 				minV = node;
 			}
- 
+
 			for (int i = 0; i < nodes.size(); i++)
 			{
 				if (hnswNodes[nodes[i]]->distance > hnswNodes[maxV]->distance)
@@ -246,20 +246,17 @@ public:
 
 	void RemoveFirstNode()
 	{
-		//Sort();
-		//nodes.erase(nodes.begin());
-
 		if (nodes.size() <= 1)
 		{
 			nodes.clear();
 			return;
 		}
-
+		
 		nodes.erase(nodes.begin() + minI);
 
 		minI = 0;
 		minV = nodes[minI];
-		
+
 		for (int i = 0; i < nodes.size(); i++)
 		{
 			if (hnswNodes[nodes[i]]->distance < hnswNodes[minV]->distance)

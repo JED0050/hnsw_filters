@@ -2,6 +2,7 @@
 #include<vector>
 #include"Node.h"
 #include"Layer.h"
+#include <algorithm> 
 
 using namespace std;
 
@@ -56,7 +57,7 @@ public:
 
 		vector<int> nearestNodes;
 		int entryPoint = 0;
-		int L = layers.size();
+		int L = layers.size() - 1;
 		int l = -log(((float)(rand() % 10000 + 1)) / 10000) * mL; //(0 - 9) * mL => 0 - 3
 
 		for (int lC = L; lC >= l + 1; lC--)
@@ -66,7 +67,7 @@ public:
 
 		for (int lC = min(L, l); lC >= 0; lC--)
 		{
-			/*
+			
 			vector<int> W = SearchLayer(*newNode, entryPoint, eFConstructions, lC);
 			vector<int> neighbors;
 
@@ -74,10 +75,9 @@ public:
 				neighbors.assign(W.begin(), W.end() - (W.size() - M));
 			else
 				neighbors = W;
-			*/
 
-			vector<int> W = SearchLayer(*newNode, entryPoint, eFConstructions, lC);
-			vector<int> neighbors = W;
+			//vector<int> W = SearchLayer(*newNode, entryPoint, eFConstructions, lC);
+			//vector<int> neighbors = W;
 
 			for (auto &nbr : neighbors)
 			{
@@ -281,13 +281,40 @@ public:
 		return nearestNodes;
 	}
 
-	void PrintInfo()
+	void PrintInfo(int n)
 	{
-		for (int i = 0; i < allNodes.size(); i++)
+		if (n == 0)
+			n = allNodes.size();
+
+		for (int i = 0; i < n; i++)
 		{
-			printf("Index: %d\n\t", i);
+			printf("%d: ", i);
 
 			for (auto& n : allNodes[i]->GetNeighboursVectorAtLayer(0))
+			{
+				printf("%d ", n);
+			}
+
+			printf("\n");
+		}
+
+		printf("\n");
+	}
+
+	void PrintInfoSorted(int n)
+	{
+		if (n == 0)
+			n = allNodes.size();
+
+		for (int i = 0; i < n; i++)
+		{
+			printf("%d: ", i);
+
+			vector<int> nbs = allNodes[i]->GetNeighboursVectorAtLayer(0);
+
+			sort(nbs.begin(), nbs.end());
+
+			for (auto& n : nbs)
 			{
 				printf("%d ", n);
 			}

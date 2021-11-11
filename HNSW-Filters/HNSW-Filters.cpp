@@ -260,16 +260,16 @@ void HNSWPrint()
         hG.Insert(n);
     }
 
-    hG.PrintInfo();
+    hG.PrintInfoSorted(10);
 }
 
 int main()
 {
     //GeneratePoints(10000, 5, 0, 50000);
     //HNSW();
-    //HNSWQueryTest();
-    HNSWPrint();
-    //CompareFiles(AFILE_NAME, UFILE_NAME);
+    HNSWQueryTest();
+    //HNSWPrint();
+    CompareFiles(AFILE_NAME, UFILE_NAME);
 
     return 0;
 }
