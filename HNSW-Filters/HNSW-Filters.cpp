@@ -5,10 +5,12 @@
 #include "Hnsw.h"
 #include <chrono>
 
-#define FILE_NAME "Files\\space_points.txt"
-#define QFILE_NAME "Files\\query_points.txt"
-#define AFILE_NAME "Files\\answer_points_j.txt"
-#define UFILE_NAME "Files\\answer_points_u.txt"
+#define FILE_NAME "Files\\space_points_1000.txt"
+#define QFILE_NAME "Files\\query_points_1000.txt"
+#define AFILE_NAME "Files\\answer_points_j_1000.txt"
+#define UFILE_NAME "Files\\answer_points_u_1000.txt"
+#define GFILE_NAME "Files\\graph_j_1000.txt"
+#define GUFILE_NAME "Files\\graph_u_1000.txt"
 #define QUERY_POINT "16 8943 561 84 651"
 #define QUERY_POINT_DEFAULT "16 8943 561 84 651"
 
@@ -174,16 +176,25 @@ void HNSWQueryTest()
     Hnsw hG = Hnsw(16,16,16);  //efc 16 - 9.7s, efc 200 - 150.6s
 
     auto start = high_resolution_clock::now();
+
+    int i = 0;
+
     for (auto& n : nodes)
     {
+        //if (i == 16)
+          //  cout << "x" << endl;//getchar();
+
         hG.Insert(n);
+
+        //hG.PrintInfoSorted(++i);
+        //getchar();
     }
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop - start);
     cout << "\nCas vkladani prvku: " << duration.count() / 1000000.0 << " [s]" << endl;
 
     int K = 10;
-    int nOQP = 10000; //počet query bodů
+    int nOQP = 1000; //počet query bodů
 
     ofstream MyFile(AFILE_NAME);
 
@@ -252,24 +263,38 @@ void CompareFiles(string f1, string f2)
 void HNSWPrint()
 {
     vector<Node*> nodes = LoadNodesFromFile(FILE_NAME);
-    Hnsw hG = Hnsw(16, 16, 16);  //efc 16 - 9.7s, efc 200 - 150.6s
+    Hnsw hG = Hnsw(16, 16, 16);
 
-    auto start = high_resolution_clock::now();
     for (auto& n : nodes)
     {
         hG.Insert(n);
     }
 
-    hG.PrintInfoSorted(10);
+    hG.PrintInfoSorted(1000);
+}
+
+void HNSWSavePrint()
+{
+    vector<Node*> nodes = LoadNodesFromFile(FILE_NAME);
+    Hnsw hG = Hnsw(16, 16, 16);
+
+    for (auto& n : nodes)
+    {
+        hG.Insert(n);
+    }
+
+    hG.SavePrint(1000,GFILE_NAME);
 }
 
 int main()
 {
-    //GeneratePoints(10000, 5, 0, 50000);
+    //GeneratePoints(1000, 5, 0, 1000);
     //HNSW();
-    HNSWQueryTest();
+    //HNSWQueryTest();
     //HNSWPrint();
-    CompareFiles(AFILE_NAME, UFILE_NAME);
+    //CompareFiles(AFILE_NAME, UFILE_NAME);
+    //HNSWSavePrint();
+    CompareFiles(GFILE_NAME, GUFILE_NAME);
 
     return 0;
 }

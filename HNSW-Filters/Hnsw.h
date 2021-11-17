@@ -2,7 +2,10 @@
 #include<vector>
 #include"Node.h"
 #include"Layer.h"
-#include <algorithm> 
+#include <algorithm>
+#include <iostream>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -69,15 +72,14 @@ public:
 		{
 			
 			vector<int> W = SearchLayer(*newNode, entryPoint, eFConstructions, lC);
-			vector<int> neighbors;
+			vector<int> neighbors = SelectNeighborsHeuristic(newNodeIndex, W, M); //SelectNeighborsHeuristic(W, nbrNbrs, MMax_);
 
+			/*
 			if (W.size() > M)
 				neighbors.assign(W.begin(), W.end() - (W.size() - M));
 			else
-				neighbors = W;
+				neighbors = W;*/
 
-			//vector<int> W = SearchLayer(*newNode, entryPoint, eFConstructions, lC);
-			//vector<int> neighbors = W;
 
 			for (auto &nbr : neighbors)
 			{
@@ -95,7 +97,9 @@ public:
 
 				if (eConn > MMax_)
 				{
-					Neighbours* eNewCon = SelectNeighborsSimple(nbr, nbrNbrs, MMax_);
+					//Neighbours* eNewCon = SelectNeighborsSimple(nbr, nbrNbrs, MMax_);
+					Neighbours* eNewCon = new Neighbours(nbrNbrs->layerID);
+					eNewCon->neighbours = SelectNeighborsHeuristic(nbr, nbrNbrs->neighbours, MMax_);
 
 					allNodes[nbr]->SetNeighbours(eNewCon);
 				}
@@ -197,11 +201,14 @@ public:
 		return nearestNodes.GetKNearestNodes();
 	}
 
-	Neighbours* SelectNeighborsSimple(int queryNode, Neighbours* neighbours, int M)
+	vector<int> SelectNeighborsSimple(int queryNode, vector<int> neighbours, int M)
 	{
-		vector<int> sortedNodes = neighbours->neighbours;
+		if (neighbours.size() <= M)
+			return neighbours;
 
-		for (auto& n : neighbours->neighbours)
+		vector<int> sortedNodes = neighbours;
+
+		for (auto& n : neighbours)
 		{
 			allNodes[n]->SetDistance(*allNodes[queryNode]);
 		}
@@ -226,9 +233,76 @@ public:
 
 		sortedNodes.erase(sortedNodes.begin() + M, sortedNodes.end());
 
-		neighbours->neighbours = sortedNodes;
+		//neighbours->neighbours = sortedNodes;
+		//return neighbours;
 
-		return neighbours;
+		return sortedNodes;
+	}
+
+	vector<int> SelectNeighborsHeuristic(int queryNode, vector<int> W, int M)
+	{
+		if (W.size() < M)
+		{
+			return W;
+		}
+
+		for (auto& n : W)
+		{
+			allNodes[n]->SetDistance(*allNodes[queryNode]);
+		}
+
+		bool changed = true;
+
+		while (changed)
+		{
+			changed = false;
+
+			for (int i = 0; i < W.size() - 1; i++)
+			{
+				if (allNodes[W[i]]->distance > allNodes[W[i + 1]]->distance)
+				{
+					changed = true;
+					int tmpNode = W[i + 1];
+					W[i + 1] = W[i];
+					W[i] = tmpNode;
+				}
+			}
+		}
+
+		vector<int> R;
+
+		int s = 2;
+		int i = 2;
+
+		R.emplace_back(W[0]);
+		R.emplace_back(W[1]);
+
+		while (i < W.size() && s < M)
+		{
+			bool q_is_close = true;
+			for (int j = 0; j < R.size(); j++)
+			{
+				float dist = allNodes[W[i]]->GetDistance(*allNodes[R[j]]); 
+
+				if (dist < allNodes[W[i]]->distance)
+				{
+					q_is_close = false;
+					break;
+				}
+
+			}
+
+			if (q_is_close)
+			{
+				R.emplace_back(W[i]);
+				s++;
+			}
+
+			i++;
+		}
+
+		return R;
+
 	}
 
 	vector<Node*> KNNSearch(Node queryNode, int K)
@@ -322,7 +396,36 @@ public:
 			printf("\n");
 		}
 
-		printf("\n");
+		printf("\n\n");
+	}
+
+	void SavePrint(int max_count, std::string name)
+	{
+		if (max_count == 0)
+			max_count = allNodes.size();
+
+		std::ofstream MyFile(name);
+
+		for (int i = 0; i < max_count; i++) {
+			std::cout << i << " / " << max_count << std::endl;
+
+			std::string line = std::to_string(i) + ": ";
+
+			vector<int> nbs = allNodes[i]->GetNeighboursVectorAtLayer(0);
+
+			sort(nbs.begin(), nbs.end());
+
+			for (auto& n : nbs)
+			{
+				line += std::to_string(n) + "  ";
+			}
+
+			line += "\n";
+
+			MyFile << line;
+		}
+
+		MyFile.close();
 	}
 	
 };
