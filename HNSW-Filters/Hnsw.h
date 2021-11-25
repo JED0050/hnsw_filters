@@ -72,6 +72,29 @@ public:
 		{
 			
 			vector<int> W = SearchLayer(*newNode, entryPoint, eFConstructions, lC);
+			
+			//if(W.size() > 16)
+			//	W.erase(W.begin() + eFConstructions, W.end());
+
+			if (newNodeIndex == 279)
+			{
+				for (auto& n : W)
+					cout << n << " ";
+				cout << endl;
+
+				//cout << allNodes[38]->distance << " ";
+				//cout << allNodes[253]->distance << " ";
+				//cout << allNodes[207]->distance << " ";
+				//cout << allNodes[156]->distance << " ";
+				//cout << endl;
+
+				//cout << allNodes[38]->GetDistance(*allNodes[279]) << " ";
+				//cout << allNodes[253]->GetDistance(*allNodes[279]) << " ";
+				//cout << allNodes[207]->GetDistance(*allNodes[279]) << " ";
+				//cout << allNodes[156]->GetDistance(*allNodes[279]) << " ";
+				//cout << endl;
+			}
+			
 			vector<int> neighbors = SelectNeighborsHeuristic(newNodeIndex, W, M); //SelectNeighborsHeuristic(W, nbrNbrs, MMax_);
 
 			/*
@@ -162,6 +185,9 @@ public:
 
 		while (candidateNodes.Size() > 0)
 		{
+			//if (layerC == 0)
+				//nearestNodes.Print();
+
 			int c = candidateNodes.GetFirstNode();
 
 			if (allNodes[c]->distance > allNodes[nearestNodes.GetLastNode()]->distance)
@@ -200,6 +226,57 @@ public:
 
 		return nearestNodes.GetKNearestNodes();
 	}
+
+	/*
+	void searchLayerU(float* q, int ef)
+	{
+		vector<tuple<Node*, int32_t>> C;
+
+		for (auto n : W_)
+		{
+			C.emplace_back(n.node, n.distance);
+			visited_.insert(n.node_order);
+		}
+
+		std::make_heap(W_.begin(), W_.end(), neighborcmp_farest_heap());
+		std::make_heap(C.begin(), C.end(), CompareByDistanceInTupleHeap());
+		auto f = W_.front().distance;
+		while (!C.empty())
+		{
+			auto c = C.front();
+			std::pop_heap(C.begin(), C.end(), CompareByDistanceInTupleHeap());
+			C.pop_back();
+			if (std::get<1>(c) > f) break;
+			for (auto ne : std::get<0>(c)->neighbors)
+			{
+				auto e = ne.node;
+
+				if (!visited_.get(ne.node_order))
+				{
+					visited_.insert(ne.node_order);
+
+					auto dist = distance(q, getNodeVector(ne.node_order));
+
+					if (dist < f || W_.size() < ef)
+					{
+						C.emplace_back(e, dist);
+						std::push_heap(C.begin(), C.end(), CompareByDistanceInTupleHeap());
+						W_.emplace_back(e, dist, ne.node_order);
+						std::push_heap(W_.begin(), W_.end(), neighborcmp_farest_heap());
+						if (W_.size() > ef)
+						{
+							std::pop_heap(W_.begin(), W_.end(), neighborcmp_farest_heap());
+							W_.pop_back();
+						}
+						f = W_.front().distance;
+					}
+
+
+				}
+			}
+		}
+	}
+	*/
 
 	vector<int> SelectNeighborsSimple(int queryNode, vector<int> neighbours, int M)
 	{
@@ -390,7 +467,7 @@ public:
 
 			for (auto& n : nbs)
 			{
-				printf("%d ", n);
+				printf("%d  ", n);
 			}
 
 			printf("\n");

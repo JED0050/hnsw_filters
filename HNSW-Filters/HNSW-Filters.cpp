@@ -9,7 +9,7 @@
 #define QFILE_NAME "Files\\query_points_1000.txt"
 #define AFILE_NAME "Files\\answer_points_j_1000.txt"
 #define UFILE_NAME "Files\\answer_points_u_1000.txt"
-#define GFILE_NAME "Files\\graph_j_1000.txt"
+#define GFILE_NAME "Files\\graph_j_1000_n.txt"
 #define GUFILE_NAME "Files\\graph_u_1000.txt"
 #define QUERY_POINT "16 8943 561 84 651"
 #define QUERY_POINT_DEFAULT "16 8943 561 84 651"
@@ -223,6 +223,44 @@ void HNSWQueryTest()
     MyFile.close();
 }
 
+void DistinctNodes(string f1)
+{
+
+    ifstream file1(f1);
+    string line1 = "";
+
+    int i = 0;
+
+    do
+    {
+        ifstream file2(f1);
+        string line2 = "";
+
+        getline(file1, line1);
+        int c = 0;
+
+        do
+        {
+            getline(file2, line2);
+
+            if (line1 == line2)
+                c++;
+
+
+        } while (line2 != "");
+
+        if (c > 1)
+            cout << "Shoda: " << c << endl;
+
+        if (i % 1000 == 0)
+            cout << i << endl;
+
+        i++;
+
+    } while (line1 != "");
+
+}
+
 void CompareFiles(string f1, string f2)
 {
     int rL = 0;
@@ -234,7 +272,7 @@ void CompareFiles(string f1, string f2)
     string line1 = "";
     string line2 = "";
 
-    int nOL = 10000;
+    int nOL = 1000;
 
     for (int i = 0; i < nOL; i++)
     {
@@ -265,13 +303,27 @@ void HNSWPrint()
     vector<Node*> nodes = LoadNodesFromFile(FILE_NAME);
     Hnsw hG = Hnsw(16, 16, 16);
 
+    int c = 0;
+
     for (auto& n : nodes)
     {
+        if (c == 279)
+            cout << "wrong" << endl;
+
         hG.Insert(n);
+
+        if(c == 279)
+            hG.PrintInfoSorted(c + 1);
+
+        //hG.PrintInfoSorted(c);
+        //getchar();
+        c++;
+
+        cout << c << endl;
     }
 
     hG.PrintInfoSorted(1000);
-}
+ }
 
 void HNSWSavePrint()
 {
@@ -288,13 +340,14 @@ void HNSWSavePrint()
 
 int main()
 {
-    //GeneratePoints(1000, 5, 0, 1000);
+    //GeneratePoints(1000, 5, 0, 1000); 
     //HNSW();
     //HNSWQueryTest();
-    //HNSWPrint();
+    HNSWPrint();
     //CompareFiles(AFILE_NAME, UFILE_NAME);
     //HNSWSavePrint();
-    CompareFiles(GFILE_NAME, GUFILE_NAME);
+    //CompareFiles(GFILE_NAME, GUFILE_NAME);
+    //DistinctNodes(FILE_NAME);
 
     return 0;
 }

@@ -186,6 +186,8 @@ public:
 		{
 			nodes.push_back(node);
 
+			//Sort();
+
 			int nodeLastIndex = nodes.size() - 1;
 
 			if (nodeLastIndex + 1 == 1)
@@ -217,6 +219,8 @@ public:
 			nodes[maxI] = node;
 			maxV = node;
 
+			//Sort();
+			
 			if (hnswNodes[node]->distance < hnswNodes[minV]->distance)
 			{
 				minI = maxI;
@@ -236,11 +240,15 @@ public:
 
 	int GetFirstNode()
 	{
+		//Sort();
+
 		return minV;
 	}
 
 	int GetLastNode()
 	{
+		//Sort();
+
 		return maxV;
 	}
 
@@ -249,9 +257,17 @@ public:
 		if (nodes.size() <= 1)
 		{
 			nodes.clear();
+
+			minI = -1;
+			maxI = -1;
+			minV = -1;
+			maxV = -1;
+
 			return;
 		}
 		
+		//Sort();
+
 		nodes.erase(nodes.begin() + minI);
 
 		minI = 0;
@@ -265,6 +281,117 @@ public:
 				minI = i;
 			}
 		}
+	}
+
+	int Size()
+	{
+		return nodes.size();
+	}
+
+	void Sort()
+	{
+		int nodeLastIndex = nodes.size() - 1;
+
+		bool changed = true;
+
+		while (changed)
+		{
+			changed = false;
+
+			for (int i = 0; i < nodeLastIndex; i++)
+			{
+				if (hnswNodes[nodes[i]]->distance > hnswNodes[nodes[i + 1]]->distance)
+				{
+					changed = true;
+					int tmpNode = nodes[i + 1];
+					nodes[i + 1] = nodes[i];
+					nodes[i] = tmpNode;
+				}
+			}
+		}
+
+		/*minV = nodes[0];
+		minI = 0;
+		maxV = nodes[Size() - 1];
+		maxI = Size() - 1;*/
+	}
+
+	void Print()
+	{
+		for (auto& n : nodes)
+			printf("%d ", n);
+		printf("\n");
+	}
+
+	vector<int> GetKNearestNodes()
+	{
+		Sort();
+
+		return nodes;
+	}
+};
+
+class SortedNodesO
+{
+public:
+	vector<int> nodes;
+	int K;
+
+	vector<Node*> hnswNodes;
+
+	SortedNodesO(vector<Node*> allNodes)
+	{
+		hnswNodes = allNodes;
+		K = -1;
+	}
+
+	SortedNodesO(vector<Node*> allNodes, int K)
+	{
+		hnswNodes = allNodes;
+		this->K = K;
+	}
+
+	void InsertNode(int node)
+	{
+		if (K == -1 || nodes.size() < K)
+		{
+			nodes.push_back(node);
+
+			int nodeLastIndex = nodes.size() - 1;
+
+		}
+		else if (hnswNodes[nodes.size() - 1]->distance > hnswNodes[node]->distance)
+		{
+			nodes[nodes.size() - 1] = node;
+		}
+
+		Sort();
+	}
+
+	int GetFirstNode()
+	{
+		return nodes[0];
+	}
+
+	int GetLastNode()
+	{
+		return nodes[nodes.size() - 1];
+	}
+
+	void RemoveFirstNode()
+	{
+		Sort();
+		//nodes.erase(nodes.begin());
+
+		if (nodes.size() <= 1)
+		{
+			nodes.clear();
+			return;
+		}
+
+		nodes.erase(nodes.begin());
+
+		Sort();
 	}
 
 	int Size()
