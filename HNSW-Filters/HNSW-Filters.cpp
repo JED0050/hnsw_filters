@@ -10,7 +10,7 @@
 #define AFILE_NAME "Files\\answer_points_j_1000.txt"
 #define UFILE_NAME "Files\\answer_points_u_1000.txt"
 #define GFILE_NAME "Files\\graph_j_1000_n.txt"
-#define GUFILE_NAME "Files\\graph_u_1000.txt"
+#define GUFILE_NAME "Files\\graph_u_1000.txt" //"Files\\graph_u_1000.txt"
 #define QUERY_POINT "16 8943 561 84 651"
 #define QUERY_POINT_DEFAULT "16 8943 561 84 651"
 
@@ -301,7 +301,7 @@ void CompareFiles(string f1, string f2)
 void HNSWPrint()
 {
     vector<Node*> nodes = LoadNodesFromFile(FILE_NAME);
-    Hnsw hG = Hnsw(16, 16, 16);
+    Hnsw hG = Hnsw(16, 16, 200);
 
     int c = 0;
 
@@ -312,8 +312,8 @@ void HNSWPrint()
 
         hG.Insert(n);
 
-        if(c == 279)
-            hG.PrintInfoSorted(c + 1);
+        //if(c == 279)
+        //    hG.PrintInfoSorted(c + 1);
 
         //hG.PrintInfoSorted(c);
         //getchar();
@@ -335,7 +335,7 @@ void HNSWSavePrint()
         hG.Insert(n);
     }
 
-    hG.SavePrint(1000,GFILE_NAME);
+    hG.SavePrint(10000,GFILE_NAME);
 }
 
 int main()
@@ -343,10 +343,10 @@ int main()
     //GeneratePoints(1000, 5, 0, 1000); 
     //HNSW();
     //HNSWQueryTest();
-    HNSWPrint();
+    //HNSWPrint();
     //CompareFiles(AFILE_NAME, UFILE_NAME);
     //HNSWSavePrint();
-    //CompareFiles(GFILE_NAME, GUFILE_NAME);
+    CompareFiles(GFILE_NAME, GUFILE_NAME);
     //DistinctNodes(FILE_NAME);
 
     return 0;
