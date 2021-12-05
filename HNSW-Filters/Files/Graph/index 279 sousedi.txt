@@ -27,3 +27,7 @@ J		U
 237		240
 240		242
 242		253
+
+
+- když bych na search layer nepoužil node 60 ale jiný node tak tak mi to vrátí to co učiteli
+- když zakomentuju vrstvy a pracuju pořád s vrstvou 0 tak máme grafy stejné

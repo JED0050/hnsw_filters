@@ -58,14 +58,16 @@ public:
 			return;
 		}
 
-		vector<int> nearestNodes;
-		int entryPoint = 0;
+		//vector<int> nearestNodes;
 		int L = layers.size() - 1;
 		int l = -log(((float)(rand() % 10000 + 1)) / 10000) * mL; //(0 - 9) * mL => 0 - 3
+		int entryPoint = layers[L]->entryPoint;	//0
+
 
 		for (int lC = L; lC >= l + 1; lC--)
 		{
-			entryPoint = SearchLayer(*newNode, entryPoint, 1, lC)[0];
+			entryPoint = SearchLayer(*newNode, entryPoint, 1, lC)[0];			//13/1000 zle
+			//entryPoint = SearchLayerOne(*newNode, entryPoint, lC);			//19/1000 zle
 		}
 
 		for (int lC = min(L, l); lC >= 0; lC--)
@@ -78,21 +80,37 @@ public:
 
 			if (newNodeIndex == 279)
 			{
+				cout << entryPoint << endl;
+
+				/*
 				for (auto& n : W)
 					cout << n << " ";
-				cout << endl;
+				cout << endl;*/
 
-				//cout << allNodes[38]->distance << " ";
-				//cout << allNodes[253]->distance << " ";
-				//cout << allNodes[207]->distance << " ";
-				//cout << allNodes[156]->distance << " ";
-				//cout << endl;
+				/*
+				string line = "";
 
-				//cout << allNodes[38]->GetDistance(*allNodes[279]) << " ";
-				//cout << allNodes[253]->GetDistance(*allNodes[279]) << " ";
-				//cout << allNodes[207]->GetDistance(*allNodes[279]) << " ";
-				//cout << allNodes[156]->GetDistance(*allNodes[279]) << " ";
-				//cout << endl;
+				for (auto& n : W)
+					line += to_string(n) + " ";
+
+				vector<int> TS = SearchLayer(*newNode, 0, eFConstructions, lC);
+
+				for (int i = 0; i <= 277; i++)
+				{
+					string Tline = "";
+					vector<int> TS = SearchLayer(*newNode, i, eFConstructions, lC);
+
+					for (auto& n : TS)
+						Tline += to_string(n) + " ";
+					
+					//cout << line << "\n" << Tline << endl;
+
+					if (line != Tline)
+					{
+						cout << i << "\n" << line << "\n" << Tline << "\n" << endl;
+					}
+				}
+				*/
 			}
 			
 			vector<int> neighbors = SelectNeighborsHeuristic(newNodeIndex, W, M); //SelectNeighborsHeuristic(W, nbrNbrs, MMax_);
@@ -171,6 +189,49 @@ public:
 		}*/
 	}
 
+	int SearchLayerOne(Node queryNode, int entryPoint, int lC)
+	{
+		bool change = true;
+		vector<int> visitedNodes;
+		int cNode = entryPoint;
+		allNodes[entryPoint]->SetDistance(queryNode);
+
+		while (change)
+		{
+			change = false;
+
+			vector<int> nbs = allNodes[cNode]->GetNeighboursVectorAtLayer(lC);
+
+			for (auto n : nbs)
+			{
+				bool visited = false;
+
+				for (auto vn : visitedNodes)
+				{
+					if (vn == n)
+					{
+						visited = true;
+						break;
+					}
+				}
+
+				if (!visited)
+				{
+					allNodes[n]->SetDistance(queryNode);
+					visitedNodes.push_back(n);
+
+					if (allNodes[n]->distance < allNodes[entryPoint]->distance)
+					{
+						change = true;
+						cNode = n;
+					}
+				}
+			}
+		}
+
+		return cNode;
+	}
+
 	vector<int> SearchLayer(Node queryNode, int entryPoint, int K, int layerC)
 	{
 		SortedNodes nearestNodes = SortedNodes(allNodes, K);
@@ -225,6 +286,111 @@ public:
 		}
 
 		return nearestNodes.GetKNearestNodes();
+	}
+
+	vector<int> SearchLayerN(Node queryNode, int entryPoint, int K, int layerC)
+	{
+		vector<int> nearestNodes;
+		vector<int> candidateNodes;
+		vector<int> visitedNodes;
+
+		allNodes[entryPoint]->SetDistance(queryNode);
+
+		candidateNodes.push_back(entryPoint);
+		nearestNodes.push_back(entryPoint);
+		visitedNodes.push_back(entryPoint);
+
+		while (candidateNodes.size() > 0)
+		{
+			int cMin = - 1;
+
+			for (auto n : candidateNodes)
+			{
+				allNodes[n]->SetDistance(queryNode);
+
+				if (cMin == -1 || allNodes[n]->distance < allNodes[cMin]->distance)
+				{
+					cMin = n;
+				}
+			}
+
+			int l = -1;
+
+			for (auto n : nearestNodes)
+			{
+				allNodes[n]->SetDistance(queryNode);
+
+				if (l == -1 || allNodes[n]->distance > allNodes[l]->distance)
+				{
+					l = n;
+				}
+			}
+
+			if (allNodes[cMin]->distance > allNodes[l]->distance)
+				break;
+
+			vector<int> nbs = allNodes[cMin]->GetNeighboursVectorAtLayer(layerC);
+
+			candidateNodes.erase(std::remove(candidateNodes.begin(), candidateNodes.end(), cMin), candidateNodes.end());
+
+			for (auto& n : nbs)
+			{
+				bool nodeVisited = false;
+
+				for (auto& vn : visitedNodes)
+				{
+					if (vn == n)
+					{
+						nodeVisited = true;
+						break;
+					}
+				}
+
+				if (!nodeVisited)
+				{
+					visitedNodes.push_back(n);
+					allNodes[n]->SetDistance(queryNode);
+
+					l = -1;
+
+					for (auto ln : nearestNodes)
+					{
+						allNodes[ln]->SetDistance(queryNode);
+
+						if (l == -1 || allNodes[ln]->distance > allNodes[l]->distance)
+						{
+							l = ln;
+						}
+					}
+
+					if (allNodes[n]->distance < allNodes[l]->distance || nearestNodes.size() < K)
+					{
+						nearestNodes.push_back(n);
+						candidateNodes.push_back(n);
+
+						if (nearestNodes.size() > K)
+						{
+							l = -1;
+
+							for (auto ln : nearestNodes)
+							{
+								allNodes[ln]->SetDistance(queryNode);
+
+								if (l == -1 || allNodes[ln]->distance > allNodes[l]->distance)
+								{
+									l = ln;
+								}
+							}
+
+							nearestNodes.erase(std::remove(nearestNodes.begin(), nearestNodes.end(), l), nearestNodes.end());
+						}
+					}
+				}
+			}
+
+		}
+
+		return nearestNodes;
 	}
 
 	/*

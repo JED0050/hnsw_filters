@@ -115,6 +115,35 @@ public:
 		return emptyVector;
 	}
 
+	vector<int> GetNeighboursVectorAll()
+	{
+		vector<int> nbs;
+
+		for (auto& nbr : lNaighbours)
+		{
+			for (auto n : nbr->neighbours)
+			{
+				bool cont = false;
+
+				for (auto c : nbs)
+				{
+					if (c == n)
+					{
+						cont = true;
+						break;
+					}
+				}
+
+				if (!cont)
+				{
+					nbs.push_back(n);
+				}
+			}
+		}
+
+		return nbs;
+	}
+
 	void InsertValue(long value)
 	{
 		values.push_back(value);
