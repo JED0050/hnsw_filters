@@ -9,13 +9,15 @@
 #define QFILE_NAME "Files\\query_points_1000.txt"
 #define AFILE_NAME "Files\\answer_points_j_1000.txt"
 #define UFILE_NAME "Files\\answer_points_u_1000.txt"
-#define GFILE_NAME "Files\\graph_j_1000_n.txt"
+#define GFILE_NAME "Files\\graph_j_1000.txt"
 #define GUFILE_NAME "Files\\graph_u_1000.txt"
 #define QUERY_POINT "16 8943 561 84 651"
 #define QUERY_POINT_DEFAULT "16 8943 561 84 651"
 
+#define NUMBER_OF_GRAPH_NODES 1000
+
 using namespace std::chrono;
-using namespace std;
+using namespace std; 
 
 vector<Node*> LoadNodesFromFile(string fileName)
 {
@@ -194,7 +196,7 @@ void HNSWQueryTest()
     cout << "\nCas vkladani prvku: " << duration.count() / 1000000.0 << " [s]" << endl;
 
     int K = 10;
-    int nOQP = 1000; //počet query bodů
+    int nOQP = NUMBER_OF_GRAPH_NODES; //počet query bodů
 
     ofstream MyFile(AFILE_NAME);
 
@@ -272,7 +274,7 @@ void CompareFiles(string f1, string f2)
     string line1 = "";
     string line2 = "";
 
-    int nOL = 1000;
+    int nOL = NUMBER_OF_GRAPH_NODES;
 
     for (int i = 0; i < nOL; i++)
     {
@@ -308,7 +310,8 @@ void HNSWPrint()
     for (auto& n : nodes)
     {
         //if (c == 279)
-        //    cout << "wrong" << endl;
+        if (c == 445)
+            cout << "wrong" << endl;
 
         hG.Insert(n);
 
@@ -323,7 +326,7 @@ void HNSWPrint()
         //cout << c << endl;
     }
 
-    hG.PrintInfoSorted(1000);
+    hG.PrintInfoSorted(NUMBER_OF_GRAPH_NODES);
  }
 
 void HNSWSavePrint()
@@ -336,17 +339,17 @@ void HNSWSavePrint()
         hG.Insert(n);
     }
 
-    hG.SavePrint(1000,GFILE_NAME);
+    hG.SavePrint(NUMBER_OF_GRAPH_NODES,GFILE_NAME);
 }
 
 int main()
 {
-    //GeneratePoints(1000, 5, 0, 1000); 
+    //GeneratePoints(NUMBER_OF_GRAPH_NODES, 5, 0, 1000); 
     //HNSW();
     //HNSWQueryTest();
     //HNSWPrint();
     //CompareFiles(AFILE_NAME, UFILE_NAME);
-    HNSWSavePrint();
+    //HNSWSavePrint();
     CompareFiles(GFILE_NAME, GUFILE_NAME);
     //DistinctNodes(FILE_NAME);
 
