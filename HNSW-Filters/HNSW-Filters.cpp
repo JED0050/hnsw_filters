@@ -5,16 +5,17 @@
 #include "Hnsw.h"
 #include <chrono>
 
-#define FILE_NAME "Files\\space_points_1000.txt"
-#define QFILE_NAME "Files\\query_points_1000.txt"
-#define AFILE_NAME "Files\\answer_points_j_1000.txt"
-#define UFILE_NAME "Files\\answer_points_u_1000.txt"
-#define GFILE_NAME "Files\\graph_j_1000.txt"
-#define GUFILE_NAME "Files\\graph_u_1000.txt"
+#define FILE_NAME "Files\\space_points.txt"
+#define QFILE_NAME "Files\\query_points.txt"
+#define AFILE_NAME "Files\\answer_points_j_10kp_200efc.txt"
+#define UFILE_NAME "Files\\answer_points_u_10kp_200efc.txt"
+#define GFILE_NAME "Files\\graph_j_10kp_200efc.txt"
+#define GUFILE_NAME "Files\\graph_u_10kp_200efc.txt"
 #define QUERY_POINT "16 8943 561 84 651"
 #define QUERY_POINT_DEFAULT "16 8943 561 84 651"
 
-#define NUMBER_OF_GRAPH_NODES 1000
+#define NUMBER_OF_GRAPH_NODES 10000
+#define EF_CONSTRUCTIONS 200
 
 using namespace std::chrono;
 using namespace std; 
@@ -107,7 +108,7 @@ void HNSW()
 {
     vector<Node*> nodes = LoadNodesFromFile(FILE_NAME);
 
-    Hnsw hG = Hnsw(16, 16, 16);  //efc 16 - 9.7s, efc 200 - 150.6s
+    Hnsw hG = Hnsw(16, 16, EF_CONSTRUCTIONS);  //efc 16 - 9.7s, efc 200 - 150.6s
 
 
     auto start = high_resolution_clock::now();
@@ -175,7 +176,7 @@ void HNSWQueryTest()
 {
     vector<Node*> nodes = LoadNodesFromFile(FILE_NAME);
     vector<Node*> qNodes = LoadNodesFromFile(QFILE_NAME);    
-    Hnsw hG = Hnsw(16,16,16);  //efc 16 - 9.7s, efc 200 - 150.6s
+    Hnsw hG = Hnsw(16,16, EF_CONSTRUCTIONS);  //efc 16 - 9.7s, efc 200 - 150.6s
 
     auto start = high_resolution_clock::now();
 
@@ -194,6 +195,8 @@ void HNSWQueryTest()
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop - start);
     cout << "\nCas vkladani prvku: " << duration.count() / 1000000.0 << " [s]" << endl;
+
+    hG.SavePrint(NUMBER_OF_GRAPH_NODES, GFILE_NAME);
 
     int K = 10;
     int nOQP = NUMBER_OF_GRAPH_NODES; //počet query bodů
@@ -303,7 +306,7 @@ void CompareFiles(string f1, string f2)
 void HNSWPrint()
 {
     vector<Node*> nodes = LoadNodesFromFile(FILE_NAME);
-    Hnsw hG = Hnsw(16, 16, 16);
+    Hnsw hG = Hnsw(16, 16, EF_CONSTRUCTIONS);
 
     int c = 0;
 
@@ -332,7 +335,7 @@ void HNSWPrint()
 void HNSWSavePrint()
 {
     vector<Node*> nodes = LoadNodesFromFile(FILE_NAME);
-    Hnsw hG = Hnsw(16, 16, 16);
+    Hnsw hG = Hnsw(16, 16, EF_CONSTRUCTIONS);
 
     for (auto& n : nodes)
     {
@@ -346,11 +349,11 @@ int main()
 {
     //GeneratePoints(NUMBER_OF_GRAPH_NODES, 5, 0, 1000); 
     //HNSW();
-    //HNSWQueryTest();
+    HNSWQueryTest();
     //HNSWPrint();
     //CompareFiles(AFILE_NAME, UFILE_NAME);
     //HNSWSavePrint();
-    CompareFiles(GFILE_NAME, GUFILE_NAME);
+    //CompareFiles(GFILE_NAME, GUFILE_NAME);
     //DistinctNodes(FILE_NAME);
 
     return 0;
