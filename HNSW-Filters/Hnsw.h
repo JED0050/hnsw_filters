@@ -116,7 +116,7 @@ public:
 			l--;
 		}
 
-		if(allNodes.size() % 1000 == 0)
+		if(allNodes.size() % 5000 == 0)
 			printf("Inserted %d\n", allNodes.size());
 	}
 
@@ -433,6 +433,8 @@ public:
 			allNodes[n]->SetDistance(*allNodes[queryNode]);
 		}
 
+		//sort(W.begin(), W.end(), NodeDistanceSort(allNodes));
+
 		bool changed = true;
 
 		while (changed)
@@ -514,6 +516,11 @@ public:
 
 	vector<int> KNNSearchIndex(Node queryNode, int K)
 	{
+		return KNNSearchIndex(queryNode, K, eFConstructions);
+	}
+
+	vector<int> KNNSearchIndex(Node queryNode, int K, int efC)
+	{
 		vector<int> nearestNodesIndex;
 		int L = layers.size() - 1;
 		int entryPoint = layers[L]->entryPoint;
@@ -524,8 +531,7 @@ public:
 			entryPoint = nearestNodesIndex[0];
 		}
 
-		nearestNodesIndex = SearchLayer(queryNode, entryPoint, eFConstructions, 0);
-		//nearestNodesIndex = SearchLayer(queryNode, entryPoint, K, 0);
+		nearestNodesIndex = SearchLayer(queryNode, entryPoint, efC, 0);
 
 		vector<int> nearestNodes;
 

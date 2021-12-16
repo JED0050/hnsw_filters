@@ -33,12 +33,31 @@ public:
 
 };
 
+/*
+struct NodeDistanceSort
+{
+	vector<Node*> allNodes;
+
+	NodeDistanceSort() {}
+
+	NodeDistanceSort(vector<Node*> aN)
+	{
+		allNodes = aN;
+	}
+
+	inline bool operator() (const int& left, const int& right)
+	{
+		return (allNodes[left]->distance < allNodes[right]->distance);
+	}
+};
+*/
+
 class Node
 {
 public:
-	vector<long> values;
+	vector<float> values;
 	vector<Neighbours*> lNaighbours;
-	double distance = -1;
+	float distance = -1;
 
 	//~Node()
 	//{
@@ -144,7 +163,7 @@ public:
 		return nbs;
 	}
 
-	void InsertValue(long value)
+	void InsertValue(float value)
 	{
 		values.push_back(value);
 	}
@@ -154,15 +173,15 @@ public:
 		distance = GetDistance(node);
 	}
 
-	double GetDistance(Node& node)
+	float GetDistance(Node& node)
 	{
-		double distance = 0;
+		float distance = 0;
 
 		for (int i = 0; i < node.values.size(); i++)
 		{
-			double x = node.values[i];
-			double y = values[i];
-			double z = x - y;
+			float x = node.values[i];
+			float y = values[i];
+			float z = x - y;
 
 			distance += (z * z);
 		}
@@ -319,8 +338,11 @@ public:
 
 	void Sort()
 	{
+		//sort(nodes.begin(), nodes.end(), NodeDistanceSort(hnswNodes));
+
 		int nodeLastIndex = nodes.size() - 1;
 
+		
 		bool changed = true;
 
 		while (changed)
@@ -338,6 +360,7 @@ public:
 				}
 			}
 		}
+		
 
 		/*minV = nodes[0];
 		minI = 0;

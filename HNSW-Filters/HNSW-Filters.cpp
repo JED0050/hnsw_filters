@@ -29,7 +29,7 @@ vector<Node*> LoadNodesFromFile(string fileName)
 
     while (getline(file, line))
     {
-        vector<long> values;
+        vector<float> values;
 
         size_t pos = 0;
         string token;
@@ -345,16 +345,157 @@ void HNSWSavePrint()
     hG.SavePrint(NUMBER_OF_GRAPH_NODES,GFILE_NAME);
 }
 
+void SiftTest()
+{
+    size_t node_count = 1000000;
+    size_t qsize = 10000;
+    size_t vecdim = 128;
+    size_t answer_size = 100;
+    uint32_t k = 10;
+
+    float* mass = new float[node_count * vecdim];
+    std::ifstream input("Data\\sift1M.bin", std::ios::binary);
+    if (!input.good()) throw std::runtime_error("Input data file not opened!");
+    input.read((char*)mass, node_count * vecdim * sizeof(float));
+    input.close();
+    vector<Node*> graphNodes;
+    for (int i = 0; i < node_count; i++)
+    {
+        Node *graphNode = new Node();
+        vector<float> position;
+
+        for (int p = 0; p < vecdim; p++)
+        {
+            position.push_back(mass[(i * vecdim) + p]);
+        }
+
+        graphNode->values = position;
+
+        graphNodes.push_back(graphNode);
+    }
+    delete[] mass;
+    cout << "Graph nodes done" << endl;
+
+    vector<Node*> queryNodes;
+    float* massQ = new float[qsize * vecdim];
+    std::ifstream inputQ("Data\\siftQ1M.bin", std::ios::binary);
+    if (!inputQ.good()) throw std::runtime_error("Input query file not opened!");
+    inputQ.read((char*)massQ, qsize * vecdim * sizeof(float));
+    inputQ.close();
+    for (int i = 0; i < qsize; i++)
+    {
+        Node* queryNode = new Node();
+        vector<float> position;
+
+        for (int p = 0; p < vecdim; p++)
+        {
+            position.push_back(massQ[(i * vecdim) + p]);
+        }
+
+        queryNode->values = position;
+
+        queryNodes.push_back(queryNode);
+    }
+    delete[] massQ;
+    cout << "Query nodes done" << endl;
+    
+    unsigned int* massQA = new unsigned int[qsize * answer_size];
+    std::ifstream inputQA("Data\\knnQA1M.bin", std::ios::binary);
+    if (!inputQA.is_open()) throw std::runtime_error("Input result file not opened!");
+    inputQA.read((char*)massQA, qsize * answer_size * sizeof(int));
+    inputQA.close();
+    cout << "Answer nodes done" << endl;
+
+    Hnsw hnsw = Hnsw(16, 16, 200);
+
+    /////////////////////////////////////////////////////// INSERT PART
+    std::cout << "Start inserting\n";
+    auto start = std::chrono::system_clock::now();
+    for (int i = 0; i < node_count; i++)
+    {
+        hnsw.Insert(graphNodes[i]);
+    }
+    auto end = std::chrono::system_clock::now();
+    double dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+    std::cout << "Insert time " << dur / 1000 << " [s] \n";
+    //hnsw.PrintInfoSorted(node_count);
+
+    /////////////////////////////////////////////////////// QUERY PART
+    std::cout << "Start querying\n";
+    std::vector<std::pair<float, float>> precision_time;
+    for (int ef = 20; ef <= 200; ef += 10)
+    {
+        if (ef > 100) ef += 10;
+
+        float positive = 0;
+        for (int i = 0; i < qsize; i++)
+        {
+            vector<int> result = hnsw.KNNSearchIndex(*queryNodes[i], k);
+
+            //int c1 = result.size();
+
+            /*for (auto item : hnsw.W_)
+            {
+                result.push_back(item.node_order);
+
+                if (c1++ >= k) break;
+            }*/
+
+            int c2 = 0;
+            while (c2 < k)
+            {
+                if (std::find(result.begin(), result.end(), massQA[i * answer_size + c2]) != result.end())
+                {
+                    positive++;
+                    //cout << "positive++" << endl;
+                }
+                c2++;
+            }
+        }
+        std::cout << "Precision: " << positive / (qsize * k) << ", ";
+
+        int sum = 0;
+        int min_time;
+        std::cout << "ef: " << ef << ", ";
+        for (int i = 0; i < 3; i++)
+        {
+            auto start = std::chrono::steady_clock::now();
+            for (int i = 0; i < qsize; i++)
+            {
+                hnsw.KNNSearchIndex(*queryNodes[i], k, ef);
+                //hnsw.aproximateKnn(&massQ[i * vecdim], k, ef);
+            }
+            auto end = std::chrono::steady_clock::now();
+            int time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+            sum += time;
+            min_time = i == 0 ? time : std::min(min_time, time);
+
+            //std::cout << (double)std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() / qsize << " [us]; ";
+        }
+        std::cout << "avg: " << (float)sum / (qsize * 3) << " [us]; " << "min: " << min_time / qsize << " [us]; \n";
+        precision_time.emplace_back((float)positive / (qsize * k), (float)min_time / qsize);
+ 
+        }
+    std::cout << "\nPrecision Time [us]\n";
+    for (auto item : precision_time)
+    {
+        std::cout << item.first << " " << item.second << "\n";
+    }
+
+    delete[] massQA;
+}
+
 int main()
 {
     //GeneratePoints(NUMBER_OF_GRAPH_NODES, 5, 0, 1000); 
     //HNSW();
-    HNSWQueryTest();
+    //HNSWQueryTest();
     //HNSWPrint();
     //CompareFiles(AFILE_NAME, UFILE_NAME);
     //HNSWSavePrint();
     //CompareFiles(GFILE_NAME, GUFILE_NAME);
     //DistinctNodes(FILE_NAME);
+    SiftTest();
 
     return 0;
 }
