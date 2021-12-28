@@ -33,24 +33,6 @@ public:
 
 };
 
-/*
-struct NodeDistanceSort
-{
-	vector<Node*> allNodes;
-
-	NodeDistanceSort() {}
-
-	NodeDistanceSort(vector<Node*> aN)
-	{
-		allNodes = aN;
-	}
-
-	inline bool operator() (const int& left, const int& right)
-	{
-		return (allNodes[left]->distance < allNodes[right]->distance);
-	}
-};
-*/
 
 class Node
 {
@@ -95,7 +77,7 @@ public:
 
 	void SetNeighbours(Neighbours* nbrs)
 	{
-		for (auto& nbr : lNaighbours)
+		for (auto nbr : lNaighbours)
 		{
 			if (nbr->layerID == nbrs->layerID)
 			{
@@ -106,7 +88,7 @@ public:
 
 		lNaighbours.push_back(nbrs);
 	}
-
+	
 	Neighbours* GetNeighboursAtLayer(int layerID)
 	{
 		for (auto& nbr : lNaighbours)
@@ -168,18 +150,18 @@ public:
 		values.push_back(value);
 	}
 
-	void SetDistance(Node& node)
+	void SetDistance(Node* node)
 	{
 		distance = GetDistance(node);
 	}
 
-	float GetDistance(Node& node)
+	float GetDistance(Node* node)
 	{
 		float distance = 0;
 
-		for (int i = 0; i < node.values.size(); i++)
+		for (int i = 0; i < node->values.size(); i++)
 		{
-			float x = node.values[i];
+			float x = node->values[i];
 			float y = values[i];
 			float z = x - y;
 
@@ -190,16 +172,21 @@ public:
 		//return sqrt(distance);
 	}
 
+};
 
+struct NodeDistanceSort
+{
+	vector<Node*> allNodes;
 
-	vector<Node*> neighbours;
-
-	void InsertNode(Node& node)
+	NodeDistanceSort(vector<Node*> &aN)
 	{
-		neighbours.push_back(&node);
+		allNodes = aN;
 	}
 
-
+	inline bool operator() (const int& left, const int& right)
+	{
+		return (allNodes[left]->distance < allNodes[right]->distance);
+	}
 };
 
 class SortedNodes
@@ -216,13 +203,13 @@ public:
 
 	vector<Node*> hnswNodes;
 
-	SortedNodes(vector<Node*> allNodes)
+	SortedNodes(vector<Node*> &allNodes)
 	{
 		hnswNodes = allNodes;
 		K = -1;
 	}
 
-	SortedNodes(vector<Node*> allNodes, int K)
+	SortedNodes(vector<Node*> &allNodes, int K)
 	{
 		hnswNodes = allNodes;
 		this->K = K;
@@ -378,7 +365,6 @@ public:
 	vector<int> GetKNearestNodes()
 	{
 		Sort();
-
 		return nodes;
 	}
 };

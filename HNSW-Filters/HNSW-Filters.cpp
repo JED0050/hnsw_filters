@@ -129,7 +129,7 @@ void HNSW()
     int K = 3;
 
     start = high_resolution_clock::now();
-    vector<Node*> closestNodes = hG.KNNSearch(queryNode, K);
+    vector<Node*> closestNodes = hG.KNNSearch(&queryNode, K);
     stop = high_resolution_clock::now();
     duration = duration_cast<microseconds>(stop - start);
     cout << "Cas vyhledavani K prvku: " << duration.count() / 1000000.0 << " [s]" << endl;
@@ -142,7 +142,7 @@ void HNSW()
         for (auto& v : n->values)
             cout << v << " ";
 
-        n->SetDistance(queryNode);
+        n->SetDistance(&queryNode);
 
         cout << "\tdist: " << n->distance << endl;
     }
@@ -151,7 +151,7 @@ void HNSW()
 
     K = 10;
     start = high_resolution_clock::now();
-    closestNodes = hG.KNNSearch(queryNode, K);
+    closestNodes = hG.KNNSearch(&queryNode, K);
     stop = high_resolution_clock::now();
     duration = duration_cast<microseconds>(stop - start);
     cout << "Cas vyhledavani K prvku: " << duration.count() / 1000000.0 << " [s]" << endl;
@@ -164,7 +164,7 @@ void HNSW()
         for (auto& v : n->values)
             cout << v << " ";
 
-        n->SetDistance(queryNode);
+        n->SetDistance(&queryNode);
 
         cout << "\tdist: " << n->distance << endl;
     }
@@ -206,7 +206,7 @@ void HNSWQueryTest()
     for (int i = 0; i < nOQP; i++)
     {
         //start = high_resolution_clock::now();
-        vector<int> closestNodes = hG.KNNSearchIndex(*qNodes[i], K);
+        vector<int> closestNodes = hG.KNNSearchIndex(qNodes[i], K);
         //stop = high_resolution_clock::now();
         //duration = duration_cast<microseconds>(stop - start);
         //cout << "Cas vyhledavani K prvku: " << duration.count() / 1000000.0 << " [s]" << endl;
@@ -337,17 +337,24 @@ void HNSWSavePrint()
     vector<Node*> nodes = LoadNodesFromFile(FILE_NAME);
     Hnsw hG = Hnsw(16, 16, EF_CONSTRUCTIONS);
 
+    std::cout << "Start inserting\n";
+    auto start = std::chrono::system_clock::now();
+
     for (auto& n : nodes)
     {
         hG.Insert(n);
     }
+
+    auto end = std::chrono::system_clock::now();
+    double dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+    std::cout << "Insert time " << dur / 1000 << " [s] \n";
 
     hG.SavePrint(NUMBER_OF_GRAPH_NODES,GFILE_NAME);
 }
 
 void SiftTest()
 {
-    size_t node_count = 1000000;
+    size_t node_count = 50000;//1000000;
     size_t qsize = 10000;
     size_t vecdim = 128;
     size_t answer_size = 100;
@@ -419,6 +426,8 @@ void SiftTest()
     double dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
     std::cout << "Insert time " << dur / 1000 << " [s] \n";
     //hnsw.PrintInfoSorted(node_count);
+    hnsw.SavePrint(node_count, "Files\\Sift\\SiftGraphJ.txt");
+    return;
 
     /////////////////////////////////////////////////////// QUERY PART
     std::cout << "Start querying\n";
@@ -430,7 +439,7 @@ void SiftTest()
         float positive = 0;
         for (int i = 0; i < qsize; i++)
         {
-            vector<int> result = hnsw.KNNSearchIndex(*queryNodes[i], k);
+            vector<int> result = hnsw.KNNSearchIndex(queryNodes[i], k);
 
             //int c1 = result.size();
 
@@ -462,7 +471,7 @@ void SiftTest()
             auto start = std::chrono::steady_clock::now();
             for (int i = 0; i < qsize; i++)
             {
-                hnsw.KNNSearchIndex(*queryNodes[i], k, ef);
+                hnsw.KNNSearchIndex(queryNodes[i], k, ef);
                 //hnsw.aproximateKnn(&massQ[i * vecdim], k, ef);
             }
             auto end = std::chrono::steady_clock::now();
@@ -492,10 +501,11 @@ int main()
     //HNSWQueryTest();
     //HNSWPrint();
     //CompareFiles(AFILE_NAME, UFILE_NAME);
-    //HNSWSavePrint();
-    //CompareFiles(GFILE_NAME, GUFILE_NAME);
+    HNSWSavePrint();
+    CompareFiles(GFILE_NAME, GUFILE_NAME);
     //DistinctNodes(FILE_NAME);
-    SiftTest();
+    //SiftTest();
+    //CompareFiles("Files\\Sift\\SiftGraphJ.txt", "Files\\Sift\\SiftGraphU.txt");
 
     return 0;
 }
