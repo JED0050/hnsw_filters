@@ -5,16 +5,16 @@
 #include "Hnsw.h"
 #include <chrono>
 
-#define FILE_NAME "Files\\space_points.txt"
-#define QFILE_NAME "Files\\query_points.txt"
-#define AFILE_NAME "Files\\answer_points_j_10kp_200efc.txt"
-#define UFILE_NAME "Files\\answer_points_u_10kp_200efc.txt"
-#define GFILE_NAME "Files\\graph_j_10kp_200efc.txt"
-#define GUFILE_NAME "Files\\graph_u_10kp_200efc.txt"
+#define FILE_NAME "Files\\space_points_1kp_128vd.txt"
+#define QFILE_NAME "Files\\query_points_1kp_128vd.txt"
+#define AFILE_NAME "Files\\answer_points_j_1kp_128vd_200efc.txt"
+#define UFILE_NAME "Files\\answer_points_u_1kp_128vd_200efc.txt"
+#define GFILE_NAME "Files\\graph_j_1kp_128vd_200efc.txt"
+#define GUFILE_NAME "Files\\graph_u_1kp_128vd_200efc.txt"
 #define QUERY_POINT "16 8943 561 84 651"
 #define QUERY_POINT_DEFAULT "16 8943 561 84 651"
 
-#define NUMBER_OF_GRAPH_NODES 10000
+#define NUMBER_OF_GRAPH_NODES 1000
 #define EF_CONSTRUCTIONS 200
 
 using namespace std::chrono;
@@ -80,7 +80,7 @@ void GeneratePoints(int numOfPoints, int numOfVectors, int minV, int maxV)
 
     srand(time(nullptr));
 
-    ofstream MyFile(QFILE_NAME);
+    ofstream MyFile("Files\\space_points_" + to_string(numOfPoints / 1000) + "kp_" + to_string(numOfVectors) + "vd.txt");
 
     for (int i = 0; i < numOfPoints; i++)
     {
@@ -350,11 +350,64 @@ void HNSWSavePrint()
     std::cout << "Insert time " << dur / 1000 << " [s] \n";
 
     hG.SavePrint(NUMBER_OF_GRAPH_NODES,GFILE_NAME);
+
+}
+
+void HNSWGraphAndQuerySavePrint()
+{
+    vector<Node*> nodes = LoadNodesFromFile(FILE_NAME);
+    Hnsw hG = Hnsw(16, 16, EF_CONSTRUCTIONS);
+
+    cout << "Start inserting\n";
+    auto start = std::chrono::system_clock::now();
+
+    for (auto& n : nodes)
+    {
+        hG.Insert(n);
+    }
+
+    auto end = std::chrono::system_clock::now();
+    double dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+    cout << "Insert time " << dur / 1000.0 << " [s]" << endl << endl;
+    
+    //hG.PrintInfoSorted(NUMBER_OF_GRAPH_NODES);
+    hG.SavePrint(NUMBER_OF_GRAPH_NODES, GFILE_NAME);
+
+
+
+    cout << "Start querying\n";
+    int K = 10;
+    vector<Node*> queryNodes = LoadNodesFromFile(QFILE_NAME);
+    ofstream MyFile(AFILE_NAME);
+
+    start = std::chrono::system_clock::now();
+    for (int i = 0; i < NUMBER_OF_GRAPH_NODES; i++)
+    {
+        vector<int> closestNodes = hG.KNNSearchIndex(queryNodes[i], K);
+
+        //cout << K << " nearest point: ";
+
+        string line = "";
+
+        for (auto& p : closestNodes)
+        {
+            line += to_string(p) + " ";
+        }
+        line += "\n";
+
+        MyFile << line;
+        //cout << line;
+    }
+    end = std::chrono::system_clock::now();
+    dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+
+    cout << "Total query time: " << dur / 1000.0 << " [s]" << endl;
+    MyFile.close();
 }
 
 void SiftTest()
 {
-    size_t node_count = 50000;//1000000;
+    size_t node_count = 50000; //1000000
     size_t qsize = 10000;
     size_t vecdim = 128;
     size_t answer_size = 100;
@@ -365,6 +418,22 @@ void SiftTest()
     if (!input.good()) throw std::runtime_error("Input data file not opened!");
     input.read((char*)mass, node_count * vecdim * sizeof(float));
     input.close();
+    /*
+    float min = mass[0];
+    float max = mass[0];
+
+    for (int i = 1; i < node_count*vecdim; i++)
+    {
+        if (mass[i] < min)
+            min = mass[i];
+        else if (mass[i] > max)
+            max = mass[i];
+    }
+
+    printf("min: %f\tmax: %f\n", min, max); //min = 0; max = 164
+
+    delete[] mass;
+    */
     vector<Node*> graphNodes;
     for (int i = 0; i < node_count; i++)
     {
@@ -496,16 +565,20 @@ void SiftTest()
 
 int main()
 {
-    //GeneratePoints(NUMBER_OF_GRAPH_NODES, 5, 0, 1000); 
+    //GeneratePoints(10000, 128, 0, 255);   //numberOfNodes, vecdim, minV, maxV
+    // 
     //HNSW();
     //HNSWQueryTest();
     //HNSWPrint();
-    //CompareFiles(AFILE_NAME, UFILE_NAME);
-    HNSWSavePrint();
-    CompareFiles(GFILE_NAME, GUFILE_NAME);
+    //HNSWSavePrint();
+    // 
     //DistinctNodes(FILE_NAME);
     //SiftTest();
     //CompareFiles("Files\\Sift\\SiftGraphJ.txt", "Files\\Sift\\SiftGraphU.txt");
+
+    HNSWGraphAndQuerySavePrint();
+    //CompareFiles(AFILE_NAME, UFILE_NAME);
+    //CompareFiles(GFILE_NAME, GUFILE_NAME);
 
     return 0;
 }

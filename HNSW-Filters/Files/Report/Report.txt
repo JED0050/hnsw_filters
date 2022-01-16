@@ -1,0 +1,11 @@
+16.1.
+- v sift datech kde je 1M bodů je min 0 max 218
+
+- graf pro 10k bodů, dimenzi 5 a efc 200 je pro mě i referenci 100% stejný
+- 10k dotazů pro N 10 nad předešlými body pro efc 200 je pro mě i referenci na 100% stejné
+
+Graph: 1kp, 128vd, 200efc, Query: 1kp, 10N, 200efc
+- já insert time 15s, učitel 2.595s
+- já query time 19.2s, učitel 3.3s
+- graf 100% stejný (jen 2 nody mají při vypsání sousedů postupně 2 prohozené, mají stejné sousedy ale výpis v jiném pořadí u 2)
+- dotazy 100% stejný
