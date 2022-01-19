@@ -5,16 +5,15 @@
 #include "Hnsw.h"
 #include <chrono>
 
-#define FILE_NAME "Files\\space_points_1kp_128vd.txt"
-#define QFILE_NAME "Files\\query_points_1kp_128vd.txt"
-#define AFILE_NAME "Files\\answer_points_j_1kp_128vd_200efc.txt"
-#define UFILE_NAME "Files\\answer_points_u_1kp_128vd_200efc.txt"
-#define GFILE_NAME "Files\\graph_j_1kp_128vd_200efc.txt"
-#define GUFILE_NAME "Files\\graph_u_1kp_128vd_200efc.txt"
-#define QUERY_POINT "16 8943 561 84 651"
-#define QUERY_POINT_DEFAULT "16 8943 561 84 651"
+#define FILE_NAME "Files\\space_points_10kp_128vd.txt"
+#define QFILE_NAME "Files\\query_points_10kp_128vd.txt"
+#define AFILE_NAME "Files\\answer_points_j_10kp_128vd_200efc.txt"
+#define UFILE_NAME "Files\\answer_points_u_10kp_128vd_200efc.txt"
+#define GFILE_NAME "Files\\graph_j_10kp_128vd_200efc.txt"
+#define GUFILE_NAME "Files\\graph_u_10kp_128vd_200efc.txt"
 
-#define NUMBER_OF_GRAPH_NODES 1000
+#define NUMBER_OF_GRAPH_NODES 10000
+#define NUMBER_OF_QUERY_NODES 10000
 #define EF_CONSTRUCTIONS 200
 
 using namespace std::chrono;
@@ -57,7 +56,7 @@ Node GetQueryNode()
 {
     Node queryNode = Node();
 
-    string values = QUERY_POINT;
+    string values = "12 56 35 654 126";
 
     size_t pos = 0;
     string token;
@@ -102,130 +101,6 @@ void GeneratePoints(int numOfPoints, int numOfVectors, int minV, int maxV)
 
     MyFile.close();
 
-}
-
-void HNSW()
-{
-    vector<Node*> nodes = LoadNodesFromFile(FILE_NAME);
-
-    Hnsw hG = Hnsw(16, 16, EF_CONSTRUCTIONS);  //efc 16 - 9.7s, efc 200 - 150.6s
-
-
-    auto start = high_resolution_clock::now();
-
-    for (auto& n : nodes)
-    {
-        hG.Insert(n);
-    }
-
-    auto stop = high_resolution_clock::now();
-
-    auto duration = duration_cast<microseconds>(stop - start);
-
-    cout << "\nCas vkladani prvku: " << duration.count() / 1000000.0 << " [s]" << endl;
-
-
-    Node queryNode = GetQueryNode();
-    int K = 3;
-
-    start = high_resolution_clock::now();
-    vector<Node*> closestNodes = hG.KNNSearch(&queryNode, K);
-    stop = high_resolution_clock::now();
-    duration = duration_cast<microseconds>(stop - start);
-    cout << "Cas vyhledavani K prvku: " << duration.count() / 1000000.0 << " [s]" << endl;
-
-    cout << K << " nearest point:\n";
-
-    for (auto& n : closestNodes)
-    {
-        cout << "\t";
-        for (auto& v : n->values)
-            cout << v << " ";
-
-        n->SetDistance(&queryNode);
-
-        cout << "\tdist: " << n->distance << endl;
-    }
-
-    cout << endl << endl;
-
-    K = 10;
-    start = high_resolution_clock::now();
-    closestNodes = hG.KNNSearch(&queryNode, K);
-    stop = high_resolution_clock::now();
-    duration = duration_cast<microseconds>(stop - start);
-    cout << "Cas vyhledavani K prvku: " << duration.count() / 1000000.0 << " [s]" << endl;
-
-    cout << K << " nearest point:\n";
-
-    for (auto& n : closestNodes)
-    {
-        cout << "\t";
-        for (auto& v : n->values)
-            cout << v << " ";
-
-        n->SetDistance(&queryNode);
-
-        cout << "\tdist: " << n->distance << endl;
-    }
-
-    cout << endl << endl;
-}
-
-void HNSWQueryTest()
-{
-    vector<Node*> nodes = LoadNodesFromFile(FILE_NAME);
-    vector<Node*> qNodes = LoadNodesFromFile(QFILE_NAME);    
-    Hnsw hG = Hnsw(16,16, EF_CONSTRUCTIONS);  //efc 16 - 9.7s, efc 200 - 150.6s
-
-    auto start = high_resolution_clock::now();
-
-    int i = 0;
-
-    for (auto& n : nodes)
-    {
-        //if (i == 16)
-          //  cout << "x" << endl;//getchar();
-
-        hG.Insert(n);
-
-        //hG.PrintInfoSorted(++i);
-        //getchar();
-    }
-    auto stop = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(stop - start);
-    cout << "\nCas vkladani prvku: " << duration.count() / 1000000.0 << " [s]" << endl;
-
-    hG.SavePrint(NUMBER_OF_GRAPH_NODES, GFILE_NAME);
-
-    int K = 10;
-    int nOQP = NUMBER_OF_GRAPH_NODES; //počet query bodů
-
-    ofstream MyFile(AFILE_NAME);
-
-    for (int i = 0; i < nOQP; i++)
-    {
-        //start = high_resolution_clock::now();
-        vector<int> closestNodes = hG.KNNSearchIndex(qNodes[i], K);
-        //stop = high_resolution_clock::now();
-        //duration = duration_cast<microseconds>(stop - start);
-        //cout << "Cas vyhledavani K prvku: " << duration.count() / 1000000.0 << " [s]" << endl;
-
-        cout << K << " nearest point: ";
-
-        string line = "";
-
-        for (auto& p : closestNodes)
-        {
-            line += to_string(p) + " ";
-        }
-        line += "\n";
-
-        MyFile << line;
-        cout << line;
-    }    
-
-    MyFile.close();
 }
 
 void DistinctNodes(string f1)
@@ -361,9 +236,16 @@ void HNSWGraphAndQuerySavePrint()
     cout << "Start inserting\n";
     auto start = std::chrono::system_clock::now();
 
+    //int counter = 0;
+
     for (auto& n : nodes)
     {
+        //if (counter == 437)
+        //    counter += 0;
+
         hG.Insert(n);
+
+        //counter++;
     }
 
     auto end = std::chrono::system_clock::now();
@@ -381,7 +263,7 @@ void HNSWGraphAndQuerySavePrint()
     ofstream MyFile(AFILE_NAME);
 
     start = std::chrono::system_clock::now();
-    for (int i = 0; i < NUMBER_OF_GRAPH_NODES; i++)
+    for (int i = 0; i < NUMBER_OF_QUERY_NODES; i++)
     {
         vector<int> closestNodes = hG.KNNSearchIndex(queryNodes[i], K);
 
@@ -566,19 +448,17 @@ void SiftTest()
 int main()
 {
     //GeneratePoints(10000, 128, 0, 255);   //numberOfNodes, vecdim, minV, maxV
-    // 
-    //HNSW();
-    //HNSWQueryTest();
+    //
     //HNSWPrint();
     //HNSWSavePrint();
-    // 
+    //
     //DistinctNodes(FILE_NAME);
     //SiftTest();
     //CompareFiles("Files\\Sift\\SiftGraphJ.txt", "Files\\Sift\\SiftGraphU.txt");
 
     HNSWGraphAndQuerySavePrint();
-    //CompareFiles(AFILE_NAME, UFILE_NAME);
     //CompareFiles(GFILE_NAME, GUFILE_NAME);
+    //CompareFiles(AFILE_NAME, UFILE_NAME);
 
     return 0;
 }
