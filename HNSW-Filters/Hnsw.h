@@ -71,7 +71,6 @@ public:
 		for (int lC = L; lC > l; lC--)
 		{
 			entryPoint = SearchLayerOne(newNode, entryPoint, lC);
-			//entryPoint = SearchLayer(newNode, entryPoint, 1, lC)[0];
 		}
 
 		vector<int> W;
@@ -151,7 +150,7 @@ public:
 					allNodes[n]->SetDistance(queryNode);
 					visitedNodes.push_back(n);
 
-					if (allNodes[n]->distance < allNodes[entryPoint]->distance)
+					if (allNodes[n]->distance < allNodes[cNode]->distance)
 					{
 						change = true;
 						cNode = n;
