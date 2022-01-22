@@ -104,7 +104,7 @@ public:
 				}
 			}
 
-			W = neighbors;
+			//W = neighbors;
 		}
 
 		while (l > L)

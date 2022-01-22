@@ -7,13 +7,13 @@
 
 #define FILE_NAME "Files\\space_points_10kp_128vd.txt"
 #define QFILE_NAME "Files\\query_points_10kp_128vd.txt"
-#define AFILE_NAME "Files\\answer_points_j_2kp_128vd_200efc.txt"
-#define UFILE_NAME "Files\\answer_points_u_2kp_128vd_200efc.txt"
-#define GFILE_NAME "Files\\graph_j_2kp_128vd_200efc.txt"
-#define GUFILE_NAME "Files\\graph_u_2kp_128vd_200efc.txt"
+#define AFILE_NAME "Files\\answer_points_j_3kp_128vd_200efc.txt"
+#define UFILE_NAME "Files\\answer_points_u_3kp_128vd_200efc.txt"
+#define GFILE_NAME "Files\\graph_j_3kp_128vd_200efc.txt"
+#define GUFILE_NAME "Files\\graph_u_3kp_128vd_200efc.txt"
 
-#define NUMBER_OF_GRAPH_NODES 2000
-#define NUMBER_OF_QUERY_NODES 2000
+#define NUMBER_OF_GRAPH_NODES 3000
+#define NUMBER_OF_QUERY_NODES 3000
 #define EF_CONSTRUCTIONS 200
 
 using namespace std::chrono;
@@ -240,7 +240,7 @@ void HNSWGraphAndQuerySavePrint()
 
     for (int i = 0; i < NUMBER_OF_GRAPH_NODES; i++)
     {
-        if (i == 1241)
+        if (i == 2918)
             i += 0;
 
         hG.Insert(nodes[i]);
@@ -253,7 +253,7 @@ void HNSWGraphAndQuerySavePrint()
     //hG.PrintInfoSorted(NUMBER_OF_GRAPH_NODES);
     hG.SavePrint(NUMBER_OF_GRAPH_NODES, GFILE_NAME);
 
-
+    return;
 
     cout << "Start querying\n";
     int K = 10;
