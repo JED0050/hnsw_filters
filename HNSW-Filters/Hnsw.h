@@ -12,7 +12,6 @@ using namespace std;
 class Hnsw
 {
 public:
-	Node* mainEntryPoint;
 	vector<Layer> layers;
 
 	int M;
@@ -50,10 +49,9 @@ public:
 		int newNodeIndex = allNodes.size() - 1;
 		int L = layers.size() - 1;
 		int l = -log(((float)(rand() % 10000 + 1)) / 10000) * mL; //(0 - 9) * mL => 0 - 3
-
-		if (mainEntryPoint == nullptr)
+		
+		if (newNodeIndex == 0)
 		{
-			mainEntryPoint = allNodes[0];
 
 			while (l > L)
 			{
@@ -109,7 +107,7 @@ public:
 
 		while (l > L)
 		{
-			Layer newLayer = Layer(entryPoint);
+			Layer newLayer = Layer(newNodeIndex);
 			layers.push_back(newLayer);
 
 			l--;
