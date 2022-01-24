@@ -16,10 +16,15 @@ Graph: 10kp, 128vd, 200efc, Query: 10kp, 10N, 200efc
 - dotazy 9990 ano / 10 ne
 
 
+OPTIMALIZACE:
+Graph: 2kp, 128vd, 200efc, Query: 2kp, 10N, 200efc
 
+	Já1	Já2	Já3	|	Ref1	Ref2	Ref3
+Graph	59.184	53.975	50.64	|	8.747	7.209	7.589
+Query	59.184	59.363	57.865	|	9.127	8.421	8.576
 
-
-
+Graph	49.407
+Query	58.904
 
 Insert time 631.825 [s]
 Total query time: 643.257 [s]

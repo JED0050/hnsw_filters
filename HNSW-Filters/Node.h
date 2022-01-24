@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
 class Node;
-
 class Neighbours
 {
 public:
@@ -323,6 +323,11 @@ public:
 		return nodes.size();
 	}
 
+	bool Empty()
+	{
+		return nodes.empty();
+	}
+
 	void Sort()
 	{
 		//sort(nodes.begin(), nodes.end(), NodeDistanceSort(hnswNodes));
@@ -377,13 +382,13 @@ public:
 
 	vector<Node*> hnswNodes;
 
-	SortedNodesO(vector<Node*> allNodes)
+	SortedNodesO(vector<Node*> &allNodes)
 	{
 		hnswNodes = allNodes;
 		K = -1;
 	}
 
-	SortedNodesO(vector<Node*> allNodes, int K)
+	SortedNodesO(vector<Node*> &allNodes, int K)
 	{
 		hnswNodes = allNodes;
 		this->K = K;
@@ -394,9 +399,6 @@ public:
 		if (K == -1 || nodes.size() < K)
 		{
 			nodes.push_back(node);
-
-			int nodeLastIndex = nodes.size() - 1;
-
 		}
 		else if (hnswNodes[nodes.size() - 1]->distance > hnswNodes[node]->distance)
 		{
@@ -437,8 +439,15 @@ public:
 		return nodes.size();
 	}
 
+	bool Empty()
+	{
+		return nodes.empty();
+	}
+
 	void Sort()
 	{
+		sort(nodes.begin(), nodes.end(), NodeDistanceSort(hnswNodes));
+		/*
 		int nodeLastIndex = nodes.size() - 1;
 
 		bool changed = true;
@@ -457,7 +466,7 @@ public:
 					nodes[i] = tmpNode;
 				}
 			}
-		}
+		}*/
 	}
 
 	vector<int> GetKNearestNodes()

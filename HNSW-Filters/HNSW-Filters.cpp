@@ -7,24 +7,24 @@
 
 #define FILE_NAME "Files\\space_points_10kp_128vd.txt"
 #define QFILE_NAME "Files\\query_points_10kp_128vd.txt"
-#define AFILE_NAME "Files\\answer_points_j_10kp_128vd_200efc.txt"
-#define UFILE_NAME "Files\\answer_points_u_10kp_128vd_200efc.txt"
-#define GFILE_NAME "Files\\graph_j_10kp_128vd_200efc.txt"
-#define GUFILE_NAME "Files\\graph_u_10kp_128vd_200efc.txt"
+#define AFILE_NAME "Files\\answer_points_j_2kp_128vd_200efc.txt"
+#define UFILE_NAME "Files\\answer_points_u_2kp_128vd_200efc.txt"
+#define GFILE_NAME "Files\\graph_j_2kp_128vd_200efc.txt"
+#define GUFILE_NAME "Files\\graph_u_2kp_128vd_200efc.txt"
 
-#define NUMBER_OF_GRAPH_NODES 10000
-#define NUMBER_OF_QUERY_NODES 10000
+#define NUMBER_OF_GRAPH_NODES 2000
+#define NUMBER_OF_QUERY_NODES 2000
 #define EF_CONSTRUCTIONS 200
 
 using namespace std::chrono;
 using namespace std; 
 
-vector<Node*> LoadNodesFromFile(string fileName)
+vector<Node> LoadNodesFromFile(string fileName)
 {
     ifstream file(fileName);
     string line = "";
 
-    vector<Node*> nodes;
+    vector<Node> nodes;
 
     while (getline(file, line))
     {
@@ -43,8 +43,8 @@ vector<Node*> LoadNodesFromFile(string fileName)
 
         values.push_back(stoi(line));
 
-        Node* n = new Node();
-        n->values = values;
+        Node n = Node();
+        n.values = values;
 
         nodes.push_back(n);
     }
@@ -180,7 +180,7 @@ void CompareFiles(string f1, string f2)
 
 void HNSWPrint()
 {
-    vector<Node*> nodes = LoadNodesFromFile(FILE_NAME);
+    vector<Node> nodes = LoadNodesFromFile(FILE_NAME);
     Hnsw hG = Hnsw(16, 16, EF_CONSTRUCTIONS);
 
     int c = 0;
@@ -191,7 +191,7 @@ void HNSWPrint()
         if (c == 445)
             cout << "wrong" << endl;
 
-        hG.Insert(n);
+        hG.Insert(&n);
 
         //if(c == 279)
         //    hG.PrintInfoSorted(c + 1);
@@ -209,7 +209,7 @@ void HNSWPrint()
 
 void HNSWSavePrint()
 {
-    vector<Node*> nodes = LoadNodesFromFile(FILE_NAME);
+    vector<Node> nodes = LoadNodesFromFile(FILE_NAME);
     Hnsw hG = Hnsw(16, 16, EF_CONSTRUCTIONS);
 
     std::cout << "Start inserting\n";
@@ -217,7 +217,7 @@ void HNSWSavePrint()
 
     for (auto& n : nodes)
     {
-        hG.Insert(n);
+        hG.Insert(&n);
     }
 
     auto end = std::chrono::system_clock::now();
@@ -230,7 +230,7 @@ void HNSWSavePrint()
 
 void HNSWGraphAndQuerySavePrint()
 {
-    vector<Node*> nodes = LoadNodesFromFile(FILE_NAME);
+    vector<Node> nodes = LoadNodesFromFile(FILE_NAME);
     Hnsw hG = Hnsw(16, 16, EF_CONSTRUCTIONS);
 
     cout << "Start inserting\n";
@@ -243,7 +243,7 @@ void HNSWGraphAndQuerySavePrint()
         //if (i == 2918)
         //    i += 0;
 
-        hG.Insert(nodes[i]);
+        hG.Insert(&nodes[i]);
     }
 
     auto end = std::chrono::system_clock::now();
@@ -255,13 +255,13 @@ void HNSWGraphAndQuerySavePrint()
 
     cout << "Start querying\n";
     int K = 10;
-    vector<Node*> queryNodes = LoadNodesFromFile(QFILE_NAME);
+    vector<Node> queryNodes = LoadNodesFromFile(QFILE_NAME);
     ofstream MyFile(AFILE_NAME);
 
     start = std::chrono::system_clock::now();
     for (int i = 0; i < NUMBER_OF_QUERY_NODES; i++)
     {
-        vector<int> closestNodes = hG.KNNSearchIndex(queryNodes[i], K);
+        vector<int> closestNodes = hG.KNNSearchIndex(&queryNodes[i], K, EF_CONSTRUCTIONS);
 
         //cout << K << " nearest point: ";
 
@@ -274,7 +274,9 @@ void HNSWGraphAndQuerySavePrint()
         line += "\n";
 
         MyFile << line;
-        //cout << line;
+
+        //cout << line << endl;
+       
     }
     end = std::chrono::system_clock::now();
     dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
@@ -453,8 +455,8 @@ int main()
     //CompareFiles("Files\\Sift\\SiftGraphJ.txt", "Files\\Sift\\SiftGraphU.txt");
 
     HNSWGraphAndQuerySavePrint();
-    CompareFiles(GFILE_NAME, GUFILE_NAME);
-    CompareFiles(AFILE_NAME, UFILE_NAME);
+    //CompareFiles(GFILE_NAME, GUFILE_NAME);
+    //CompareFiles(AFILE_NAME, UFILE_NAME);
 
     return 0;
 }

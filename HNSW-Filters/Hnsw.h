@@ -42,7 +42,7 @@ public:
 		this->mL = 1 / log(0.8 * M);
 	}
 
-	void Insert(Node *newNode)
+	void Insert(Node* newNode)
 	{
 		allNodes.push_back(newNode);
 
@@ -228,7 +228,7 @@ public:
 		nearestNodes.InsertNode(entryPoint);
 		visitedNodes.push_back(entryPoint);
 
-		while (candidateNodes.Size() > 0)
+		while (!candidateNodes.Empty())
 		{
 
 			int c = candidateNodes.GetFirstNode();
@@ -239,11 +239,11 @@ public:
 			vector<int> nbs = allNodes[c]->GetNeighboursVectorAtLayer(layerC);
 			candidateNodes.RemoveFirstNode();
 
-			for (auto& n : nbs)
+			for (auto n : nbs)
 			{
 				bool nodeVisited = false;
 
-				for (auto& vn : visitedNodes)
+				for (auto vn : visitedNodes)
 				{
 					if (vn == n)
 					{
@@ -282,38 +282,25 @@ public:
 		nearestNodes.push_back(entryPoint);
 		visitedNodes.push_back(entryPoint);
 
-		while (candidateNodes.size() > 0)
+		int cMinNode = entryPoint;
+		int nMaxNode = entryPoint;
+
+		while (!candidateNodes.empty())
 		{
-			int cMin = - 1;
 
-			for (auto n : candidateNodes)
-			{
-				allNodes[n]->SetDistance(queryNode);
-
-				if (cMin == -1 || allNodes[n]->distance < allNodes[cMin]->distance)
-				{
-					cMin = n;
-				}
-			}
-
-			int l = -1;
-
-			for (auto n : nearestNodes)
-			{
-				allNodes[n]->SetDistance(queryNode);
-
-				if (l == -1 || allNodes[n]->distance > allNodes[l]->distance)
-				{
-					l = n;
-				}
-			}
-
-			if (allNodes[cMin]->distance > allNodes[l]->distance)
+			if (allNodes[cMinNode]->distance > allNodes[nMaxNode]->distance)
 				break;
 
-			vector<int> nbs = allNodes[cMin]->GetNeighboursVectorAtLayer(layerC);
+			vector<int> nbs = allNodes[cMinNode]->GetNeighboursVectorAtLayer(layerC);
+			candidateNodes.erase(std::remove(candidateNodes.begin(), candidateNodes.end(), cMinNode), candidateNodes.end());
 
-			candidateNodes.erase(std::remove(candidateNodes.begin(), candidateNodes.end(), cMin), candidateNodes.end());
+			for (auto& n : candidateNodes)
+			{
+				if (allNodes[n]->distance < allNodes[cMinNode]->distance)
+				{
+					cMinNode = n;
+				}
+			}
 
 			for (auto& n : nbs)
 			{
@@ -333,38 +320,38 @@ public:
 					visitedNodes.push_back(n);
 					allNodes[n]->SetDistance(queryNode);
 
-					l = -1;
-
-					for (auto ln : nearestNodes)
+					if (allNodes[n]->distance < allNodes[nMaxNode]->distance || nearestNodes.size() < K)
 					{
-						allNodes[ln]->SetDistance(queryNode);
-
-						if (l == -1 || allNodes[ln]->distance > allNodes[l]->distance)
+						if (nearestNodes.size() == K)
 						{
-							l = ln;
-						}
-					}
+							int maxIndex = 0;
 
-					if (allNodes[n]->distance < allNodes[l]->distance || nearestNodes.size() < K)
-					{
-						nearestNodes.push_back(n);
-						candidateNodes.push_back(n);
-
-						if (nearestNodes.size() > K)
-						{
-							l = -1;
-
-							for (auto ln : nearestNodes)
+							for (int i = 1; i < nearestNodes.size(); i++)
 							{
-								allNodes[ln]->SetDistance(queryNode);
-
-								if (l == -1 || allNodes[ln]->distance > allNodes[l]->distance)
+								if (allNodes[maxIndex]->distance < allNodes[i]->distance)
 								{
-									l = ln;
+									maxIndex = i;
 								}
 							}
 
-							nearestNodes.erase(std::remove(nearestNodes.begin(), nearestNodes.end(), l), nearestNodes.end());
+							nearestNodes[maxIndex] = n;
+						}
+						else
+						{
+							nearestNodes.push_back(n);
+
+							if (allNodes[nMaxNode]->distance < allNodes[cMinNode]->distance)
+							{
+								nMaxNode = n;
+							}
+						}
+
+
+						candidateNodes.push_back(n);
+
+						if (allNodes[cMinNode]->distance > allNodes[n]->distance)
+						{
+							cMinNode = n;
 						}
 					}
 				}
@@ -387,6 +374,7 @@ public:
 			allNodes[n]->SetDistance(allNodes[queryNode]);
 		}
 
+		
 		bool changed = true;
 
 		while (changed)
@@ -404,7 +392,7 @@ public:
 				}
 			}
 		}
-
+		
 		sortedNodes.erase(sortedNodes.begin() + M, sortedNodes.end());
 
 		//neighbours->neighbours = sortedNodes;
@@ -529,12 +517,12 @@ public:
 		nearestNodesIndex = SearchLayerKNN(queryNode, entryPoint, efC, 0);
 
 		vector<int> nearestNodes;
-
+		
 		for (int i = 0; i < K; i++)
 		{
 			nearestNodes.push_back(nearestNodesIndex[i]);
 		}
-
+		
 		return nearestNodes;
 	}
 
