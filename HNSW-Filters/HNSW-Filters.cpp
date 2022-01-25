@@ -15,9 +15,10 @@
 #define NUMBER_OF_GRAPH_NODES 2000
 #define NUMBER_OF_QUERY_NODES 2000
 #define EF_CONSTRUCTIONS 200
+#define VECTOR_SIZE 128
 
 using namespace std::chrono;
-using namespace std; 
+using namespace std;
 
 vector<Node> LoadNodesFromFile(string fileName)
 {
@@ -29,49 +30,36 @@ vector<Node> LoadNodesFromFile(string fileName)
     while (getline(file, line))
     {
         vector<float> values;
+        //float values[VECTOR_SIZE];
 
         size_t pos = 0;
         string token;
 
+        int index = 0;
+
+        Node n = Node();
+
         while ((pos = line.find(' ')) != string::npos) {
             token = line.substr(0, pos);
 
+            //n.InsertValue((float)stoi(token), index);
+            //values[index] = (float)stoi(token);
+            //index++;
             values.push_back(stoi(token));
 
             line.erase(0, pos + 1);
         }
 
+        //n.InsertValue((float)stoi(token), index);
+        //values[index] = (float)stoi(token);
         values.push_back(stoi(line));
 
-        Node n = Node();
         n.values = values;
 
         nodes.push_back(n);
     }
 
     return nodes;
-}
-
-Node GetQueryNode()
-{
-    Node queryNode = Node();
-
-    string values = "12 56 35 654 126";
-
-    size_t pos = 0;
-    string token;
-
-    while ((pos = values.find(' ')) != string::npos) {
-        token = values.substr(0, pos);
-
-        queryNode.InsertValue(stoi(token));
-
-        values.erase(0, pos + 1);
-    }
-
-    queryNode.InsertValue(stoi(values));
-
-    return queryNode;
 }
 
 void GeneratePoints(int numOfPoints, int numOfVectors, int minV, int maxV)
@@ -205,7 +193,7 @@ void HNSWPrint()
     }
 
     hG.PrintInfoSorted(NUMBER_OF_GRAPH_NODES);
- }
+}
 
 void HNSWSavePrint()
 {
@@ -224,7 +212,7 @@ void HNSWSavePrint()
     double dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
     std::cout << "Insert time " << dur / 1000 << " [s] \n";
 
-    hG.SavePrint(NUMBER_OF_GRAPH_NODES,GFILE_NAME);
+    hG.SavePrint(NUMBER_OF_GRAPH_NODES, GFILE_NAME);
 
 }
 
@@ -243,20 +231,22 @@ void HNSWGraphAndQuerySavePrint()
         //if (i == 2918)
         //    i += 0;
 
+        //cout << nodes[i].values[0] << " " << nodes[i].values[69] << " " << nodes[i].values[127] << " " << endl;
+
         hG.Insert(&nodes[i]);
     }
 
     auto end = std::chrono::system_clock::now();
     double dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
     cout << "Insert time " << dur / 1000.0 << " [s]" << endl << endl;
-    
+
     //hG.PrintInfoSorted(NUMBER_OF_GRAPH_NODES);
     hG.SavePrint(NUMBER_OF_GRAPH_NODES, GFILE_NAME);
 
-    cout << "Start querying\n";
     int K = 10;
     vector<Node> queryNodes = LoadNodesFromFile(QFILE_NAME);
     ofstream MyFile(AFILE_NAME);
+    cout << "Start querying\n";
 
     start = std::chrono::system_clock::now();
     for (int i = 0; i < NUMBER_OF_QUERY_NODES; i++)
@@ -276,7 +266,7 @@ void HNSWGraphAndQuerySavePrint()
         MyFile << line;
 
         //cout << line << endl;
-       
+
     }
     end = std::chrono::system_clock::now();
     dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
@@ -317,15 +307,15 @@ void SiftTest()
     vector<Node*> graphNodes;
     for (int i = 0; i < node_count; i++)
     {
-        Node *graphNode = new Node();
-        vector<float> position;
+        Node* graphNode = new Node();
+        float position[VECTOR_SIZE];
 
         for (int p = 0; p < vecdim; p++)
         {
-            position.push_back(mass[(i * vecdim) + p]);
+            position[p] = mass[(i * vecdim) + p];
         }
 
-        graphNode->values = position;
+        //graphNode->values = position;
 
         graphNodes.push_back(graphNode);
     }
@@ -341,20 +331,20 @@ void SiftTest()
     for (int i = 0; i < qsize; i++)
     {
         Node* queryNode = new Node();
-        vector<float> position;
+        float position[VECTOR_SIZE];
 
         for (int p = 0; p < vecdim; p++)
         {
-            position.push_back(massQ[(i * vecdim) + p]);
+            position[p] = massQ[(i * vecdim) + p];
         }
 
-        queryNode->values = position;
+        //queryNode->values = position;
 
         queryNodes.push_back(queryNode);
     }
     delete[] massQ;
     cout << "Query nodes done" << endl;
-    
+
     unsigned int* massQA = new unsigned int[qsize * answer_size];
     std::ifstream inputQA("Data\\knnQA1M.bin", std::ios::binary);
     if (!inputQA.is_open()) throw std::runtime_error("Input result file not opened!");
@@ -432,8 +422,8 @@ void SiftTest()
         }
         std::cout << "avg: " << (float)sum / (qsize * 3) << " [us]; " << "min: " << min_time / qsize << " [us]; \n";
         precision_time.emplace_back((float)positive / (qsize * k), (float)min_time / qsize);
- 
-        }
+
+    }
     std::cout << "\nPrecision Time [us]\n";
     for (auto item : precision_time)
     {
@@ -455,8 +445,8 @@ int main()
     //CompareFiles("Files\\Sift\\SiftGraphJ.txt", "Files\\Sift\\SiftGraphU.txt");
 
     HNSWGraphAndQuerySavePrint();
-    //CompareFiles(GFILE_NAME, GUFILE_NAME);
-    //CompareFiles(AFILE_NAME, UFILE_NAME);
+    CompareFiles(GFILE_NAME, GUFILE_NAME);
+    CompareFiles(AFILE_NAME, UFILE_NAME);
 
     return 0;
 }

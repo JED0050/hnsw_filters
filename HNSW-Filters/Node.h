@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <algorithm>
+#include<tuple>
 
 using namespace std;
 
@@ -37,6 +38,8 @@ public:
 class Node
 {
 public:
+	static unsigned int vectorSize;
+	//float values[128];
 	vector<float> values;
 	vector<Neighbours*> lNaighbours;
 	float distance = -1;
@@ -88,7 +91,7 @@ public:
 
 		lNaighbours.push_back(nbrs);
 	}
-	
+
 	Neighbours* GetNeighboursAtLayer(int layerID)
 	{
 		for (auto& nbr : lNaighbours)
@@ -145,23 +148,23 @@ public:
 		return nbs;
 	}
 
-	void InsertValue(float value)
+	void InsertValue(float v, int index)
 	{
-		values.push_back(value);
+		values[index] = v;
 	}
 
 	void SetDistance(Node* node)
 	{
-		distance = GetDistance(node);
+		distance = GetDistance(node->values);
 	}
 
-	float GetDistance(Node* node)
+	float GetDistance(vector<float> node)
 	{
 		float distance = 0;
 
-		for (int i = 0; i < node->values.size(); i++)
+		for (int i = 0; i < vectorSize; i++)
 		{
-			float x = node->values[i];
+			float x = node[i];
 			float y = values[i];
 			float z = x - y;
 
@@ -172,13 +175,19 @@ public:
 		//return sqrt(distance);
 	}
 
+	float SetGetDistance(Node* node)
+	{
+		distance = GetDistance(node->values);
+		return distance;
+	}
+
 };
 
 struct NodeDistanceSort
 {
 	vector<Node*> allNodes;
 
-	NodeDistanceSort(vector<Node*> &aN)
+	NodeDistanceSort(vector<Node*>& aN)
 	{
 		allNodes = aN;
 	}
@@ -186,6 +195,19 @@ struct NodeDistanceSort
 	inline bool operator() (const int& left, const int& right)
 	{
 		return (allNodes[left]->distance < allNodes[right]->distance);
+	}
+};
+
+struct TupleSortNearest {
+	bool operator()(const tuple<unsigned int, float>& a, const tuple<unsigned int, float>& b) const {
+		return get<1>(a) < get<1>(b);
+	}
+};
+
+struct TupleSortFurthest {
+	constexpr bool operator()(std::tuple<unsigned int, float> i1, std::tuple<unsigned int, float> i2) const noexcept
+	{
+		return std::get<1>(i1) > std::get<1>(i2);
 	}
 };
 
@@ -203,13 +225,13 @@ public:
 
 	vector<Node*> hnswNodes;
 
-	SortedNodes(vector<Node*> &allNodes)
+	SortedNodes(vector<Node*>& allNodes)
 	{
 		hnswNodes = allNodes;
 		K = -1;
 	}
 
-	SortedNodes(vector<Node*> &allNodes, int K)
+	SortedNodes(vector<Node*>& allNodes, int K)
 	{
 		hnswNodes = allNodes;
 		this->K = K;
@@ -255,7 +277,7 @@ public:
 			maxV = node;
 
 			//Sort();
-			
+
 			if (hnswNodes[node]->distance < hnswNodes[minV]->distance)
 			{
 				minI = maxI;
@@ -300,7 +322,7 @@ public:
 
 			return;
 		}
-		
+
 		//Sort();
 
 		nodes.erase(nodes.begin() + minI);
@@ -330,11 +352,12 @@ public:
 
 	void Sort()
 	{
-		//sort(nodes.begin(), nodes.end(), NodeDistanceSort(hnswNodes));
+		sort(nodes.begin(), nodes.end(), NodeDistanceSort(hnswNodes));
 
+		/*
 		int nodeLastIndex = nodes.size() - 1;
 
-		
+
 		bool changed = true;
 
 		while (changed)
@@ -352,12 +375,12 @@ public:
 				}
 			}
 		}
-		
+		*/
 
-		/*minV = nodes[0];
+		minV = nodes[0];
 		minI = 0;
 		maxV = nodes[Size() - 1];
-		maxI = Size() - 1;*/
+		maxI = Size() - 1;
 	}
 
 	void Print()
@@ -374,6 +397,154 @@ public:
 	}
 };
 
+class SortedNodesTuple
+{
+public:
+	vector<tuple<unsigned int, float>> nodes;
+	int K;
+
+	tuple<unsigned int, float> minNode;
+	tuple<unsigned int, float> maxNode;
+
+	unsigned int maxIndex;
+
+	SortedNodesTuple()
+	{
+		K = -1;
+	}
+
+	SortedNodesTuple(int K)
+	{
+		this->K = K;
+	}
+
+	void InsertNode(tuple<unsigned int, float> newNode)
+	{
+		if (nodes.empty())
+		{
+			nodes.push_back(newNode);
+
+			minNode = newNode;
+			maxNode = newNode;
+
+			maxIndex = 0;
+		}
+		else if (K == -1 || nodes.size() < K)
+		{
+			nodes.push_back(newNode);
+
+			if (get<1>(newNode) < get<1>(minNode))
+			{
+				minNode = newNode;
+			}
+
+			if (get<1>(newNode) > get<1>(maxNode))
+			{
+				maxNode = newNode;
+
+				maxIndex = nodes.size() - 1;
+			}
+
+		}
+		else if (get<1>(maxNode) > get<1>(newNode))
+		{
+			//nodes.erase(std::remove(nodes.begin(), nodes.end(), maxNode), nodes.end());
+			//nodes.push_back(newNode);
+			nodes[maxIndex] = newNode;
+
+			//Sort();
+
+			if (get<1>(newNode) < get<1>(minNode))
+			{
+				minNode = newNode;
+			}
+
+			for (int i = 0; i < nodes.size(); i++)
+			{
+				if (get<1>(nodes[i]) > get<1>(maxNode))
+				{
+					maxNode = nodes[i];
+					maxIndex = i;
+				}
+			}
+		}
+	}
+
+	int GetFirstNode()
+	{
+		//Sort();
+
+		return get<0>(minNode);
+	}
+
+	int GetLastNode()
+	{
+		//Sort();
+
+		return get<0>(maxNode);
+	}
+
+	void RemoveFirstNode()
+	{
+		if (nodes.size() <= 1)
+		{
+			nodes.clear();
+
+			//minNode = nullptr;
+			//maxNode = nullptr;
+
+			return;
+		}
+
+		nodes.erase(nodes.begin());
+
+		minNode = nodes[0];
+		maxNode = nodes[0];
+
+		for (int i = 1; i < nodes.size(); i++)
+		{
+			if (get<1>(nodes[i]) < get<1>(minNode))
+			{
+				minNode = nodes[i];
+			}
+
+			if (get<1>(nodes[i]) > get<1>(maxNode))
+			{
+				maxNode = nodes[i];
+			}
+		}
+	}
+
+	int Size()
+	{
+		return nodes.size();
+	}
+
+	bool Empty()
+	{
+		return nodes.empty();
+	}
+
+	void Sort()
+	{
+		sort(nodes.begin(), nodes.end(), TupleSortNearest());
+
+		minNode = nodes[0];
+		maxNode = nodes[Size() - 1];
+	}
+
+	vector<tuple<unsigned int, float>> GetKNearestNodes()
+	{
+		return nodes;
+	}
+
+	vector<tuple<unsigned int, float>> GetKNearestNodesSorted()
+	{
+		Sort();
+		return nodes;
+	}
+};
+
 class SortedNodesO
 {
 public:
@@ -382,13 +553,13 @@ public:
 
 	vector<Node*> hnswNodes;
 
-	SortedNodesO(vector<Node*> &allNodes)
+	SortedNodesO(vector<Node*>& allNodes)
 	{
 		hnswNodes = allNodes;
 		K = -1;
 	}
 
-	SortedNodesO(vector<Node*> &allNodes, int K)
+	SortedNodesO(vector<Node*>& allNodes, int K)
 	{
 		hnswNodes = allNodes;
 		this->K = K;
@@ -474,5 +645,77 @@ public:
 		Sort();
 
 		return nodes;
+	}
+};
+
+class linearHash
+{
+	uint32_t actual_size;
+	uint32_t mask;
+	uint32_t* hasharray;
+
+public:
+
+	uint32_t item_count;
+
+	linearHash(uint32_t asize = 16384)
+	{
+		item_count = 0;
+		actual_size = asize;
+		mask = asize - 1;
+		hasharray = new uint32_t[actual_size];
+	}
+
+	~linearHash()
+	{
+		delete[] hasharray;
+	}
+
+	void clear()
+	{
+		item_count = 0;
+		memset(hasharray, -1, sizeof(uint32_t) * actual_size);
+	}
+
+	void reduce(int shift)
+	{
+		actual_size = actual_size >> shift;
+		mask = actual_size - 1;
+	}
+
+	void insert(uint32_t index)
+	{
+		//if (item_count > (actual_size >> 1))
+		//{
+		//	std::cout << "Hash array should be resized!" << "\n";
+		//}
+
+		uint32_t hash = index & mask;
+		while (hasharray[hash] != -1)
+		{
+			hash++;
+			if (hash >= actual_size) {
+				hash = 0;
+			}
+		}
+		item_count++;
+		hasharray[hash] = index;
+	}
+
+	bool get(uint32_t index)
+	{
+		uint32_t hash = index & mask;
+		while (hasharray[hash] != -1)
+		{
+			if (hasharray[hash] == index)
+			{
+				return true;
+			}
+			hash++;
+			if (hash >= actual_size) {
+				hash = 0;
+			}
+		}
+		return false;
 	}
 };
