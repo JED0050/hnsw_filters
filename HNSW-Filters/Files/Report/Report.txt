@@ -10,8 +10,8 @@ Graph: 1kp, 128vd, 200efc, Query: 1kp, 10N, 200efc
 - dotazy 100% stejný  (jen 2 query mají při vypsání 10 NN 2 prohozené, mají stejné NN ale výpis v jiném pořadí u 2)
 
 Graph: 10kp, 128vd, 200efc, Query: 10kp, 10N, 200efc
-- já insert time 603.351s, učitel 70.582s 	//reference 10x rychlejší
-- já query time 603.265s, učitel 66.464s
+- já insert time 392.488s, učitel 70.582s 	//reference 5x rychlejší		//old 603.351s 10x rychlejší
+- já query time 320.199s, učitel 66.464s						//old 603.265s
 - graf 9991ano / 9 ne
 - dotazy 9994 ano / 6 ne
 
@@ -23,11 +23,17 @@ Graph: 2kp, 128vd, 200efc, Query: 2kp, 10N, 200efc
 Graph	59.184	53.975	50.64	|	8.747	7.209	7.589
 Query	59.184	59.363	57.865	|	9.127	8.421	8.576
 
+- reference místo hodnoty u insertu
 Graph	46.736
 Query	57.115
 
-Insert time 631.825 [s]
-Total query time: 643.257 [s]
+- linearHash
+Graph	36.577
+Query	38.26
+
+
+Insert time 392.488 [s]	(old Insert time 631.825 [s])
+Total query time: 320.199 [s] 	(old Total query time: 643.257 [s])
 
 l 89:
 88: 9  201  236  243  275  490  655  1353  1640  2012  2300  2439  2598  2747  2974  3038  3689  3980  4024  4084  5756  6321  6474  6586  6615  7338  8025  8217  8351  8453  9185
@@ -79,14 +85,6 @@ l 5011:
 448 2970 9523 9185 4447 2259 25 2300 1424 1047
 5497 448 2970 9523 9185 4447 2259 25 2300 1424
 
-l 5249:
-8169 3842 3731 5884 6457 1980 2218 4626 2945 3411
-8169 3842 3731 5884 1980 6457 2218 4626 2945 3411
-
-l 5254:
-5351 4629 1056 6591 3821 374 1053 7801 4558 9457
-5351 4629 1056 6591 3821 374 1053 7801 4558 1620
-
 l 6492:
 9521 3250 1746 4760 1451 4016 2769 4663 3955 3883
 9521 3250 1746 4760 1451 4016 2769 4155 4663 3955
@@ -108,4 +106,4 @@ l 8750:
 9683 3187 3091 1109 5205 6427 4976 26 4320 4212
 
 
-shoda: 9990,  neshoda: 10
+shoda: 9992,  neshoda: 8

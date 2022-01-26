@@ -448,11 +448,8 @@ public:
 		}
 		else if (get<1>(maxNode) > get<1>(newNode))
 		{
-			//nodes.erase(std::remove(nodes.begin(), nodes.end(), maxNode), nodes.end());
-			//nodes.push_back(newNode);
 			nodes[maxIndex] = newNode;
-
-			//Sort();
+			maxNode = newNode;
 
 			if (get<1>(newNode) < get<1>(minNode))
 			{
@@ -470,18 +467,18 @@ public:
 		}
 	}
 
-	int GetFirstNode()
+	tuple<unsigned int, float> GetFirstNode()
 	{
 		//Sort();
 
-		return get<0>(minNode);
+		return minNode;
 	}
 
-	int GetLastNode()
+	tuple<unsigned int, float> GetLastNode()
 	{
 		//Sort();
 
-		return get<0>(maxNode);
+		return maxNode;
 	}
 
 	void RemoveFirstNode()
@@ -490,13 +487,10 @@ public:
 		{
 			nodes.clear();
 
-			//minNode = nullptr;
-			//maxNode = nullptr;
-
 			return;
 		}
 
-		nodes.erase(nodes.begin());
+		nodes.erase(remove(nodes.begin(), nodes.end(), minNode), nodes.end());
 
 		minNode = nodes[0];
 		maxNode = nodes[0];
@@ -511,6 +505,7 @@ public:
 			if (get<1>(nodes[i]) > get<1>(maxNode))
 			{
 				maxNode = nodes[i];
+				maxIndex = i;
 			}
 		}
 	}
@@ -530,7 +525,7 @@ public:
 		sort(nodes.begin(), nodes.end(), TupleSortNearest());
 
 		minNode = nodes[0];
-		maxNode = nodes[Size() - 1];
+		maxNode = nodes[nodes.size() - 1];
 	}
 
 	vector<tuple<unsigned int, float>> GetKNearestNodes()
@@ -540,10 +535,11 @@ public:
 
 	vector<tuple<unsigned int, float>> GetKNearestNodesSorted()
 	{
-		Sort();
+		sort(nodes.begin(), nodes.end(), TupleSortNearest());
 		return nodes;
 	}
 };
+
 
 class SortedNodesO
 {

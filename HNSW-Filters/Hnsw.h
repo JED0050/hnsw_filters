@@ -7,6 +7,7 @@
 #include <fstream>
 #include <string>
 #include <set>
+#include <tuple>
 
 using namespace std;
 
@@ -121,33 +122,22 @@ public:
 	int SearchLayerOne(Node* queryNode, int entryPoint, int lC)
 	{
 		bool change = true;
-		vector<int> visitedNodes;
+		linearHash visitedNodes = linearHash();
+		visitedNodes.clear();
 		int cNode = entryPoint;
 		allNodes[entryPoint]->SetDistance(queryNode);
 
 		while (change)
 		{
 			change = false;
-
 			vector<int> nbs = allNodes[cNode]->GetNeighboursVectorAtLayer(lC);
 
 			for (auto n : nbs)
 			{
-				bool visited = false;
-
-				for (auto vn : visitedNodes)
+				if (!visitedNodes.get(n))
 				{
-					if (vn == n)
-					{
-						visited = true;
-						break;
-					}
-				}
-
-				if (!visited)
-				{
+					visitedNodes.insert(n);
 					allNodes[n]->SetDistance(queryNode);
-					visitedNodes.push_back(n);
 
 					if (allNodes[n]->distance < allNodes[cNode]->distance)
 					{
@@ -165,7 +155,8 @@ public:
 	{
 		SortedNodes nearestNodes = SortedNodes(allNodes, K);
 		SortedNodes candidateNodes = SortedNodes(allNodes);
-		vector<int> visitedNodes;
+		linearHash visitedNodes = linearHash();
+		visitedNodes.clear();
 
 		for (auto p : entryPoints)
 		{
@@ -173,7 +164,7 @@ public:
 
 			candidateNodes.InsertNode(p);
 			nearestNodes.InsertNode(p);
-			visitedNodes.push_back(p);
+			visitedNodes.insert(p);
 		}
 
 		while (candidateNodes.Size() > 0)
@@ -188,20 +179,9 @@ public:
 
 			for (auto& n : nbs)
 			{
-				bool nodeVisited = false;
-
-				for (auto& vn : visitedNodes)
+				if (!visitedNodes.get(n))
 				{
-					if (vn == n)
-					{
-						nodeVisited = true;
-						break;
-					}
-				}
-
-				if (!nodeVisited)
-				{
-					visitedNodes.push_back(n);
+					visitedNodes.insert(n);
 					allNodes[n]->SetDistance(queryNode);
 
 					if (allNodes[n]->distance < allNodes[nearestNodes.GetLastNode()]->distance || nearestNodes.Size() < K)
@@ -221,17 +201,17 @@ public:
 	{
 		SortedNodes nearestNodes = SortedNodes(allNodes, K);
 		SortedNodes candidateNodes = SortedNodes(allNodes);
-		vector<int> visitedNodes;
+		linearHash visitedNodes = linearHash();
+		visitedNodes.clear();
 
 		allNodes[entryPoint]->SetDistance(queryNode);
 
 		candidateNodes.InsertNode(entryPoint);
 		nearestNodes.InsertNode(entryPoint);
-		visitedNodes.push_back(entryPoint);
+		visitedNodes.insert(entryPoint);
 
 		while (!candidateNodes.Empty())
 		{
-
 			int c = candidateNodes.GetFirstNode();
 
 			if (allNodes[c]->distance > allNodes[nearestNodes.GetLastNode()]->distance)
@@ -240,34 +220,25 @@ public:
 			vector<int> nbs = allNodes[c]->GetNeighboursVectorAtLayer(layerC);
 			candidateNodes.RemoveFirstNode();
 
+
 			for (auto n : nbs)
 			{
-				bool nodeVisited = false;
-
-				for (auto vn : visitedNodes)
+				if(!visitedNodes.get(n))
 				{
-					if (vn == n)
-					{
-						nodeVisited = true;
-						break;
-					}
-				}
-
-				if (!nodeVisited)
-				{
-					visitedNodes.push_back(n);
+					visitedNodes.insert(n);
 					allNodes[n]->SetDistance(queryNode);
 
 					if (allNodes[n]->distance < allNodes[nearestNodes.GetLastNode()]->distance || nearestNodes.Size() < K)
 					{
+
 						nearestNodes.InsertNode(n);
 						candidateNodes.InsertNode(n);
+
 					}
 				}
 			}
 
 		}
-
 		return nearestNodes.GetKNearestNodes();
 	}
 
@@ -277,7 +248,6 @@ public:
 		SortedNodesTuple candidateNodes = SortedNodesTuple();
 		vector<int> visitedNodes;
 
-		//allNodes[entryPoint]->SetDistance(queryNode);
 		float nDist = allNodes[entryPoint]->SetGetDistance(queryNode);
 
 		tuple<unsigned int, float> entryNode = make_tuple(entryPoint, nDist);
@@ -286,17 +256,14 @@ public:
 		nearestNodes.InsertNode(entryNode);
 		visitedNodes.push_back(entryPoint);
 
-
 		while (!candidateNodes.Empty())
 		{
+			tuple<unsigned int, float> cNode = candidateNodes.GetFirstNode();
 
-			int c = candidateNodes.GetFirstNode();
-			float cDist = allNodes[c]->distance;
-
-			if (cDist > nDist)
+			if (get<1>(cNode) > nDist)
 				break;
 
-			vector<int> nbs = allNodes[c]->GetNeighboursVectorAtLayer(layerC);
+			vector<int> nbs = allNodes[get<0>(cNode)]->GetNeighboursVectorAtLayer(layerC);
 			candidateNodes.RemoveFirstNode();
 
 			for (auto n : nbs)
@@ -324,7 +291,7 @@ public:
 						nearestNodes.InsertNode(newNode);
 						candidateNodes.InsertNode(newNode);
 
-						nDist = allNodes[nearestNodes.GetLastNode()]->distance;
+						nDist = get<1>(nearestNodes.GetLastNode());
 					}
 				}
 			}
@@ -620,11 +587,17 @@ public:
 		vector<int> nearestNodes;
 
 		vector<int> nearestNodesIndex = SearchLayerKNN(queryNode, entryPoint, efC, 0);
+		//vector<tuple<unsigned int,float>> nearestNodesIndexTuple = SearchLayerKNNTuple(queryNode, entryPoint, efC, 0);
 
 		for (int i = 0; i < K; i++)
 		{
 			nearestNodes.push_back(nearestNodesIndex[i]);
+			//nearestNodes.push_back(get<0>(nearestNodesIndexTuple[i]));
+
+			//cout << nearestNodesIndex[i] << "\t" << get<0>(nearestNodesIndexTuple[i]) << endl;
 		}
+
+
 
 		return nearestNodes;
 	}
