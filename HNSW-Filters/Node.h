@@ -10,14 +10,14 @@ class Neighbours
 {
 public:
 	int layerID;
-	vector<int> neighbours;
+	vector<unsigned int> neighbours;
 
 	Neighbours(int lID)
 	{
 		layerID = lID;
 	}
 
-	void Insert(int newNode)
+	void Insert(unsigned int newNode)
 	{
 		neighbours.push_back(newNode);
 	}
@@ -27,7 +27,7 @@ public:
 		return neighbours.size();
 	}
 
-	vector<int> GetNeighbours()
+	vector<unsigned int> GetNeighbours()
 	{
 		return neighbours;
 	}
@@ -105,7 +105,7 @@ public:
 		return new Neighbours(layerID);
 	}
 
-	vector<int> GetNeighboursVectorAtLayer(int layerID)
+	vector<unsigned int> GetNeighboursVectorAtLayer(int layerID)
 	{
 		for (auto& nbr : lNaighbours)
 		{
@@ -115,7 +115,7 @@ public:
 			}
 		}
 
-		vector<int> emptyVector;
+		vector<unsigned int> emptyVector;
 		return emptyVector;
 	}
 
@@ -354,29 +354,6 @@ public:
 	{
 		sort(nodes.begin(), nodes.end(), NodeDistanceSort(hnswNodes));
 
-		/*
-		int nodeLastIndex = nodes.size() - 1;
-
-
-		bool changed = true;
-
-		while (changed)
-		{
-			changed = false;
-
-			for (int i = 0; i < nodeLastIndex; i++)
-			{
-				if (hnswNodes[nodes[i]]->distance > hnswNodes[nodes[i + 1]]->distance)
-				{
-					changed = true;
-					int tmpNode = nodes[i + 1];
-					nodes[i + 1] = nodes[i];
-					nodes[i] = tmpNode;
-				}
-			}
-		}
-		*/
-
 		minV = nodes[0];
 		minI = 0;
 		maxV = nodes[Size() - 1];
@@ -392,154 +369,15 @@ public:
 
 	vector<int> GetKNearestNodes()
 	{
+		return nodes;
+	}
+
+	vector<int> GetKNearestNodesSorted()
+	{
 		Sort();
 		return nodes;
 	}
 };
-
-class SortedNodesTuple
-{
-public:
-	vector<tuple<unsigned int, float>> nodes;
-	int K;
-
-	tuple<unsigned int, float> minNode;
-	tuple<unsigned int, float> maxNode;
-
-	unsigned int maxIndex;
-
-	SortedNodesTuple()
-	{
-		K = -1;
-	}
-
-	SortedNodesTuple(int K)
-	{
-		this->K = K;
-	}
-
-	void InsertNode(tuple<unsigned int, float> newNode)
-	{
-		if (nodes.empty())
-		{
-			nodes.push_back(newNode);
-
-			minNode = newNode;
-			maxNode = newNode;
-
-			maxIndex = 0;
-		}
-		else if (K == -1 || nodes.size() < K)
-		{
-			nodes.push_back(newNode);
-
-			if (get<1>(newNode) < get<1>(minNode))
-			{
-				minNode = newNode;
-			}
-
-			if (get<1>(newNode) > get<1>(maxNode))
-			{
-				maxNode = newNode;
-
-				maxIndex = nodes.size() - 1;
-			}
-
-		}
-		else if (get<1>(maxNode) > get<1>(newNode))
-		{
-			nodes[maxIndex] = newNode;
-			maxNode = newNode;
-
-			if (get<1>(newNode) < get<1>(minNode))
-			{
-				minNode = newNode;
-			}
-
-			for (int i = 0; i < nodes.size(); i++)
-			{
-				if (get<1>(nodes[i]) > get<1>(maxNode))
-				{
-					maxNode = nodes[i];
-					maxIndex = i;
-				}
-			}
-		}
-	}
-
-	tuple<unsigned int, float> GetFirstNode()
-	{
-		//Sort();
-
-		return minNode;
-	}
-
-	tuple<unsigned int, float> GetLastNode()
-	{
-		//Sort();
-
-		return maxNode;
-	}
-
-	void RemoveFirstNode()
-	{
-		if (nodes.size() <= 1)
-		{
-			nodes.clear();
-
-			return;
-		}
-
-		nodes.erase(remove(nodes.begin(), nodes.end(), minNode), nodes.end());
-
-		minNode = nodes[0];
-		maxNode = nodes[0];
-
-		for (int i = 1; i < nodes.size(); i++)
-		{
-			if (get<1>(nodes[i]) < get<1>(minNode))
-			{
-				minNode = nodes[i];
-			}
-
-			if (get<1>(nodes[i]) > get<1>(maxNode))
-			{
-				maxNode = nodes[i];
-				maxIndex = i;
-			}
-		}
-	}
-
-	int Size()
-	{
-		return nodes.size();
-	}
-
-	bool Empty()
-	{
-		return nodes.empty();
-	}
-
-	void Sort()
-	{
-		sort(nodes.begin(), nodes.end(), TupleSortNearest());
-
-		minNode = nodes[0];
-		maxNode = nodes[nodes.size() - 1];
-	}
-
-	vector<tuple<unsigned int, float>> GetKNearestNodes()
-	{
-		return nodes;
-	}
-
-	vector<tuple<unsigned int, float>> GetKNearestNodesSorted()
-	{
-		sort(nodes.begin(), nodes.end(), TupleSortNearest());
-		return nodes;
-	}
-};
-
 
 class SortedNodesO
 {
@@ -587,9 +425,6 @@ public:
 
 	void RemoveFirstNode()
 	{
-		Sort();
-		//nodes.erase(nodes.begin());
-
 		if (nodes.size() <= 1)
 		{
 			nodes.clear();
@@ -597,8 +432,6 @@ public:
 		}
 
 		nodes.erase(nodes.begin());
-
-		Sort();
 	}
 
 	int Size()
@@ -614,32 +447,16 @@ public:
 	void Sort()
 	{
 		sort(nodes.begin(), nodes.end(), NodeDistanceSort(hnswNodes));
-		/*
-		int nodeLastIndex = nodes.size() - 1;
-
-		bool changed = true;
-
-		while (changed)
-		{
-			changed = false;
-
-			for (int i = 0; i < nodeLastIndex; i++)
-			{
-				if (hnswNodes[nodes[i]]->distance > hnswNodes[nodes[i + 1]]->distance)
-				{
-					changed = true;
-					int tmpNode = nodes[i + 1];
-					nodes[i + 1] = nodes[i];
-					nodes[i] = tmpNode;
-				}
-			}
-		}*/
 	}
 
 	vector<int> GetKNearestNodes()
 	{
-		Sort();
+		return nodes;
+	}
 
+	vector<int> GetKNearestNodesSorted()
+	{
+		Sort();
 		return nodes;
 	}
 };

@@ -8,6 +8,7 @@
 #include <string>
 #include <set>
 #include <tuple>
+#include <chrono>
 
 using namespace std;
 
@@ -48,7 +49,7 @@ public:
 	{
 		allNodes.push_back(newNode);
 
-		int newNodeIndex = allNodes.size() - 1;
+		unsigned int newNodeIndex = allNodes.size() - 1;
 		int L = layers.size() - 1;
 		int l = -log(((float)(rand() % 10000 + 1)) / 10000) * mL; //(0 - 9) * mL => 0 - 3
 
@@ -66,21 +67,21 @@ public:
 			return;
 		}
 
-		int entryPoint = layers[L].entryPoint;
+		unsigned int entryPoint = layers[L].entryPoint;
 
 		for (int lC = L; lC > l; lC--)
 		{
 			entryPoint = SearchLayerOne(newNode, entryPoint, lC);
 		}
 
-		vector<int> W;
+		vector<unsigned int> W;
 		W.push_back(entryPoint);
 
 		for (int lC = min(L, l); lC >= 0; lC--)
 		{
-			W = SearchLayer(newNode, W, eFConstructions, lC);
+			W = SearchLayerR(newNode, W, eFConstructions, lC);
 
-			vector<int> neighbors = SelectNeighborsHeuristic(newNodeIndex, W, M);
+			vector<unsigned int> neighbors = SelectNeighborsHeuristic(newNodeIndex, W, M);
 
 			for (auto& nbr : neighbors)
 			{
@@ -130,7 +131,7 @@ public:
 		while (change)
 		{
 			change = false;
-			vector<int> nbs = allNodes[cNode]->GetNeighboursVectorAtLayer(lC);
+			vector<unsigned int> nbs = allNodes[cNode]->GetNeighboursVectorAtLayer(lC);
 
 			for (auto n : nbs)
 			{
@@ -151,7 +152,7 @@ public:
 		return cNode;
 	}
 
-	vector<int> SearchLayer(Node* queryNode, vector<int> entryPoints, int K, int layerC)
+	vector<int> SearchLayer(Node* queryNode, vector<unsigned int> entryPoints, int K, int layerC)
 	{
 		SortedNodes nearestNodes = SortedNodes(allNodes, K);
 		SortedNodes candidateNodes = SortedNodes(allNodes);
@@ -174,7 +175,7 @@ public:
 			if (allNodes[c]->distance > allNodes[nearestNodes.GetLastNode()]->distance)
 				break;
 
-			vector<int> nbs = allNodes[c]->GetNeighboursVectorAtLayer(layerC);
+			vector<unsigned int> nbs = allNodes[c]->GetNeighboursVectorAtLayer(layerC);
 			candidateNodes.RemoveFirstNode();
 
 			for (auto& n : nbs)
@@ -197,7 +198,75 @@ public:
 		return nearestNodes.GetKNearestNodes();
 	}
 
-	vector<int> SearchLayerKNN(Node* queryNode, int entryPoint, int K, int layerC)
+	vector <unsigned int> SearchLayerR(Node* queryNode, vector<unsigned int> entryPoints, int K, int layerC)
+	{
+		vector<tuple<unsigned int, float>> candidateNodes;
+		vector<tuple<unsigned int, float>> nearestNodes;
+		linearHash visitedNodes = linearHash();
+		visitedNodes.clear();
+
+		float nNDist;
+		
+		for (auto ep : entryPoints)
+		{
+			nNDist = allNodes[ep]->SetGetDistance(queryNode);
+			candidateNodes.emplace_back(ep, nNDist);
+			nearestNodes.emplace_back(ep, nNDist);
+			visitedNodes.insert(ep);
+		}
+
+		std::make_heap(nearestNodes.begin(), nearestNodes.end(), TupleSortNearest());
+		std::make_heap(candidateNodes.begin(), candidateNodes.end(), TupleSortFurthest());
+
+		nNDist = get<1>(nearestNodes.front());
+		while (!candidateNodes.empty())
+		{
+			auto c = candidateNodes.front();
+
+			std::pop_heap(candidateNodes.begin(), candidateNodes.end(), TupleSortFurthest());
+			candidateNodes.pop_back();
+
+			if (get<1>(c) > nNDist)
+				break;
+
+			for (auto n : allNodes[get<0>(c)]->GetNeighboursVectorAtLayer(layerC))
+			{
+				if (!visitedNodes.get(n))
+				{
+					visitedNodes.insert(n);
+
+					float dist = allNodes[n]->SetGetDistance(queryNode);
+
+					if (dist < nNDist || nearestNodes.size() < K)
+					{
+						candidateNodes.emplace_back(n, dist);
+						std::push_heap(candidateNodes.begin(), candidateNodes.end(), TupleSortFurthest());
+						nearestNodes.emplace_back(n, dist);
+						std::push_heap(nearestNodes.begin(), nearestNodes.end(), TupleSortNearest());
+
+						if (nearestNodes.size() > K)
+						{
+							std::pop_heap(nearestNodes.begin(), nearestNodes.end(), TupleSortNearest());
+							nearestNodes.pop_back();
+						}
+
+						nNDist = get<1>(nearestNodes.front());
+					}
+
+				}
+			}
+		}
+
+		vector<unsigned int> finalNearestNodes;
+		for (auto n : nearestNodes)
+		{
+			finalNearestNodes.push_back(get<0>(n));
+		}
+
+		return finalNearestNodes;
+	}
+
+	vector<int> SearchLayerKNN(Node* queryNode, unsigned int entryPoint, int K, int layerC)
 	{
 		SortedNodes nearestNodes = SortedNodes(allNodes, K);
 		SortedNodes candidateNodes = SortedNodes(allNodes);
@@ -217,7 +286,7 @@ public:
 			if (allNodes[c]->distance > allNodes[nearestNodes.GetLastNode()]->distance)
 				break;
 
-			vector<int> nbs = allNodes[c]->GetNeighboursVectorAtLayer(layerC);
+			vector<unsigned int> nbs = allNodes[c]->GetNeighboursVectorAtLayer(layerC);
 			candidateNodes.RemoveFirstNode();
 
 
@@ -242,146 +311,18 @@ public:
 		return nearestNodes.GetKNearestNodes();
 	}
 
-	vector<tuple<unsigned int, float>> SearchLayerKNNTuple(Node* queryNode, unsigned int entryPoint, int K, int layerC)
-	{
-		SortedNodesTuple nearestNodes = SortedNodesTuple(K);
-		SortedNodesTuple candidateNodes = SortedNodesTuple();
-		vector<int> visitedNodes;
-
-		float nDist = allNodes[entryPoint]->SetGetDistance(queryNode);
-
-		tuple<unsigned int, float> entryNode = make_tuple(entryPoint, nDist);
-
-		candidateNodes.InsertNode(entryNode);
-		nearestNodes.InsertNode(entryNode);
-		visitedNodes.push_back(entryPoint);
-
-		while (!candidateNodes.Empty())
-		{
-			tuple<unsigned int, float> cNode = candidateNodes.GetFirstNode();
-
-			if (get<1>(cNode) > nDist)
-				break;
-
-			vector<int> nbs = allNodes[get<0>(cNode)]->GetNeighboursVectorAtLayer(layerC);
-			candidateNodes.RemoveFirstNode();
-
-			for (auto n : nbs)
-			{
-				bool nodeVisited = false;
-
-				for (auto vn : visitedNodes)
-				{
-					if (vn == n)
-					{
-						nodeVisited = true;
-						break;
-					}
-				}
-
-				if (!nodeVisited)
-				{
-					visitedNodes.push_back(n);
-					float newDist = allNodes[n]->SetGetDistance(queryNode);
-
-					if (newDist < nDist || nearestNodes.Size() < K)
-					{
-						tuple<unsigned int, float> newNode = make_tuple(n, newDist);
-
-						nearestNodes.InsertNode(newNode);
-						candidateNodes.InsertNode(newNode);
-
-						nDist = get<1>(nearestNodes.GetLastNode());
-					}
-				}
-			}
-
-		}
-
-		return nearestNodes.GetKNearestNodesSorted();
-	}
-
-	vector<int> SearchLayerN(Node* queryNode, int entryPoint, int K, int layerC)
-	{
-		vector<int> nearestNodes;
-		vector<int> candidateNodes;
-		//vector<int> visitedNodes;
-		std::set<int> visitedNodes;
-
-		allNodes[entryPoint]->SetDistance(queryNode);
-
-		candidateNodes.push_back(entryPoint);
-		nearestNodes.push_back(entryPoint);
-		//visitedNodes.push_back(entryPoint);
-		visitedNodes.insert(entryPoint);
-
-		//int cMinNode = entryPoint;
-		int nMaxNode = entryPoint;
-
-		while (!candidateNodes.empty())
-		{
-			int cMinNode = candidateNodes[0];
-			sort(candidateNodes.begin(), candidateNodes.end(), NodeDistanceSort(allNodes));
-			candidateNodes.erase(candidateNodes.begin());
-
-			if (allNodes[cMinNode]->distance > allNodes[nMaxNode]->distance)
-				break;
-
-			//vector<int> nbs = allNodes[cMinNode]->GetNeighboursVectorAtLayer(layerC);
-			//candidateNodes.erase(std::remove(candidateNodes.begin(), candidateNodes.end(), cMinNode), candidateNodes.end());
-
-			for (auto& n : allNodes[cMinNode]->GetNeighboursVectorAtLayer(layerC))
-			{
-
-				if (visitedNodes.empty() || !(visitedNodes.find(n) != visitedNodes.end()))
-				{
-					visitedNodes.insert(n);
-					allNodes[n]->SetDistance(queryNode);
-
-					if (allNodes[n]->distance < allNodes[nMaxNode]->distance || nearestNodes.size() < K)
-					{
-						candidateNodes.push_back(n);
-						sort(candidateNodes.begin(), candidateNodes.end(), NodeDistanceSort(allNodes));
-
-						nearestNodes.push_back(n);
-						sort(nearestNodes.begin(), nearestNodes.end(), NodeDistanceSort(allNodes));
-
-						if (nearestNodes.size() > K)
-						{
-							nearestNodes.pop_back();
-						}
-
-						nMaxNode = nearestNodes[nearestNodes.size() - 1];
-					}
-				}
-			}
-
-		}
-
-		return nearestNodes;
-	}
-
-	vector<tuple<unsigned int, float>> SearchLayerR(Node* queryNode, unsigned int entryPoint, unsigned int K, unsigned int layerC)
+	vector<tuple<unsigned int, float>> SearchLayerRKNN(Node* queryNode, unsigned int entryPoint, unsigned int K, unsigned int layerC)
 	{
 		vector<tuple<unsigned int, float>> candidateNodes;
 		vector<tuple<unsigned int, float>> nearestNodes;
-		vector<int> visitedNodes;
-		//linearHash visitedNodes;
+		linearHash visitedNodes = linearHash();
+		visitedNodes.clear();
 
-		allNodes[entryPoint]->SetDistance(queryNode);
-		float nNDist = allNodes[entryPoint]->distance;
+		float nNDist = allNodes[entryPoint]->SetGetDistance(queryNode);
 
 		candidateNodes.emplace_back(entryPoint, nNDist);
 		nearestNodes.emplace_back(entryPoint, nNDist);
-		visitedNodes.emplace_back(entryPoint);
-		//visitedNodes.insert(entryPoint);
-
-		/*
-		for (auto n : entryPoints)
-		{
-			candidateNodes.emplace_back(n.node, n.distance);
-			visited_.insert(n.node_order);
-		}*/
+		visitedNodes.insert(entryPoint);
 
 		std::make_heap(nearestNodes.begin(), nearestNodes.end(), TupleSortNearest());
 		std::make_heap(candidateNodes.begin(), candidateNodes.end(), TupleSortFurthest());
@@ -396,24 +337,19 @@ public:
 			if (std::get<1>(c) > nNDist)
 				break;
 
-			for (auto ne : allNodes[std::get<0>(c)]->GetNeighboursVectorAtLayer(layerC))
+			for (auto n : allNodes[std::get<0>(c)]->GetNeighboursVectorAtLayer(layerC))
 			{
-				//auto e = ne.node;
-
-				//if (!visitedNodes.get(ne))
-				if(!(std::find(visitedNodes.begin(), visitedNodes.end(), ne) != visitedNodes.end()))
+				if (!visitedNodes.get(n))
 				{
-					visitedNodes.push_back(ne);
-					//visitedNodes.insert(ne);
+					visitedNodes.insert(n);
 
-					allNodes[ne]->SetDistance(queryNode);
-					float dist = allNodes[ne]->distance;
+					float dist = allNodes[n]->SetGetDistance(queryNode);
 
 					if (dist < nNDist || nearestNodes.size() < K)
 					{
-						candidateNodes.emplace_back(ne, dist);
+						candidateNodes.emplace_back(n, dist);
 						std::push_heap(candidateNodes.begin(), candidateNodes.end(), TupleSortFurthest());
-						nearestNodes.emplace_back(ne, dist);
+						nearestNodes.emplace_back(n, dist);
 						std::push_heap(nearestNodes.begin(), nearestNodes.end(), TupleSortNearest());
 
 						if (nearestNodes.size() > K)
@@ -430,49 +366,29 @@ public:
 			}
 		}
 
+		sort(nearestNodes.begin(), nearestNodes.end(), TupleSortNearest());
 		return nearestNodes;
 	}
 
-	vector<int> SelectNeighborsSimple(int queryNode, vector<int> neighbours, int M)
+	vector<unsigned int> SelectNeighborsSimple(unsigned int queryNode, vector<unsigned int> neighbours, int M)
 	{
 		if (neighbours.size() <= M)
 			return neighbours;
 
-		vector<int> sortedNodes = neighbours;
+		vector<unsigned int> sortedNodes = neighbours;
 
 		for (auto& n : neighbours)
 		{
 			allNodes[n]->SetDistance(allNodes[queryNode]);
 		}
 
-
-		bool changed = true;
-
-		while (changed)
-		{
-			changed = false;
-
-			for (int i = 0; i < sortedNodes.size() - 1; i++)
-			{
-				if (allNodes[sortedNodes[i]]->distance > allNodes[sortedNodes[i + 1]]->distance)
-				{
-					changed = true;
-					int tmpNode = sortedNodes[i + 1];
-					sortedNodes[i + 1] = sortedNodes[i];
-					sortedNodes[i] = tmpNode;
-				}
-			}
-		}
-
+		sort(sortedNodes.begin(), sortedNodes.end(), NodeDistanceSort(allNodes));
 		sortedNodes.erase(sortedNodes.begin() + M, sortedNodes.end());
-
-		//neighbours->neighbours = sortedNodes;
-		//return neighbours;
 
 		return sortedNodes;
 	}
 
-	vector<int> SelectNeighborsHeuristic(int queryNode, vector<int> W, int M)
+	vector<unsigned int> SelectNeighborsHeuristic(unsigned int queryNode, vector<unsigned int> W, int M)
 	{
 		if (W.size() < M)
 		{
@@ -486,26 +402,7 @@ public:
 
 		sort(W.begin(), W.end(), NodeDistanceSort(allNodes));
 
-		/*
-		bool changed = true;
-
-		while (changed)
-		{
-			changed = false;
-
-			for (int i = 0; i < W.size() - 1; i++)
-			{
-				if (allNodes[W[i]]->distance > allNodes[W[i + 1]]->distance)
-				{
-					changed = true;
-					int tmpNode = W[i + 1];
-					W[i + 1] = W[i];
-					W[i] = tmpNode;
-				}
-			}
-		}*/
-
-		vector<int> R;
+		vector<unsigned int> R;
 
 		int s = 2;
 		int i = 2;
@@ -569,35 +466,29 @@ public:
 		return nearestNodes;
 	}
 	*/
-	vector<int> KNNSearchIndex(Node* queryNode, int K)
+	vector<unsigned int> KNNSearchIndex(Node* queryNode, int K)
 	{
 		return KNNSearchIndex(queryNode, K, eFConstructions);
 	}
 
-	vector<int> KNNSearchIndex(Node* queryNode, int K, int efC)
+	vector<unsigned int> KNNSearchIndex(Node* queryNode, int K, int efC)
 	{
 		int L = layers.size() - 1;
-		int entryPoint = layers[L].entryPoint;
+		unsigned int entryPoint = layers[L].entryPoint;
 
 		for (int lC = L; lC >= 1; lC--)
 		{
 			entryPoint = SearchLayerOne(queryNode, entryPoint, lC);
 		}
 
-		vector<int> nearestNodes;
-
-		vector<int> nearestNodesIndex = SearchLayerKNN(queryNode, entryPoint, efC, 0);
-		//vector<tuple<unsigned int,float>> nearestNodesIndexTuple = SearchLayerKNNTuple(queryNode, entryPoint, efC, 0);
+		
+		vector<unsigned int> nearestNodes;
+		vector<tuple<unsigned int, float>> nearestNodesIndexRef = SearchLayerRKNN(queryNode, entryPoint, efC, 0);
 
 		for (int i = 0; i < K; i++)
 		{
-			nearestNodes.push_back(nearestNodesIndex[i]);
-			//nearestNodes.push_back(get<0>(nearestNodesIndexTuple[i]));
-
-			//cout << nearestNodesIndex[i] << "\t" << get<0>(nearestNodesIndexTuple[i]) << endl;
+			nearestNodes.push_back(get<0>(nearestNodesIndexRef[i]));
 		}
-
-
 
 		return nearestNodes;
 	}
@@ -631,7 +522,7 @@ public:
 		{
 			printf("%d: ", i);
 
-			vector<int> nbs = allNodes[i]->GetNeighboursVectorAtLayer(0);
+			vector<unsigned int> nbs = allNodes[i]->GetNeighboursVectorAtLayer(0);
 
 			sort(nbs.begin(), nbs.end());
 
@@ -661,7 +552,7 @@ public:
 
 			std::string line = std::to_string(i) + ": ";
 
-			vector<int> nbs = allNodes[i]->GetNeighboursVectorAtLayer(0);
+			vector<unsigned int> nbs = allNodes[i]->GetNeighboursVectorAtLayer(0);
 
 			sort(nbs.begin(), nbs.end());
 

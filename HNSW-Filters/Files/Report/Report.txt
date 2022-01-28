@@ -10,10 +10,10 @@ Graph: 1kp, 128vd, 200efc, Query: 1kp, 10N, 200efc
 - dotazy 100% stejný  (jen 2 query mají při vypsání 10 NN 2 prohozené, mají stejné NN ale výpis v jiném pořadí u 2)
 
 Graph: 10kp, 128vd, 200efc, Query: 10kp, 10N, 200efc
-- já insert time 392.488s, učitel 70.582s 	//reference 5x rychlejší		//old 603.351s 10x rychlejší
-- já query time 320.199s, učitel 66.464s						//old 603.265s
-- graf 9991ano / 9 ne
-- dotazy 9994 ano / 6 ne
+- já insert time 337.83s, reference 70.582s 	//reference 5x rychlejší		//old 603.351s 10x rychlejší
+- já query time 259.037s, reference 66.464s					//old 603.265s
+- graf 10000 stejný 100%
+- dotazy 10000 stejný 100%
 
 
 OPTIMALIZACE:
@@ -30,6 +30,31 @@ Query	57.115
 - linearHash
 Graph	36.577
 Query	38.26
+
+- SearchLayerR a SearchLayerRKNN + GetSetDistance
+Graph	29.839
+Query	28.831
+
+
+
+
+
+
+
+
+
+
+
+
+
+Insert time 337.83 [s]
+Total query time: 259.037 [s]
+
+shoda: 10000,  neshoda: 0
+shoda: 10000,  neshoda: 0
+
+
+
 
 
 Insert time 392.488 [s]	(old Insert time 631.825 [s])

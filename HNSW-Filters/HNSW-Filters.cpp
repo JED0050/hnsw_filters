@@ -224,7 +224,7 @@ void HNSWGraphAndQuerySavePrint()
     cout << "Start inserting\n";
     auto start = std::chrono::system_clock::now();
 
-    int counter = 0;
+    //int counter = 0;
 
     for (int i = 0; i < NUMBER_OF_GRAPH_NODES; i++)
     {
@@ -251,7 +251,7 @@ void HNSWGraphAndQuerySavePrint()
     start = std::chrono::system_clock::now();
     for (int i = 0; i < NUMBER_OF_QUERY_NODES; i++)
     {
-        vector<int> closestNodes = hG.KNNSearchIndex(&queryNodes[i], K, EF_CONSTRUCTIONS);
+        vector<unsigned int> closestNodes = hG.KNNSearchIndex(&queryNodes[i], K, EF_CONSTRUCTIONS);
 
         //cout << K << " nearest point: ";
 
@@ -378,7 +378,7 @@ void SiftTest()
         float positive = 0;
         for (int i = 0; i < qsize; i++)
         {
-            vector<int> result = hnsw.KNNSearchIndex(queryNodes[i], k);
+            vector<unsigned int> result = hnsw.KNNSearchIndex(queryNodes[i], k);
 
             //int c1 = result.size();
 

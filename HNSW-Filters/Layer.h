@@ -8,7 +8,7 @@ class Layer
 public:
 	static int maxLayer;
 	int ID;
-	int entryPoint;
+	unsigned int entryPoint;
 	int numberOfNodes = 0;
 
 	Layer(int eP)
