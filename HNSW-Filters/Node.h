@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <algorithm>
-#include<tuple>
+#include <tuple>
 
 using namespace std;
 
@@ -183,18 +183,33 @@ public:
 
 };
 
-struct NodeDistanceSort
+struct NodeSortNearest
 {
 	vector<Node*> allNodes;
 
-	NodeDistanceSort(vector<Node*>& aN)
+	NodeSortNearest(vector<Node*>& aN)
+	{
+		allNodes = aN;
+	}
+
+	inline bool operator() (const unsigned int& left, const unsigned int& right)
+	{
+		return (allNodes[left]->distance < allNodes[right]->distance);
+	}
+};
+
+struct NodeSortFurthest
+{
+	vector<Node*> allNodes;
+
+	NodeSortFurthest(vector<Node*>& aN)
 	{
 		allNodes = aN;
 	}
 
 	inline bool operator() (const int& left, const int& right)
 	{
-		return (allNodes[left]->distance < allNodes[right]->distance);
+		return (allNodes[left]->distance > allNodes[right]->distance);
 	}
 };
 
@@ -214,7 +229,7 @@ struct TupleSortFurthest {
 class SortedNodes
 {
 public:
-	vector<int> nodes;
+	vector<unsigned int> nodes;
 	int K;
 
 	int minI;
@@ -352,7 +367,7 @@ public:
 
 	void Sort()
 	{
-		sort(nodes.begin(), nodes.end(), NodeDistanceSort(hnswNodes));
+		sort(nodes.begin(), nodes.end(), NodeSortNearest(hnswNodes));
 
 		minV = nodes[0];
 		minI = 0;
@@ -367,12 +382,12 @@ public:
 		printf("\n");
 	}
 
-	vector<int> GetKNearestNodes()
+	vector<unsigned int> GetKNearestNodes()
 	{
 		return nodes;
 	}
 
-	vector<int> GetKNearestNodesSorted()
+	vector<unsigned int> GetKNearestNodesSorted()
 	{
 		Sort();
 		return nodes;
@@ -382,7 +397,7 @@ public:
 class SortedNodesO
 {
 public:
-	vector<int> nodes;
+	vector<unsigned int> nodes;
 	int K;
 
 	vector<Node*> hnswNodes;
@@ -446,15 +461,15 @@ public:
 
 	void Sort()
 	{
-		sort(nodes.begin(), nodes.end(), NodeDistanceSort(hnswNodes));
+		sort(nodes.begin(), nodes.end(), NodeSortNearest(hnswNodes));
 	}
 
-	vector<int> GetKNearestNodes()
+	vector<unsigned int> GetKNearestNodes()
 	{
 		return nodes;
 	}
 
-	vector<int> GetKNearestNodesSorted()
+	vector<unsigned int> GetKNearestNodesSorted()
 	{
 		Sort();
 		return nodes;

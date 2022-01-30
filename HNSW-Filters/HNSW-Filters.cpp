@@ -7,13 +7,13 @@
 
 #define FILE_NAME "Files\\space_points_10kp_128vd.txt"
 #define QFILE_NAME "Files\\query_points_10kp_128vd.txt"
-#define AFILE_NAME "Files\\answer_points_j_10kp_128vd_200efc.txt"
-#define UFILE_NAME "Files\\answer_points_u_10kp_128vd_200efc.txt"
-#define GFILE_NAME "Files\\graph_j_10kp_128vd_200efc.txt"
-#define GUFILE_NAME "Files\\graph_u_10kp_128vd_200efc.txt"
+#define AFILE_NAME "Files\\answer_points_j_2kp_128vd_200efc.txt"
+#define UFILE_NAME "Files\\answer_points_u_2kp_128vd_200efc.txt"
+#define GFILE_NAME "Files\\graph_j_2kp_128vd_200efc.txt"
+#define GUFILE_NAME "Files\\graph_u_2kp_128vd_200efc.txt"
 
-#define NUMBER_OF_GRAPH_NODES 10000
-#define NUMBER_OF_QUERY_NODES 10000
+#define NUMBER_OF_GRAPH_NODES 2000
+#define NUMBER_OF_QUERY_NODES 2000
 #define EF_CONSTRUCTIONS 200
 #define VECTOR_SIZE 128
 

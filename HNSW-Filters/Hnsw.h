@@ -120,12 +120,12 @@ public:
 			printf("Inserted %d\n", allNodes.size());
 	}
 
-	int SearchLayerOne(Node* queryNode, int entryPoint, int lC)
+	unsigned int SearchLayerOne(Node* queryNode, unsigned int entryPoint, int lC)
 	{
 		bool change = true;
 		linearHash visitedNodes = linearHash();
 		visitedNodes.clear();
-		int cNode = entryPoint;
+		unsigned int cNode = entryPoint;
 		allNodes[entryPoint]->SetDistance(queryNode);
 
 		while (change)
@@ -152,7 +152,7 @@ public:
 		return cNode;
 	}
 
-	vector<int> SearchLayer(Node* queryNode, vector<unsigned int> entryPoints, int K, int layerC)
+	vector<unsigned int> SearchLayer(Node* queryNode, vector<unsigned int> entryPoints, int K, int layerC)
 	{
 		SortedNodes nearestNodes = SortedNodes(allNodes, K);
 		SortedNodes candidateNodes = SortedNodes(allNodes);
@@ -206,7 +206,7 @@ public:
 		visitedNodes.clear();
 
 		float nNDist;
-		
+
 		for (auto ep : entryPoints)
 		{
 			nNDist = allNodes[ep]->SetGetDistance(queryNode);
@@ -266,7 +266,7 @@ public:
 		return finalNearestNodes;
 	}
 
-	vector<int> SearchLayerKNN(Node* queryNode, unsigned int entryPoint, int K, int layerC)
+	vector<unsigned int> SearchLayerKNN(Node* queryNode, unsigned int entryPoint, int K, int layerC)
 	{
 		SortedNodes nearestNodes = SortedNodes(allNodes, K);
 		SortedNodes candidateNodes = SortedNodes(allNodes);
@@ -292,7 +292,7 @@ public:
 
 			for (auto n : nbs)
 			{
-				if(!visitedNodes.get(n))
+				if (!visitedNodes.get(n))
 				{
 					visitedNodes.insert(n);
 					allNodes[n]->SetDistance(queryNode);
@@ -382,7 +382,7 @@ public:
 			allNodes[n]->SetDistance(allNodes[queryNode]);
 		}
 
-		sort(sortedNodes.begin(), sortedNodes.end(), NodeDistanceSort(allNodes));
+		sort(sortedNodes.begin(), sortedNodes.end(), NodeSortNearest(allNodes));
 		sortedNodes.erase(sortedNodes.begin() + M, sortedNodes.end());
 
 		return sortedNodes;
@@ -400,7 +400,7 @@ public:
 			allNodes[n]->SetDistance(allNodes[queryNode]);
 		}
 
-		sort(W.begin(), W.end(), NodeDistanceSort(allNodes));
+		sort(W.begin(), W.end(), NodeSortNearest(allNodes));
 
 		vector<unsigned int> R;
 
@@ -481,7 +481,7 @@ public:
 			entryPoint = SearchLayerOne(queryNode, entryPoint, lC);
 		}
 
-		
+
 		vector<unsigned int> nearestNodes;
 		vector<tuple<unsigned int, float>> nearestNodesIndexRef = SearchLayerRKNN(queryNode, entryPoint, efC, 0);
 
@@ -570,4 +570,3 @@ public:
 	}
 
 };
-
