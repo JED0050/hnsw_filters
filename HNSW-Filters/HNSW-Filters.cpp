@@ -277,9 +277,9 @@ void HNSWGraphAndQuerySavePrint()
 
 void SiftTest()
 {
-    size_t node_count = 50000; //1000000
+    size_t node_count = 100000; //1000000
     size_t qsize = 10000;
-    size_t vecdim = 128;
+    size_t vecdim = VECTOR_SIZE;
     size_t answer_size = 100;
     uint32_t k = 10;
 
@@ -308,14 +308,16 @@ void SiftTest()
     for (int i = 0; i < node_count; i++)
     {
         Node* graphNode = new Node();
-        float position[VECTOR_SIZE];
+        vector<float> position;
+        //float position[VECTOR_SIZE];
 
         for (int p = 0; p < vecdim; p++)
         {
-            position[p] = mass[(i * vecdim) + p];
+            position.push_back(mass[(i * vecdim) + p]);
+            //position[p] = mass[(i * vecdim) + p];
         }
 
-        //graphNode->values = position;
+        graphNode->values = position;
 
         graphNodes.push_back(graphNode);
     }
@@ -331,14 +333,16 @@ void SiftTest()
     for (int i = 0; i < qsize; i++)
     {
         Node* queryNode = new Node();
-        float position[VECTOR_SIZE];
+        vector<float> position;
+        //float position[VECTOR_SIZE];
 
         for (int p = 0; p < vecdim; p++)
         {
-            position[p] = massQ[(i * vecdim) + p];
+            position.push_back(massQ[(i * vecdim) + p]);
+            //position[p] = massQ[(i * vecdim) + p];
         }
 
-        //queryNode->values = position;
+        queryNode->values = position;
 
         queryNodes.push_back(queryNode);
     }
@@ -352,7 +356,7 @@ void SiftTest()
     inputQA.close();
     cout << "Answer nodes done" << endl;
 
-    Hnsw hnsw = Hnsw(16, 16, 200);
+    Hnsw hnsw = Hnsw(16, 16, EF_CONSTRUCTIONS);
 
     /////////////////////////////////////////////////////// INSERT PART
     std::cout << "Start inserting\n";

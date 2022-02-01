@@ -15,6 +15,10 @@ Graph: 10kp, 128vd, 200efc, Query: 10kp, 10N, 200efc
 - graf 10000 stejný 100%
 - dotazy 10000 stejný 100%
 
+Graph: 100kp, 128vd, 16efc
+- já insert time 209.333s, reference 45.996
+- grag 99972 stejný, 28 jiný
+
 
 OPTIMALIZACE:
 Graph: 2kp, 128vd, 200efc, Query: 2kp, 10N, 200efc

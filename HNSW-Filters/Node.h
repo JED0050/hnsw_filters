@@ -22,7 +22,7 @@ public:
 		neighbours.push_back(newNode);
 	}
 
-	int Size()
+	unsigned int Size()
 	{
 		return neighbours.size();
 	}
@@ -52,7 +52,7 @@ public:
 	//	}
 	//}
 
-	void Insert(int node, int layerID)
+	void Insert(unsigned int node, int layerID)
 	{
 		if (lNaighbours.size() == 0)
 		{
@@ -119,9 +119,9 @@ public:
 		return emptyVector;
 	}
 
-	vector<int> GetNeighboursVectorAll()
+	vector<unsigned int> GetNeighboursVectorAll()
 	{
-		vector<int> nbs;
+		vector<unsigned int> nbs;
 
 		for (auto& nbr : lNaighbours)
 		{
@@ -162,7 +162,7 @@ public:
 	{
 		float distance = 0;
 
-		for (int i = 0; i < vectorSize; i++)
+		for (unsigned int i = 0; i < vectorSize; i++)
 		{
 			float x = node[i];
 			float y = values[i];
@@ -252,7 +252,7 @@ public:
 		this->K = K;
 	}
 
-	void InsertNode(int node)
+	void InsertNode(unsigned int node)
 	{
 		if (K == -1 || nodes.size() < K)
 		{
@@ -299,7 +299,7 @@ public:
 				minV = node;
 			}
 
-			for (int i = 0; i < nodes.size(); i++)
+			for (unsigned int i = 0; i < nodes.size(); i++)
 			{
 				if (hnswNodes[nodes[i]]->distance > hnswNodes[maxV]->distance)
 				{
@@ -414,7 +414,7 @@ public:
 		this->K = K;
 	}
 
-	void InsertNode(int node)
+	void InsertNode(unsigned int node)
 	{
 		if (K == -1 || nodes.size() < K)
 		{
@@ -476,6 +476,7 @@ public:
 	}
 };
 
+//https://github.com/RadimBaca/HNSW/blob/master/src/hnsw.h
 class linearHash
 {
 	uint32_t actual_size;
