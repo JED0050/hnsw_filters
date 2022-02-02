@@ -42,7 +42,6 @@ public:
 	//float values[128];
 	vector<float> values;
 	vector<Neighbours*> lNaighbours;
-	float distance = -1;
 
 	//~Node()
 	//{
@@ -119,43 +118,9 @@ public:
 		return emptyVector;
 	}
 
-	vector<unsigned int> GetNeighboursVectorAll()
-	{
-		vector<unsigned int> nbs;
-
-		for (auto& nbr : lNaighbours)
-		{
-			for (auto n : nbr->neighbours)
-			{
-				bool cont = false;
-
-				for (auto c : nbs)
-				{
-					if (c == n)
-					{
-						cont = true;
-						break;
-					}
-				}
-
-				if (!cont)
-				{
-					nbs.push_back(n);
-				}
-			}
-		}
-
-		return nbs;
-	}
-
 	void InsertValue(float v, int index)
 	{
 		values[index] = v;
-	}
-
-	void SetDistance(Node* node)
-	{
-		distance = GetDistance(node->values);
 	}
 
 	float GetDistance(vector<float> node)
@@ -175,304 +140,49 @@ public:
 		//return sqrt(distance);
 	}
 
-	float SetGetDistance(Node* node)
-	{
-		distance = GetDistance(node->values);
-		return distance;
-	}
-
 };
 
-struct NodeSortNearest
-{
-	vector<Node*> allNodes;
-
-	NodeSortNearest(vector<Node*>& aN)
-	{
-		allNodes = aN;
-	}
-
-	inline bool operator() (const unsigned int& left, const unsigned int& right)
-	{
-		return (allNodes[left]->distance < allNodes[right]->distance);
-	}
-};
-
-struct NodeSortFurthest
-{
-	vector<Node*> allNodes;
-
-	NodeSortFurthest(vector<Node*>& aN)
-	{
-		allNodes = aN;
-	}
-
-	inline bool operator() (const int& left, const int& right)
-	{
-		return (allNodes[left]->distance > allNodes[right]->distance);
-	}
-};
-
-struct TupleSortNearest {
-	bool operator()(const tuple<unsigned int, float>& a, const tuple<unsigned int, float>& b) const {
-		return get<1>(a) < get<1>(b);
-	}
-};
-
-struct TupleSortFurthest {
-	constexpr bool operator()(std::tuple<unsigned int, float> i1, std::tuple<unsigned int, float> i2) const noexcept
-	{
-		return std::get<1>(i1) > std::get<1>(i2);
-	}
-};
-
-class SortedNodes
+class NodeDist
 {
 public:
-	vector<unsigned int> nodes;
-	int K;
+	unsigned int ID;
+	float distance;
 
-	int minI;
-	int maxI;
-
-	int minV;
-	int maxV;
-
-	vector<Node*> hnswNodes;
-
-	SortedNodes(vector<Node*>& allNodes)
+	NodeDist(unsigned int id)
 	{
-		hnswNodes = allNodes;
-		K = -1;
+		ID = id;
 	}
 
-	SortedNodes(vector<Node*>& allNodes, int K)
+	NodeDist(unsigned int id, float dist)
 	{
-		hnswNodes = allNodes;
-		this->K = K;
+		ID = id;
+		distance = dist;
 	}
 
-	void InsertNode(unsigned int node)
+	void SetDistance(vector<float> n1, vector<float> n2)
 	{
-		if (K == -1 || nodes.size() < K)
+		distance = 0;
+
+		for (unsigned int i = 0; i < Node::vectorSize; i++)
 		{
-			nodes.push_back(node);
+			float x = n1[i];
+			float y = n2[i];
+			float z = x - y;
 
-			//Sort();
-
-			int nodeLastIndex = nodes.size() - 1;
-
-			if (nodeLastIndex + 1 == 1)
-			{
-				minV = node;
-				maxV = node;
-
-				minI = nodeLastIndex;
-				maxI = nodeLastIndex;
-			}
-			else
-			{
-				if (hnswNodes[node]->distance < hnswNodes[minV]->distance)
-				{
-					minV = node;
-					minI = nodeLastIndex;
-				}
-
-				if (hnswNodes[node]->distance > hnswNodes[maxV]->distance)
-				{
-					maxV = node;
-					maxI = nodeLastIndex;
-				}
-			}
-
+			distance += (z * z);
 		}
-		else if (hnswNodes[maxV]->distance > hnswNodes[node]->distance)
-		{
-			nodes[maxI] = node;
-			maxV = node;
-
-			//Sort();
-
-			if (hnswNodes[node]->distance < hnswNodes[minV]->distance)
-			{
-				minI = maxI;
-				minV = node;
-			}
-
-			for (unsigned int i = 0; i < nodes.size(); i++)
-			{
-				if (hnswNodes[nodes[i]]->distance > hnswNodes[maxV]->distance)
-				{
-					maxV = nodes[i];
-					maxI = i;
-				}
-			}
-		}
-	}
-
-	int GetFirstNode()
-	{
-		//Sort();
-
-		return minV;
-	}
-
-	int GetLastNode()
-	{
-		//Sort();
-
-		return maxV;
-	}
-
-	void RemoveFirstNode()
-	{
-		if (nodes.size() <= 1)
-		{
-			nodes.clear();
-
-			minI = -1;
-			maxI = -1;
-			minV = -1;
-			maxV = -1;
-
-			return;
-		}
-
-		//Sort();
-
-		nodes.erase(nodes.begin() + minI);
-
-		minI = 0;
-		minV = nodes[minI];
-
-		for (int i = 0; i < nodes.size(); i++)
-		{
-			if (hnswNodes[nodes[i]]->distance < hnswNodes[minV]->distance)
-			{
-				minV = nodes[i];
-				minI = i;
-			}
-		}
-	}
-
-	int Size()
-	{
-		return nodes.size();
-	}
-
-	bool Empty()
-	{
-		return nodes.empty();
-	}
-
-	void Sort()
-	{
-		sort(nodes.begin(), nodes.end(), NodeSortNearest(hnswNodes));
-
-		minV = nodes[0];
-		minI = 0;
-		maxV = nodes[Size() - 1];
-		maxI = Size() - 1;
-	}
-
-	void Print()
-	{
-		for (auto& n : nodes)
-			printf("%d ", n);
-		printf("\n");
-	}
-
-	vector<unsigned int> GetKNearestNodes()
-	{
-		return nodes;
-	}
-
-	vector<unsigned int> GetKNearestNodesSorted()
-	{
-		Sort();
-		return nodes;
 	}
 };
 
-class SortedNodesO
-{
-public:
-	vector<unsigned int> nodes;
-	int K;
-
-	vector<Node*> hnswNodes;
-
-	SortedNodesO(vector<Node*>& allNodes)
-	{
-		hnswNodes = allNodes;
-		K = -1;
+struct NodeDistanceSortNearest {
+	bool operator()(const NodeDist& a, const NodeDist& b) const {
+		return a.distance < b.distance;
 	}
+};
 
-	SortedNodesO(vector<Node*>& allNodes, int K)
-	{
-		hnswNodes = allNodes;
-		this->K = K;
-	}
-
-	void InsertNode(unsigned int node)
-	{
-		if (K == -1 || nodes.size() < K)
-		{
-			nodes.push_back(node);
-		}
-		else if (hnswNodes[nodes.size() - 1]->distance > hnswNodes[node]->distance)
-		{
-			nodes[nodes.size() - 1] = node;
-		}
-
-		Sort();
-	}
-
-	int GetFirstNode()
-	{
-		return nodes[0];
-	}
-
-	int GetLastNode()
-	{
-		return nodes[nodes.size() - 1];
-	}
-
-	void RemoveFirstNode()
-	{
-		if (nodes.size() <= 1)
-		{
-			nodes.clear();
-			return;
-		}
-
-		nodes.erase(nodes.begin());
-	}
-
-	int Size()
-	{
-		return nodes.size();
-	}
-
-	bool Empty()
-	{
-		return nodes.empty();
-	}
-
-	void Sort()
-	{
-		sort(nodes.begin(), nodes.end(), NodeSortNearest(hnswNodes));
-	}
-
-	vector<unsigned int> GetKNearestNodes()
-	{
-		return nodes;
-	}
-
-	vector<unsigned int> GetKNearestNodesSorted()
-	{
-		Sort();
-		return nodes;
+struct NodeDistanceSortFurthest {
+	bool operator()(const NodeDist& a, const NodeDist& b) const {
+		return a.distance > b.distance;
 	}
 };
 
