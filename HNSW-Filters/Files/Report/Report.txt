@@ -17,7 +17,7 @@ Graph: 10kp, 128vd, 200efc, Query: 10kp, 10N, 200efc
 
 Graph: 100kp, 128vd, 16efc
 - já insert time 209.333s, reference 45.996
-- grag 99972 stejný, 28 jiný
+- graf 99972 stejný, 28 jiný
 
 
 OPTIMALIZACE:
@@ -39,15 +39,17 @@ Query	38.26
 Graph	29.839
 Query	28.831
 
+- NodeDist
+Graph	27.161
+Query	29.377
 
 
 
 
 
 
-
-
-
+čas na 1 dotaz 100ms
+naměřit časy vykonávání dotazů = naměřit čas a udělat graf pro změnu efc a s tím spojený čas na 1 dotaz
 
 
 
