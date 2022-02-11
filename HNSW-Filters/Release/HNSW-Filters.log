@@ -1,12 +1,12 @@
 ﻿  HNSW-Filters.cpp
 D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(35,10): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
 D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(45,16): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
-D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(54,9): warning C4244: inicializování: float se převádí na int; může dojít ke ztrátě dat.
-D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(204,59): warning C4018: <: signed/unsigned – neshoda
-D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(211,31): warning C4018: >: signed/unsigned – neshoda
-D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(307,16): warning C4018: <: signed/unsigned – neshoda
-D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(330,12): warning C4018: <: signed/unsigned – neshoda
-D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(333,22): warning C4018: <: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(63,9): warning C4244: inicializování: float se převádí na int; může dojít ke ztrátě dat.
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(213,59): warning C4018: <: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(220,31): warning C4018: >: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(316,16): warning C4018: <: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(339,12): warning C4018: <: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(342,22): warning C4018: <: signed/unsigned – neshoda
 D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(48,34): warning C4244: argument: int se převádí na _Ty; může dojít ke ztrátě dat.
           with
           [
@@ -33,27 +33,38 @@ D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(27
           [
               _Rep=__int64
           ]
-D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(308,23): warning C4018: <: signed/unsigned – neshoda
-D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(314,27): warning C4018: <: signed/unsigned – neshoda
-D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(333,23): warning C4018: <: signed/unsigned – neshoda
-D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(339,27): warning C4018: <: signed/unsigned – neshoda
-D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(364,23): warning C4018: <: signed/unsigned – neshoda
-D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(369,16): warning C4244: inicializování: _Rep se převádí na double; může dojít ke ztrátě dat.
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(294,23): warning C4018: <: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(300,27): warning C4018: <: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(319,23): warning C4018: <: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(324,27): warning C4018: <: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(348,23): warning C4018: <: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(353,16): warning C4244: inicializování: _Rep se převádí na double; může dojít ke ztrátě dat.
           with
           [
               _Rep=__int64
           ]
-D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(383,27): warning C4018: <: signed/unsigned – neshoda
-D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(397,23): warning C4018: <: signed/unsigned – neshoda
-D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(415,31): warning C4018: <: signed/unsigned – neshoda
-D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(421,22): warning C4244: inicializování: _Rep se převádí na int; může dojít ke ztrátě dat.
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(367,27): warning C4018: <: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(381,23): warning C4018: <: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(399,31): warning C4018: <: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\HNSW-Filters.cpp(404,22): warning C4244: inicializování: _Rep se převádí na int; může dojít ke ztrátě dat.
           with
           [
               _Rep=__int64
           ]
+  Hnsw.cpp
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(35,10): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(45,16): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(63,9): warning C4244: inicializování: float se převádí na int; může dojít ke ztrátě dat.
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(213,59): warning C4018: <: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(220,31): warning C4018: >: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(316,16): warning C4018: <: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(339,12): warning C4018: <: signed/unsigned – neshoda
+D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\HNSW-Filters\Hnsw.h(342,22): warning C4018: <: signed/unsigned – neshoda
+  Layer.cpp
+  Node.cpp
   Vytváří se kód.
-  4 of 795 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+  19 of 703 functions ( 2.7%) were compiled, the rest were copied from previous compilation.
+    6 functions were new in current compilation
+    72 functions had inline decision re-evaluated but remain unchanged
   Vytváření kódu se dokončilo.
   HNSW-Filters.vcxproj -> D:\HDD VŠB\Git VŠB - StandAlones\hnsw_filters\Release\HNSW-Filters.exe

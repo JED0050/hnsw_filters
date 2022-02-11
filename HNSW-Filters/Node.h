@@ -43,13 +43,14 @@ public:
 	vector<float> values;
 	vector<Neighbours*> lNaighbours;
 
-	//~Node()
-	//{
-	//	for (auto& n : neighbours)
-	//	{
-	//		delete n;
-	//	}
-	//}
+	~Node()
+	{
+		for (auto n : lNaighbours)
+		{
+			delete n;
+		}
+		lNaighbours.clear();
+	}
 
 	void Insert(unsigned int node, int layerID)
 	{
@@ -137,7 +138,6 @@ public:
 		}
 
 		return distance;
-		//return sqrt(distance);
 	}
 
 };

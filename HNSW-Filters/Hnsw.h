@@ -45,6 +45,15 @@ public:
 		this->mL = 1 / log(0.8 * M);
 	}
 
+	~Hnsw()
+	{
+		for (auto n : allNodes)
+		{
+			delete n;
+		}
+		allNodes.clear();
+	}
+
 	void Insert(Node* newNode)
 	{
 		allNodes.push_back(newNode);
@@ -130,7 +139,7 @@ public:
 			l--;
 		}
 
-		if (allNodes.size() % 5000 == 0)
+		if (allNodes.size() % 10000 == 0)
 			printf("Inserted %d\n", allNodes.size());
 	}
 

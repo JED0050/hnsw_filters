@@ -279,8 +279,9 @@ void SiftTest()
 {
     size_t node_count = 1000000;
     size_t qsize = 10000;
-    size_t vecdim = VECTOR_SIZE;
+    size_t vecdim = 128;
     size_t answer_size = 100;
+    size_t efconstr = 200;
     uint32_t k = 10;
 
     float* mass = new float[node_count * vecdim];
@@ -288,22 +289,7 @@ void SiftTest()
     if (!input.good()) throw std::runtime_error("Input data file not opened!");
     input.read((char*)mass, node_count * vecdim * sizeof(float));
     input.close();
-    /*
-    float min = mass[0];
-    float max = mass[0];
 
-    for (int i = 1; i < node_count*vecdim; i++)
-    {
-        if (mass[i] < min)
-            min = mass[i];
-        else if (mass[i] > max)
-            max = mass[i];
-    }
-
-    printf("min: %f\tmax: %f\n", min, max); //min = 0; max = 164
-
-    delete[] mass;
-    */
     vector<Node*> graphNodes;
     for (int i = 0; i < node_count; i++)
     {
@@ -334,12 +320,10 @@ void SiftTest()
     {
         Node* queryNode = new Node();
         vector<float> position;
-        //float position[VECTOR_SIZE];
 
         for (int p = 0; p < vecdim; p++)
         {
             position.push_back(massQ[(i * vecdim) + p]);
-            //position[p] = massQ[(i * vecdim) + p];
         }
 
         queryNode->values = position;
@@ -356,7 +340,7 @@ void SiftTest()
     inputQA.close();
     cout << "Answer nodes done" << endl;
 
-    Hnsw hnsw = Hnsw(16, 16, EF_CONSTRUCTIONS);
+    Hnsw hnsw = Hnsw(16, 16, efconstr);
 
     /////////////////////////////////////////////////////// INSERT PART
     std::cout << "Start inserting\n";
@@ -368,9 +352,9 @@ void SiftTest()
     auto end = std::chrono::system_clock::now();
     double dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
     std::cout << "Insert time " << dur / 1000 << " [s] \n";
+
     //hnsw.PrintInfoSorted(node_count);
     //hnsw.SavePrint(node_count, "Files\\Sift\\SiftGraphJ.txt");
-    //return;
 
     /////////////////////////////////////////////////////// QUERY PART
     std::cout << "Start querying\n";
@@ -382,7 +366,7 @@ void SiftTest()
         float positive = 0;
         for (int i = 0; i < qsize; i++)
         {
-            vector<unsigned int> result = hnsw.KNNSearchIndex(queryNodes[i], k);
+            vector<unsigned int> result = hnsw.KNNSearchIndex(queryNodes[i], k, ef);
 
             //int c1 = result.size();
 
@@ -415,7 +399,6 @@ void SiftTest()
             for (int i = 0; i < qsize; i++)
             {
                 hnsw.KNNSearchIndex(queryNodes[i], k, ef);
-                //hnsw.aproximateKnn(&massQ[i * vecdim], k, ef);
             }
             auto end = std::chrono::steady_clock::now();
             int time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
@@ -445,12 +428,12 @@ int main()
     //HNSWSavePrint();
     //
     //DistinctNodes(FILE_NAME);
-    //SiftTest();
+    SiftTest();
     //CompareFiles("Files\\Sift\\SiftGraphJ.txt", "Files\\Sift\\SiftGraphU.txt");
 
-    HNSWGraphAndQuerySavePrint();
-    CompareFiles(GFILE_NAME, GUFILE_NAME);
-    CompareFiles(AFILE_NAME, UFILE_NAME);
+    //HNSWGraphAndQuerySavePrint();
+    //CompareFiles(GFILE_NAME, GUFILE_NAME);
+    //CompareFiles(AFILE_NAME, UFILE_NAME);
 
     return 0;
 }
