@@ -130,3 +130,95 @@ Precision Time [us]
 0.39519 880.001
 0.39519 976.211
 0.39519 1058.04
+
+
+
+
+
+REFERENCE
+Insert time 1000.3 [s]
+
+HNSW info
+Layer 0 1000000
+Layer 1 95445
+Layer 2 7463
+Layer 3 459
+Index memory: 0 [MB]
+M_: 16
+Mmax_: 16
+ml_: 0.392242
+efConstruction_: 200
+
+Start querying
+Precision: 0.83897, ef: 20, 174.356 [us]; 175.297 [us]; 174.596 [us]; avg: 174.75 [us]; min: 174 [us];
+No. precise distance computations: 5557217
+No. distance computations: 0
+No. explored nodes: 0
+Precision: 0.89553, ef: 30, 229.01 [us]; 226.956 [us]; 230.19 [us]; avg: 228.719 [us]; min: 226 [us];
+No. precise distance computations: 7181396
+No. distance computations: 0
+No. explored nodes: 0
+Precision: 0.92772, ef: 40, 279.261 [us]; 279.05 [us]; 279.63 [us]; avg: 279.314 [us]; min: 279 [us];
+No. precise distance computations: 8754710
+No. distance computations: 0
+No. explored nodes: 0
+Precision: 0.94727, ef: 50, 333.652 [us]; 332.107 [us]; 332.553 [us]; avg: 332.771 [us]; min: 332 [us];
+No. precise distance computations: 10287406
+No. distance computations: 0
+No. explored nodes: 0
+Precision: 0.96025, ef: 60, 385.231 [us]; 378.916 [us]; 376.363 [us]; avg: 380.17 [us]; min: 376 [us];
+No. precise distance computations: 11799967
+No. distance computations: 0
+No. explored nodes: 0
+Precision: 0.96935, ef: 70, 433.679 [us]; 428.548 [us]; 437.575 [us]; avg: 433.268 [us]; min: 428 [us];
+No. precise distance computations: 13282444
+No. distance computations: 0
+No. explored nodes: 0
+Precision: 0.97535, ef: 80, 484.274 [us]; 483.137 [us]; 476.029 [us]; avg: 481.147 [us]; min: 476 [us];
+No. precise distance computations: 14741498
+No. distance computations: 0
+No. explored nodes: 0
+Precision: 0.98004, ef: 90, 525.878 [us]; 526.617 [us]; 521.708 [us]; avg: 524.734 [us]; min: 521 [us];
+No. precise distance computations: 16172751
+No. distance computations: 0
+No. explored nodes: 0
+Precision: 0.98368, ef: 100, 572.9 [us]; 574.284 [us]; 571.975 [us]; avg: 573.053 [us]; min: 571 [us];
+No. precise distance computations: 17582532
+No. distance computations: 0
+No. explored nodes: 0
+Precision: 0.98861, ef: 120, 664.562 [us]; 660.827 [us]; 665.99 [us]; avg: 663.793 [us]; min: 660 [us];
+No. precise distance computations: 20333799
+No. distance computations: 0
+No. explored nodes: 0
+Precision: 0.99176, ef: 140, 756.552 [us]; 755.267 [us]; 754.502 [us]; avg: 755.44 [us]; min: 754 [us];
+No. precise distance computations: 23016933
+No. distance computations: 0
+No. explored nodes: 0
+Precision: 0.99401, ef: 160, 848.672 [us]; 849.51 [us]; 847.573 [us]; avg: 848.585 [us]; min: 847 [us];
+No. precise distance computations: 25635470
+No. distance computations: 0
+No. explored nodes: 0
+Precision: 0.99543, ef: 180, 932.126 [us]; 933.541 [us]; 926.441 [us]; avg: 930.703 [us]; min: 926 [us];
+No. precise distance computations: 28189404
+No. distance computations: 0
+No. explored nodes: 0
+Precision: 0.99636, ef: 200, 1019.14 [us]; 1021.61 [us]; 1018.14 [us]; avg: 1019.63 [us]; min: 1018 [us];
+No. precise distance computations: 30701110
+No. distance computations: 0
+No. explored nodes: 0
+
+Precision Time [us]
+0.83897 174.356
+0.89553 226.956
+0.92772 279.05
+0.94727 332.107
+0.96025 376.363
+0.96935 428.548
+0.97535 476.029
+0.98004 521.708
+0.98368 571.975
+0.98861 660.827
+0.99176 754.502
+0.99401 847.573
+0.99543 926.441
+0.99636 1018.14
