@@ -4,6 +4,7 @@
 #include <vector>
 #include "Hnsw.h"
 #include <chrono>
+#include "DimFilter.h"
 
 #define FILE_NAME "Files\\space_points_10kp_128vd.txt"
 #define QFILE_NAME "Files\\query_points_10kp_128vd.txt"
@@ -428,12 +429,24 @@ int main()
     //HNSWSavePrint();
     //
     //DistinctNodes(FILE_NAME);
-    SiftTest();
+    //SiftTest();
     //CompareFiles("Files\\Sift\\SiftGraphJ.txt", "Files\\Sift\\SiftGraphU.txt");
 
     //HNSWGraphAndQuerySavePrint();
     //CompareFiles(GFILE_NAME, GUFILE_NAME);
     //CompareFiles(AFILE_NAME, UFILE_NAME);
+
+    vector<float> vec = vector<float>({ 1,2,3,4,5 });
+    vector<DimFilter> filters = DimFilterHelper::GetNumOfFilters(vec.size());
+
+    filters[0].AddEqNumber(0);
+    filters[0].AddEqNumber(1);
+    filters[0].AddEqNumber(2);
+
+    filters[2].AddInterval(make_tuple(2, 4));
+    filters[2].AddEqNumber(1);
+
+    cout << DimFilterHelper::IsVectorValid(filters, vec) << endl;
 
     return 0;
 }

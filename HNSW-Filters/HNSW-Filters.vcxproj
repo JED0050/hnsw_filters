@@ -139,12 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DimFilter.cpp" />
     <ClCompile Include="HNSW-Filters.cpp" />
     <ClCompile Include="Hnsw.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Node.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DimFilter.h" />
     <ClInclude Include="Hnsw.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="Node.h" />

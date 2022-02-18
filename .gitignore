@@ -1,4 +1,5 @@
 Debug/
 .vs/
 X64/
+Release/
 *.bin
