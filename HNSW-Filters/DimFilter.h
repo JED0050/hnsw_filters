@@ -22,10 +22,10 @@ public:
 		eqNumbers.push_back(val);
 	}
 
-	void AddInterval(tuple<float, float> interval)
+	void AddInterval(float start, float end)
 	{
 		emptyFilter = false;
-		intervals.push_back(interval);
+		intervals.push_back(make_tuple(start, end));
 	}
 
 	bool IsDimValid(float val)

@@ -1,7 +1,10 @@
 #pragma once
-#include<vector>
-#include"Node.h"
-#include"Layer.h"
+
+#include "Node.h"
+#include "Layer.h"
+#include "DimFilter.h"
+
+#include <vector>
 #include <algorithm>
 #include <iostream>
 #include <fstream>
@@ -53,6 +56,8 @@ public:
 		}
 		allNodes.clear();
 	}
+
+	/////////////////////////////// INSERT NODE ///////////////////////////////
 
 	void Insert(Node* newNode)
 	{
@@ -233,66 +238,6 @@ public:
 		return nearestNodes;
 	}
 
-	vector<NodeDist> SearchLayerKNN(Node* queryNode, NodeDist &entryPoint, unsigned int K)
-	{
-		vector<NodeDist> candidateNodes;
-		vector<NodeDist> nearestNodes;
-		linearHash visitedNodes = linearHash();
-		visitedNodes.clear();
-
-		float nNDist = entryPoint.distance;
-
-		candidateNodes.push_back(entryPoint);
-		nearestNodes.push_back(entryPoint);
-		visitedNodes.insert(entryPoint.ID);
-
-		std::make_heap(nearestNodes.begin(), nearestNodes.end(), NodeDistanceSortNearest());
-		std::make_heap(candidateNodes.begin(), candidateNodes.end(), NodeDistanceSortFurthest());
-
-		while (!candidateNodes.empty())
-		{
-			auto c = candidateNodes.front();
-
-			std::pop_heap(candidateNodes.begin(), candidateNodes.end(), NodeDistanceSortFurthest());
-			candidateNodes.pop_back();
-
-			if (c.distance > nNDist)
-				break;
-
-			for (auto n : allNodes[c.ID]->GetNeighboursVectorAtLayer(0))
-			{
-				if (!visitedNodes.get(n))
-				{
-					visitedNodes.insert(n);
-
-					NodeDist newNode = NodeDist(n);
-					newNode.SetDistance(allNodes[n]->values, queryNode->values);
-
-					if (newNode.distance < nNDist || nearestNodes.size() < K)
-					{
-						candidateNodes.push_back(newNode);
-						std::push_heap(candidateNodes.begin(), candidateNodes.end(), NodeDistanceSortFurthest());
-						nearestNodes.push_back(newNode);
-						std::push_heap(nearestNodes.begin(), nearestNodes.end(), NodeDistanceSortNearest());
-
-						if (nearestNodes.size() > K)
-						{
-							std::pop_heap(nearestNodes.begin(), nearestNodes.end(), NodeDistanceSortNearest());
-							nearestNodes.pop_back();
-						}
-
-						nNDist = nearestNodes.front().distance;
-					}
-
-
-				}
-			}
-		}
-
-		sort(nearestNodes.begin(), nearestNodes.end(), NodeDistanceSortNearest());
-		return nearestNodes;
-	}
-
 	/*vector<unsigned int> SelectNeighborsSimple(unsigned int queryNode, vector<unsigned int> neighbours, int M)
 	{
 		if (neighbours.size() <= M)
@@ -364,9 +309,66 @@ public:
 
 	}
 
-	vector<unsigned int> KNNSearchIndex(Node* queryNode, int K)
+	/////////////////////////////// SEARCH NODE ///////////////////////////////
+
+	vector<NodeDist> SearchLayerKNN(Node* queryNode, NodeDist &entryPoint, unsigned int K)
 	{
-		return KNNSearchIndex(queryNode, K, eFConstructions);
+		vector<NodeDist> candidateNodes;
+		vector<NodeDist> nearestNodes;
+		linearHash visitedNodes = linearHash();
+		visitedNodes.clear();
+
+		float nNDist = entryPoint.distance;
+
+		candidateNodes.push_back(entryPoint);
+		nearestNodes.push_back(entryPoint);
+		visitedNodes.insert(entryPoint.ID);
+
+		std::make_heap(nearestNodes.begin(), nearestNodes.end(), NodeDistanceSortNearest());
+		std::make_heap(candidateNodes.begin(), candidateNodes.end(), NodeDistanceSortFurthest());
+
+		while (!candidateNodes.empty())
+		{
+			auto c = candidateNodes.front();
+
+			std::pop_heap(candidateNodes.begin(), candidateNodes.end(), NodeDistanceSortFurthest());
+			candidateNodes.pop_back();
+
+			if (c.distance > nNDist)
+				break;
+
+			for (auto n : allNodes[c.ID]->GetNeighboursVectorAtLayer(0))
+			{
+				if (!visitedNodes.get(n))
+				{
+					visitedNodes.insert(n);
+
+					NodeDist newNode = NodeDist(n);
+					newNode.SetDistance(allNodes[n]->values, queryNode->values);
+
+					if (newNode.distance < nNDist || nearestNodes.size() < K)
+					{
+						candidateNodes.push_back(newNode);
+						std::push_heap(candidateNodes.begin(), candidateNodes.end(), NodeDistanceSortFurthest());
+						nearestNodes.push_back(newNode);
+						std::push_heap(nearestNodes.begin(), nearestNodes.end(), NodeDistanceSortNearest());
+
+						if (nearestNodes.size() > K)
+						{
+							std::pop_heap(nearestNodes.begin(), nearestNodes.end(), NodeDistanceSortNearest());
+							nearestNodes.pop_back();
+						}
+
+						nNDist = nearestNodes.front().distance;
+					}
+
+
+				}
+			}
+		}
+
+		sort(nearestNodes.begin(), nearestNodes.end(), NodeDistanceSortNearest());
+		return nearestNodes;
 	}
 
 	vector<unsigned int> KNNSearchIndex(Node* queryNode, int K, int efC)
@@ -390,6 +392,130 @@ public:
 
 		return nearestNodes;
 	}
+
+	/////////////////////////////// SEARCH FILTER ///////////////////////////////
+
+	void SearchLayerOneFilter(Node* queryNode, NodeDist& entryPoint, vector<DimFilter> filters, int lC)
+	{
+		bool change = true;
+		linearHash visitedNodes = linearHash();
+		visitedNodes.clear();
+		visitedNodes.insert(entryPoint.ID);
+
+		while (change)
+		{
+			change = false;
+			vector<unsigned int> nbs = allNodes[entryPoint.ID]->GetNeighboursVectorAtLayer(lC);
+
+			for (auto n : nbs)
+			{
+				if (!visitedNodes.get(n))
+				{
+					visitedNodes.insert(n);
+
+					NodeDist newNode = NodeDist(n);
+					newNode.SetDistance(allNodes[n]->values, queryNode->values);
+
+					if (newNode.distance < entryPoint.distance)
+					{
+						if (DimFilterHelper::IsVectorValid(filters, allNodes[n]->values))
+						{
+							change = true;
+							entryPoint = newNode;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	vector<NodeDist> SearchLayerFilter(Node* queryNode, NodeDist& entryPoint, vector<DimFilter> filters, unsigned int K)
+	{
+		vector<NodeDist> candidateNodes;
+		vector<NodeDist> nearestNodes;
+		linearHash visitedNodes = linearHash();
+		visitedNodes.clear();
+
+		float nNDist = entryPoint.distance;
+
+		candidateNodes.push_back(entryPoint);
+		nearestNodes.push_back(entryPoint);
+		visitedNodes.insert(entryPoint.ID);
+
+		std::make_heap(nearestNodes.begin(), nearestNodes.end(), NodeDistanceSortNearest());
+		std::make_heap(candidateNodes.begin(), candidateNodes.end(), NodeDistanceSortFurthest());
+
+		while (!candidateNodes.empty())
+		{
+			auto c = candidateNodes.front();
+
+			std::pop_heap(candidateNodes.begin(), candidateNodes.end(), NodeDistanceSortFurthest());
+			candidateNodes.pop_back();
+
+			if (c.distance > nNDist)
+				break;
+
+			for (auto n : allNodes[c.ID]->GetNeighboursVectorAtLayer(0))
+			{
+				if (!visitedNodes.get(n))
+				{
+					visitedNodes.insert(n);
+
+					NodeDist newNode = NodeDist(n);
+					newNode.SetDistance(allNodes[n]->values, queryNode->values);
+
+					if (newNode.distance < nNDist || nearestNodes.size() < K)
+					{
+						candidateNodes.push_back(newNode);
+						std::push_heap(candidateNodes.begin(), candidateNodes.end(), NodeDistanceSortFurthest());
+
+						if (DimFilterHelper::IsVectorValid(filters, allNodes[n]->values))
+						{
+							nearestNodes.push_back(newNode);
+							std::push_heap(nearestNodes.begin(), nearestNodes.end(), NodeDistanceSortNearest());
+
+							if (nearestNodes.size() > K)
+							{
+								std::pop_heap(nearestNodes.begin(), nearestNodes.end(), NodeDistanceSortNearest());
+								nearestNodes.pop_back();
+							}
+
+							nNDist = nearestNodes.front().distance;
+						}
+					}
+
+
+				}
+			}
+		}
+
+		sort(nearestNodes.begin(), nearestNodes.end(), NodeDistanceSortNearest());
+		return nearestNodes;
+	}
+
+	vector<unsigned int> KNNFilter(Node* queryNode, vector<DimFilter> filters, int K, int efC)
+	{
+		int L = layers.size() - 1;
+		NodeDist entryPoint = NodeDist(layers[L].entryPoint);
+		entryPoint.SetDistance(allNodes[entryPoint.ID]->values, queryNode->values);
+
+		for (int lC = L; lC >= 1; lC--)
+		{
+			SearchLayerOneFilter(queryNode, entryPoint, filters, lC);
+		}
+
+		vector<unsigned int> nearestNodes;
+		vector<NodeDist> nearestNodesIndexRef = SearchLayerFilter(queryNode, entryPoint, filters, efC);
+
+		for (int i = 0; i < K; i++)
+		{
+			nearestNodes.push_back(nearestNodesIndexRef[i].ID);
+		}
+
+		return nearestNodes;
+	}
+
+	/////////////////////////////// STATISTICS ///////////////////////////////
 
 	void PrintInfo(int n)
 	{

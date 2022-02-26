@@ -6,17 +6,17 @@
 #include <chrono>
 #include "DimFilter.h"
 
-#define FILE_NAME "Files\\space_points_10kp_128vd.txt"
-#define QFILE_NAME "Files\\query_points_10kp_128vd.txt"
-#define AFILE_NAME "Files\\answer_points_j_10kp_128vd_200efc.txt"
-#define UFILE_NAME "Files\\answer_points_u_10kp_128vd_200efc.txt"
-#define GFILE_NAME "Files\\graph_j_10kp_128vd_200efc.txt"
-#define GUFILE_NAME "Files\\graph_u_10kp_128vd_200efc.txt"
+#define FILE_NAME "Files\\space_points_100kp_5vd.txt"
+#define QFILE_NAME "Files\\query_points_100kp_5vd.txt"
+#define AFILE_NAME "Files\\answer_points_j_100kp_5vd_200efc.txt"
+#define UFILE_NAME "Files\\answer_points_u_100kp_5vd_200efc.txt"
+#define GFILE_NAME "Files\\graph_j_100kp_5vd_200efc.txt"
+#define GUFILE_NAME "Files\\graph_u_100kp_5vd_200efc.txt"
 
-#define NUMBER_OF_GRAPH_NODES 10000
-#define NUMBER_OF_QUERY_NODES 10000
+#define NUMBER_OF_GRAPH_NODES 100000
+#define NUMBER_OF_QUERY_NODES 100000
 #define EF_CONSTRUCTIONS 200
-#define VECTOR_SIZE 128
+#define VECTOR_SIZE 5
 
 using namespace std::chrono;
 using namespace std;
@@ -421,9 +421,64 @@ void SiftTest()
     delete[] massQA;
 }
 
+void FilterTest()
+{
+    //Filter
+    //0: <50, 250> || 0
+    //1: -
+    //2: <10, 20> || <30, 100>
+    //3: -
+    //4: <0, 100> || <150, 200> 
+
+    vector<DimFilter> filters = DimFilterHelper::GetNumOfFilters(Node::vectorSize);
+    
+    filters[0].AddInterval(50, 250);
+    filters[0].AddEqNumber(0);
+
+    filters[2].AddInterval(10, 20);
+    filters[2].AddInterval(30, 100);
+
+    filters[4].AddInterval(0, 100);
+    filters[4].AddInterval(150, 200);
+
+
+    filters[0].AddInterval(0, 255);
+    filters[1].AddInterval(0, 255);
+    filters[2].AddInterval(0, 255);
+    filters[3].AddInterval(0, 255);
+    filters[4].AddInterval(0, 255);
+
+    Node::vectorSize = VECTOR_SIZE;
+    Node queryNode = Node();
+    queryNode.values = vector<float>({0,10,20,30,40});
+
+    cout << "Inserting:" << endl;
+    Hnsw hnsw = Hnsw(16, 16, 200);  //M MMax Efc
+    vector<Node> graphNodes = LoadNodesFromFile(FILE_NAME);
+    for (int i = 0; i < graphNodes.size(); i++)
+    {
+        hnsw.Insert(&graphNodes[i]);
+    }
+
+    cout << "Serch:" << endl;
+    vector<unsigned int> result = hnsw.KNNFilter(&queryNode, filters, 10, 200);
+
+    for (auto i : result)
+    {
+        cout << i << ":\t";
+
+        for (auto v : graphNodes[i].values)
+        {
+            cout << v << " ";
+        }
+        cout << endl;
+    }
+
+}
+
 int main()
 {
-    //GeneratePoints(10000, 128, 0, 255);   //numberOfNodes, vecdim, minV, maxV
+    //GeneratePoints(100000, 5, 0, 255);   //numberOfNodes, vecdim, minV, maxV
     //
     //HNSWPrint();
     //HNSWSavePrint();
@@ -436,17 +491,7 @@ int main()
     //CompareFiles(GFILE_NAME, GUFILE_NAME);
     //CompareFiles(AFILE_NAME, UFILE_NAME);
 
-    vector<float> vec = vector<float>({ 1,2,3,4,5 });
-    vector<DimFilter> filters = DimFilterHelper::GetNumOfFilters(vec.size());
-
-    filters[0].AddEqNumber(0);
-    filters[0].AddEqNumber(1);
-    filters[0].AddEqNumber(2);
-
-    filters[2].AddInterval(make_tuple(2, 4));
-    filters[2].AddEqNumber(1);
-
-    cout << DimFilterHelper::IsVectorValid(filters, vec) << endl;
+    FilterTest();
 
     return 0;
 }
