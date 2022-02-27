@@ -423,6 +423,8 @@ void SiftTest()
 
 void FilterTest()
 {
+    Node::vectorSize = VECTOR_SIZE;
+
     //Filter
     //0: <50, 250> || 0
     //1: -
@@ -441,21 +443,14 @@ void FilterTest()
     filters[4].AddInterval(0, 100);
     filters[4].AddInterval(150, 200);
 
-
-    filters[0].AddInterval(0, 255);
-    filters[1].AddInterval(0, 255);
-    filters[2].AddInterval(0, 255);
-    filters[3].AddInterval(0, 255);
-    filters[4].AddInterval(0, 255);
-
-    Node::vectorSize = VECTOR_SIZE;
     Node queryNode = Node();
     queryNode.values = vector<float>({0,10,20,30,40});
 
     cout << "Inserting:" << endl;
     Hnsw hnsw = Hnsw(16, 16, 200);  //M MMax Efc
     vector<Node> graphNodes = LoadNodesFromFile(FILE_NAME);
-    for (int i = 0; i < graphNodes.size(); i++)
+    //for (int i = 0; i < graphNodes.size(); i++)
+    for (int i = 0; i < 30000; i++)
     {
         hnsw.Insert(&graphNodes[i]);
     }
