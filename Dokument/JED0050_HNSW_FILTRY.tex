@@ -1,0 +1,49 @@
+\documentclass[czech,semestral,dept460,male,csharp,cpdeclaration]{diploma}
+
+\usepackage[autostyle=true,czech=quotes]{csquotes}
+\usepackage[backend=bibtex, style=iso-numeric, alldates=iso]{biblatex}
+\usepackage{dcolumn}
+\usepackage{subfig}
+\usepackage{geometry}
+\usepackage{listings}
+
+\ThesisAuthor{Bc. Jan Jedlička}
+\ThesisSupervisor{Doc. Ing. Radim Bača, Ph.D.}
+
+\CzechThesisTitle{Vyhledávání K nejbližších sousedů na základě filtru}
+\EnglishThesisTitle{Search K nearest neighbors based on a filter}
+
+\SubmissionYear{2022}
+
+\Acknowledgement{Rád bych na tomto místě poděkoval vedoucímu semestrálního projektu, kterým byl pan Doc. Ing. Radim Bača, Ph.D., za pravidelné konzultace a poskytnutí mnoha užitečných rad a nápadů pro řešení samotné práce.}
+
+\CzechAbstract{Techniky pro efektivní vyhledání K nejbližších sousedů (tzv. KNN problém) jsou základem pro mnoho dnešních aplikací. Velmi často se využívají i techniky pro přibližné KNN vyhledávání. Tyto techniky jsou založeny na grafech. Předmětem této práce rozšíření existující implementace pro přibližné KNN vyhledávání o možnost specifikovat filtr. Filtr bude podmínka, která stanoví, které vektory se při prohledávání vynechají.}
+
+\CzechKeywords{KNN;HNSW;Filter}
+
+\EnglishAbstract{Techniques for effective nearest neighbor search (so-called KNN problem) are the basis for many of today's applications. Techniques for approximate KNN searches are also very often used. These techniques are based on graphs. The subject of this work is to extend the existing implementation for approximate KNN searches with the ability to specify a filter. The filter will be a condition that determines which vectors are omitted when searching.}
+
+\EnglishKeywords{KNN;HNSW;Filter}
+
+\AddAcronym{KNN}{K-nearest neighbors}
+\AddAcronym{HNSW}{Hierarchical Navigable Small Worlds}
+
+\addbibresource{citace.bib}
+
+\begin{document}
+	
+	\MakeTitlePages
+	
+	\chapter{Úvod}
+	\chapter{KNN}
+	\section{HNSW}
+	\section{Filter}
+		Podmínka omezující jednotlivé atributy vyhledávaných nejbližších sousedů.
+	
+	\chapter{Závěr}
+	
+	\nocite{*}
+	
+	\printbibliography[title={Literatura}, heading=bibintoc]
+	
+\end{document}]
