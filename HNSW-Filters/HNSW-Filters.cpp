@@ -432,16 +432,23 @@ void FilterTest()
     //3: -
     //4: <0, 100> || <150, 200> 
 
-    vector<DimFilter> filters = DimFilterHelper::GetNumOfFilters(Node::vectorSize);
+    vector<DimFilter> filters;
     
-    filters[0].AddInterval(50, 250);
-    filters[0].AddEqNumber(0);
+    DimFilter f0 = DimFilter(0);
+    f0.AddInterval(50, 250);
+    f0.AddEqNumber(0);
 
-    filters[2].AddInterval(10, 20);
-    filters[2].AddInterval(30, 100);
+    DimFilter f2 = DimFilter(2);
+    f2.AddInterval(10, 20);
+    f2.AddInterval(30, 100);
 
-    filters[4].AddInterval(0, 100);
-    filters[4].AddInterval(150, 200);
+    DimFilter f4 = DimFilter(4);
+    f4.AddInterval(0, 100);
+    f4.AddInterval(150, 200);
+
+    filters.push_back(f0);
+    filters.push_back(f2);
+    filters.push_back(f4);
 
     Node queryNode = Node();
     queryNode.values = vector<float>({0,10,20,30,40});
@@ -471,6 +478,47 @@ void FilterTest()
 
 }
 
+void FilterFullTest()
+{
+    Node::vectorSize = VECTOR_SIZE;
+
+    cout << "Inserting:" << endl;
+    Hnsw hnsw = Hnsw(16, 16, 200);  //M MMax Efc
+    vector<Node> graphNodes = LoadNodesFromFile(FILE_NAME);
+    //for (int i = 0; i < graphNodes.size(); i++)
+    for (int i = 0; i < 30000; i++)
+    {
+        hnsw.Insert(&graphNodes[i]);
+    }
+
+    cout << "Serch:" << endl;
+
+    Node queryNode = Node();
+    queryNode.values = vector<float>({ 0,10,20,30,40 });
+
+    for (int i = 0; i < 10; i++)
+    {
+        cout << "Test " << i << endl;
+
+        vector<DimFilter> filters = DimFilterHelper::GenerateFilter(Node::vectorSize, 0.5, 0, 250);
+
+        vector<unsigned int> result = hnsw.KNNFilter(&queryNode, filters, 10, 200);
+
+        for (auto i : result)
+        {
+            cout << i << ":\t";
+
+            for (auto v : graphNodes[i].values)
+            {
+                cout << v << " ";
+            }
+            cout << endl;
+        }
+
+        cout << endl;
+    }
+}
+
 int main()
 {
     //GeneratePoints(100000, 5, 0, 255);   //numberOfNodes, vecdim, minV, maxV
@@ -486,7 +534,8 @@ int main()
     //CompareFiles(GFILE_NAME, GUFILE_NAME);
     //CompareFiles(AFILE_NAME, UFILE_NAME);
 
-    FilterTest();
+    //FilterTest();
+    FilterFullTest();
 
     return 0;
 }

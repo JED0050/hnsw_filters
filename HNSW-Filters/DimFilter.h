@@ -2,6 +2,8 @@
 #include <vector>
 #include <tuple>
 
+#define uint unsigned int
+
 using namespace std;
 
 class DimFilter
@@ -10,9 +12,11 @@ public:
 	vector<float> eqNumbers;
 	vector<tuple<float, float>> intervals;
 	bool emptyFilter;
+	uint index;
 
-	DimFilter()
+	DimFilter(uint ind)
 	{
+		index = ind;
 		emptyFilter = true;
 	}
 
@@ -59,7 +63,7 @@ public:
 
 		for (int i = 0; i < n; i++)
 		{
-			newFilters.push_back(DimFilter());
+			newFilters.push_back(DimFilter(i));
 		}
 
 		return newFilters;
@@ -68,9 +72,11 @@ public:
 	static bool IsVectorValid(vector<DimFilter> filters, vector<float> vec)
 	{
 
-		for (int i = 0; i < vec.size(); i++)
+		for (int i = 0; i < filters.size(); i++)
 		{
-			if (!filters[i].IsDimValid(vec[i]))
+			uint vecIdx = filters[i].index;
+
+			if (!filters[i].IsDimValid(vec[vecIdx]))
 			{
 				return false;
 			}
@@ -78,6 +84,8 @@ public:
 
 		return true;
 	}
+
+	static vector<DimFilter> GenerateFilter(uint dims, float perc, int min, int max);
 };
 
 

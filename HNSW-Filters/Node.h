@@ -45,10 +45,6 @@ public:
 
 	~Node()
 	{
-		for (auto n : lNaighbours)
-		{
-			delete n;
-		}
 		lNaighbours.clear();
 	}
 
