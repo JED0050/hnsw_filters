@@ -1,9 +1,6 @@
 #pragma once
 
-#include <iostream>
 #include "DimFilter.h"
-
-using namespace std;
 
 vector<DimFilter> DimFilterHelper::GenerateFilter(uint dims, float perc, int min, int max)
 {
@@ -60,22 +57,53 @@ vector<DimFilter> DimFilterHelper::GenerateFilter(uint dims, float perc, int min
 			val2 = tmpVal;
 		}
 
-		if ((val2 - val1) < 10)
-			val2 += 10;
-
 		if (val1 < min)
 			val1 = min;
 
 		if (val2 > max)
 			val2 = max;
 
+		if ((val2 - val1) < 10)
+			val2 += 10;
+
+		if (val2 > max)
+			val2 = max;
+
+		if ((val2 - val1) < 10)
+			val1 -= 10;
+
+		if (val1 < min)
+			val1 = min;
+
 		newDim.AddInterval(val1, val2);
 
 		filter.push_back(newDim);
 
-		cout << "Idx: " << index << " Min: " << val1 << " Max: " << val2 << endl;
-		//printf("Idx: %.2f  Min: %g  Max: %lg\n", index, val1, val2);
+		cout << "\tIdx: " << index << " Min: " << val1 << " Max: " << val2 << endl;
 	}
 
+	return filter;
+}
+
+vector<DimFilter> DimFilterHelper::GenerateFilterRandom(uint dims, int min, int max)
+{
+	uint tier = rand() % 50; //èím více atributù tím rozsáhlejší filtr
+	tier /= 10; //0 - 4
+	tier += 1;	//1 - 5
+
+	float ftier = (float)tier / (float)10; //0.1-0.5
+
+	vector<DimFilter> filter;
+
+	int nMin = min;
+	int nMax = max;
+	
+	int part = (max - min) / 20;
+
+	nMin += part * (6 - tier);
+	nMax -= part * (6 - tier);
+
+	filter = GenerateFilter(dims, ftier, nMin, nMax);
+	
 	return filter;
 }

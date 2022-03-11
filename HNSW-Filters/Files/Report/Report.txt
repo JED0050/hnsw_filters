@@ -222,3 +222,199 @@ Precision Time [us]
 0.99401 847.573
 0.99543 926.441
 0.99636 1018.14
+
+
+
+
+Graf: 10kp, dim5, val 0-250
+
+Serch compare With filter and Without filter:
+Test 0
+Filter:
+        Idx: 0 Min: 52.72 Max: 198.69
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 200 efs : 200)
+        Found 18 / 10 nodes
+We found same nodes 10/10 times
+
+Test 1
+Filter:
+        Idx: 0 Min: 104.26 Max: 238.04
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 1200 efs : 1200)
+        Found 12 / 10 nodes
+We found same nodes 2/10 times
+
+Test 2
+Filter:
+        Idx: 3 Min: 39.13 Max: 111.53
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 30 efs : 200)
+        Found 12 / 10 nodes
+We found same nodes 10/10 times
+
+Test 3
+Filter:
+        Idx: 1 Min: 46.07 Max: 90.03
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 200 efs : 200)
+        Found 28 / 10 nodes
+We found same nodes 10/10 times
+
+Test 4
+Filter:
+        Idx: 1 Min: 74.63 Max: 248.59
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 400 efs : 400)
+        Found 21 / 10 nodes
+We found same nodes 10/10 times
+
+Test 5
+Filter:
+        Idx: 3 Min: 12.5 Max: 51.16
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 10 efs : 200)
+        Found 10 / 10 nodes
+We found same nodes 10/10 times
+
+Test 6
+Filter:
+        Idx: 2 Min: 23.21 Max: 58.33
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 30 efs : 200)
+        Found 13 / 10 nodes
+We found same nodes 10/10 times
+
+Test 7
+Filter:
+        Idx: 0 Min: 71.97 Max: 233.18
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 400 efs : 400)
+        Found 14 / 10 nodes
+We found same nodes 10/10 times
+
+Test 8
+Filter:
+        Idx: 3 Min: 106.13 Max: 214.9
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 600 efs : 600)
+        Found 16 / 10 nodes
+We found same nodes 10/10 times
+
+Test 9
+Filter:
+        Idx: 3 Min: 45.67 Max: 90.11
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 40 efs : 200)
+        Found 14 / 10 nodes
+We found same nodes 10/10 times
+
+
+
+
+
+
+
+
+Serch implementation compare With filter and Without filter:
+Test 0
+Filter:
+        Idx: 2 Min: 91.2 Max: 128.69
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 500 efs : 500)
+        Found 11 / 10 nodes
+We found same nodes 8/10 times (efs with filter was lower! could make difference 200/500)
+
+Test 1
+Filter:
+        Idx: 1 Min: 142.08 Max: 171.53
+With filter: (K: 10 efs: 200)
+        Found 0 / 10 nodes
+Without filter: (K: 3000 efs : 3000)
+        Found 12 / 10 nodes
+We found same nodes 0/10 times
+
+Test 2
+Filter:
+        Idx: 1 Min: 94.07 Max: 138.03
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 700 efs : 700)
+        Found 16 / 10 nodes
+We found same nodes 5/10 times (efs with filter was lower! could make difference 200/700)
+
+Test 3
+Filter:
+        Idx: 3 Min: 175.68 Max: 188.59
+With filter: (K: 10 efs: 200)
+        Found 2 / 10 nodes
+Without filter: (K: 4500 efs : 4500)
+        Found 18 / 10 nodes
+We found same nodes 1/10 times (efs with filter was lower! could make difference 200/4500)
+
+Test 4
+Filter:
+        Idx: 0 Min: 58.37 Max: 71.21
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 250 efs : 250)
+        Found 14 / 10 nodes
+We found same nodes 10/10 times
+
+Test 5
+Filter:
+        Idx: 0 Min: 55.18 Max: 143.97
+        Idx: 3 Min: 36.9 Max: 130.13
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 350 efs : 350)
+        Found 14 / 10 nodes
+We found same nodes 10/10 times
+
+Test 6
+Filter:
+        Idx: 1 Min: 72.83 Max: 95.67
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 350 efs : 350)
+        Found 18 / 10 nodes
+We found same nodes 10/10 times
+
+Test 7
+Filter:
+        Idx: 1 Min: 57.39 Max: 193.35
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 200 efs : 200)
+        Found 12 / 10 nodes
+We found same nodes 10/10 times
+
+Test 8
+Filter:
+        Idx: 4 Min: 113.78 Max: 170.26
+With filter: (K: 10 efs: 200)
+        Found 10 / 10 nodes
+Without filter: (K: 600 efs : 600)
+        Found 16 / 10 nodes
+We found same nodes 9/10 times (efs with filter was lower! could make difference 200/600)
+
+Test 9
+Filter:
+        Idx: 3 Min: 153.41 Max: 186.65
+        Idx: 0 Min: 141.03 Max: 172.6
+With filter: (K: 10 efs: 200)
+        Found 0 / 10 nodes
+Without filter: (K: 10000 efs : 10000)
+        Found 0 / 10 nodes
+We found same nodes 0/10 times

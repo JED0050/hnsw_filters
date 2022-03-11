@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <tuple>
 
+#define uint unsigned int
+
 using namespace std;
 
 class Node;
@@ -10,24 +12,24 @@ class Neighbours
 {
 public:
 	int layerID;
-	vector<unsigned int> neighbours;
+	vector<uint> neighbours;
 
 	Neighbours(int lID)
 	{
 		layerID = lID;
 	}
 
-	void Insert(unsigned int newNode)
+	void Insert(uint newNode)
 	{
 		neighbours.push_back(newNode);
 	}
 
-	unsigned int Size()
+	uint Size()
 	{
 		return neighbours.size();
 	}
 
-	vector<unsigned int> GetNeighbours()
+	vector<uint> GetNeighbours()
 	{
 		return neighbours;
 	}
@@ -38,17 +40,23 @@ public:
 class Node
 {
 public:
-	static unsigned int vectorSize;
+	static uint vectorSize;
 	//float values[128];
 	vector<float> values;
 	vector<Neighbours*> lNaighbours;
 
 	~Node()
 	{
-		lNaighbours.clear();
+		for (int i = 0; i < lNaighbours.size(); i++)
+		{
+			delete lNaighbours[i];
+			lNaighbours[i] = nullptr;
+		}
+
+		//lNaighbours.clear();
 	}
 
-	void Insert(unsigned int node, int layerID)
+	void Insert(uint node, int layerID)
 	{
 		if (lNaighbours.size() == 0)
 		{
@@ -101,7 +109,7 @@ public:
 		return new Neighbours(layerID);
 	}
 
-	vector<unsigned int> GetNeighboursVectorAtLayer(int layerID)
+	vector<uint> GetNeighboursVectorAtLayer(int layerID)
 	{
 		for (auto& nbr : lNaighbours)
 		{
@@ -111,7 +119,7 @@ public:
 			}
 		}
 
-		vector<unsigned int> emptyVector;
+		vector<uint> emptyVector;
 		return emptyVector;
 	}
 
@@ -124,7 +132,7 @@ public:
 	{
 		float distance = 0;
 
-		for (unsigned int i = 0; i < vectorSize; i++)
+		for (uint i = 0; i < vectorSize; i++)
 		{
 			float x = node[i];
 			float y = values[i];
@@ -141,15 +149,15 @@ public:
 class NodeDist
 {
 public:
-	unsigned int ID;
+	uint ID;
 	float distance;
 
-	NodeDist(unsigned int id)
+	NodeDist(uint id)
 	{
 		ID = id;
 	}
 
-	NodeDist(unsigned int id, float dist)
+	NodeDist(uint id, float dist)
 	{
 		ID = id;
 		distance = dist;
@@ -159,7 +167,7 @@ public:
 	{
 		distance = 0;
 
-		for (unsigned int i = 0; i < Node::vectorSize; i++)
+		for (uint i = 0; i < Node::vectorSize; i++)
 		{
 			float x = n1[i];
 			float y = n2[i];

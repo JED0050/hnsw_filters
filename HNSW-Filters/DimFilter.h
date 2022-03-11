@@ -1,4 +1,6 @@
 #pragma once
+
+#include <iostream>
 #include <vector>
 #include <tuple>
 
@@ -72,6 +74,11 @@ public:
 	static bool IsVectorValid(vector<DimFilter> filters, vector<float> vec)
 	{
 
+		if (filters.size() == 0)
+		{
+			return true;
+		}
+
 		for (int i = 0; i < filters.size(); i++)
 		{
 			uint vecIdx = filters[i].index;
@@ -86,6 +93,8 @@ public:
 	}
 
 	static vector<DimFilter> GenerateFilter(uint dims, float perc, int min, int max);
+
+	static vector<DimFilter> GenerateFilterRandom(uint dims, int min, int max);
 };
 
 

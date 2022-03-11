@@ -18,6 +18,8 @@
 #define EF_CONSTRUCTIONS 200
 #define VECTOR_SIZE 5
 
+#define uint unsigned int
+
 using namespace std::chrono;
 using namespace std;
 
@@ -252,7 +254,7 @@ void HNSWGraphAndQuerySavePrint()
     start = std::chrono::system_clock::now();
     for (int i = 0; i < NUMBER_OF_QUERY_NODES; i++)
     {
-        vector<unsigned int> closestNodes = hG.KNNSearchIndex(&queryNodes[i], K, EF_CONSTRUCTIONS);
+        vector<uint> closestNodes = hG.KNNSearchIndex(&queryNodes[i], K, EF_CONSTRUCTIONS);
 
         //cout << K << " nearest point: ";
 
@@ -334,7 +336,7 @@ void SiftTest()
     delete[] massQ;
     cout << "Query nodes done" << endl;
 
-    unsigned int* massQA = new unsigned int[qsize * answer_size];
+    uint* massQA = new uint[qsize * answer_size];
     std::ifstream inputQA("Data\\knnQA1M.bin", std::ios::binary);
     if (!inputQA.is_open()) throw std::runtime_error("Input result file not opened!");
     inputQA.read((char*)massQA, qsize * answer_size * sizeof(int));
@@ -367,7 +369,7 @@ void SiftTest()
         float positive = 0;
         for (int i = 0; i < qsize; i++)
         {
-            vector<unsigned int> result = hnsw.KNNSearchIndex(queryNodes[i], k, ef);
+            vector<uint> result = hnsw.KNNSearchIndex(queryNodes[i], k, ef);
 
             //int c1 = result.size();
 
@@ -433,7 +435,7 @@ void FilterTest()
     //4: <0, 100> || <150, 200> 
 
     vector<DimFilter> filters;
-    
+
     DimFilter f0 = DimFilter(0);
     f0.AddInterval(50, 250);
     f0.AddEqNumber(0);
@@ -451,7 +453,7 @@ void FilterTest()
     filters.push_back(f4);
 
     Node queryNode = Node();
-    queryNode.values = vector<float>({0,10,20,30,40});
+    queryNode.values = vector<float>({ 0,10,20,30,40 });
 
     cout << "Inserting:" << endl;
     Hnsw hnsw = Hnsw(16, 16, 200);  //M MMax Efc
@@ -463,7 +465,7 @@ void FilterTest()
     }
 
     cout << "Serch:" << endl;
-    vector<unsigned int> result = hnsw.KNNFilter(&queryNode, filters, 10, 200);
+    vector<uint> result = hnsw.KNNFilter(&queryNode, filters, 10, 200);
 
     for (auto i : result)
     {
@@ -485,37 +487,123 @@ void FilterFullTest()
     cout << "Inserting:" << endl;
     Hnsw hnsw = Hnsw(16, 16, 200);  //M MMax Efc
     vector<Node> graphNodes = LoadNodesFromFile(FILE_NAME);
-    //for (int i = 0; i < graphNodes.size(); i++)
-    for (int i = 0; i < 30000; i++)
+    //for (int i = 0; i < 10000; i++)
+    for (int i = 0; i < graphNodes.size(); i++)
     {
         hnsw.Insert(&graphNodes[i]);
     }
+    cout << endl;
 
-    cout << "Serch:" << endl;
+    cout << "Serch implementation compare With filter and Without filter:" << endl;
 
     Node queryNode = Node();
     queryNode.values = vector<float>({ 0,10,20,30,40 });
 
+    uint K = 10;
+    uint efs = 200;
+
     for (int i = 0; i < 10; i++)
     {
         cout << "Test " << i << endl;
+        cout << "Filter:" << endl;
+        //vector<DimFilter> filters = DimFilterHelper::GenerateFilter(Node::vectorSize, 0.1, 0, 250);
+        vector<DimFilter> filters = DimFilterHelper::GenerateFilterRandom(Node::vectorSize, 0, 250);
 
-        vector<DimFilter> filters = DimFilterHelper::GenerateFilter(Node::vectorSize, 0.5, 0, 250);
+        cout << "With filter: (K: " << K << " efs: " << efs << ")" << endl;
+        vector<uint> resFilt = hnsw.KNNFilter(&queryNode, filters, K, efs);
 
-        vector<unsigned int> result = hnsw.KNNFilter(&queryNode, filters, 10, 200);
+        cout << "\tFound " << resFilt.size() << " / " << K << " nodes" << endl;
 
-        for (auto i : result)
+        //if (resFilt.size() == 0)
+        //{
+        //    cout << endl;
+        //    continue;
+        //}
+
+        /*for (auto i : resFilt)
         {
-            cout << i << ":\t";
+            cout << "\t" << i << ":\t";
 
             for (auto v : graphNodes[i].values)
             {
                 cout << v << " ";
             }
             cout << endl;
+        }*/
+
+
+        vector<uint> resNoFilt;
+        uint tmpK = 0;
+        uint efsNF = efs;
+
+        while (resNoFilt.size() < K)
+        {
+            if (tmpK < 100)
+                tmpK += 10;
+            else if (tmpK < 500)
+                tmpK += 50;
+            else if (tmpK < 1000)
+                tmpK += 100;
+            else if (tmpK < 5000)
+                tmpK += 500;
+            else if (tmpK < 10000)
+                tmpK += 1000;
+
+            if (efsNF < tmpK)
+                efsNF = tmpK;
+
+            if (tmpK > graphNodes.size() || tmpK > 9000)
+            {
+                break;
+            }
+
+            resNoFilt.clear();
+            vector<uint> res = hnsw.KNNSearchIndex(&queryNode, tmpK, efsNF);
+
+            for (auto v : res)
+            {
+                if (DimFilterHelper::IsVectorValid(filters, graphNodes[v].values))
+                {
+                    resNoFilt.push_back(v);
+                }
+            }
+
+            //cout << tmpK << endl;
         }
 
-        cout << endl;
+
+        cout << "Without filter: (K: " << tmpK << " efs : " << efsNF << ")" << endl;
+        cout << "\tFound " << resNoFilt.size() << " / " << K << " nodes" << endl;
+
+        /*for (auto i : resNoFilt)
+        {
+            cout << "\t" << i << ":\t";
+
+            for (auto v : graphNodes[i].values)
+            {
+                cout << v << " ";
+            }
+            cout << endl;
+        }*/
+
+        uint sameCtr = 0;
+
+        for (auto i : resFilt)
+        {
+            if (find(resNoFilt.begin(), resNoFilt.end(), i) != resNoFilt.end())
+            {
+                sameCtr++;
+            }
+        }
+
+        cout << "We found same nodes " << sameCtr << "/" << K << " times";
+
+        if (sameCtr < K && efs < efsNF && resFilt.size() != 0)
+        {
+            cout << " (efs with filter was lower! could make difference " << efs << "/" << efsNF << ")";
+        }
+
+        cout << endl << endl;
     }
 }
 
