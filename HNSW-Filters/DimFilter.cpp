@@ -1,6 +1,10 @@
 #pragma once
 
 #include "DimFilter.h"
+#include <algorithm>
+#include <string>
+#include <iomanip>
+#include <sstream>
 
 vector<DimFilter> DimFilterHelper::GenerateFilter(uint dims, float perc, int min, int max)
 {
@@ -79,7 +83,7 @@ vector<DimFilter> DimFilterHelper::GenerateFilter(uint dims, float perc, int min
 
 		filter.push_back(newDim);
 
-		cout << "\tIdx: " << index << " Min: " << val1 << " Max: " << val2 << endl;
+		//cout << "\tIdx: " << index << " Min: " << val1 << " Max: " << val2 << endl;
 	}
 
 	return filter;
@@ -106,4 +110,154 @@ vector<DimFilter> DimFilterHelper::GenerateFilterRandom(uint dims, int min, int 
 	filter = GenerateFilter(dims, ftier, nMin, nMax);
 	
 	return filter;
+}
+
+vector<DimFilter> DimFilterHelper::GenerateFilterTotalRandom(uint dims, int min, int max)
+{
+	uint actDims = (rand() % 4) + 1;//(rand() % dims) + 1;
+
+	vector<uint> indexes;
+
+	while (indexes.size() < actDims)
+	{
+		uint index = rand() % dims;
+
+		if (!(find(indexes.begin(), indexes.end(), index) != indexes.end()))
+		{
+			indexes.push_back(index);
+		}
+	}
+
+	sort(indexes.begin(), indexes.end());
+
+	vector<DimFilter> filter;
+
+	for (auto i : indexes)
+	{
+		DimFilter nF = DimFilter(i);
+
+		/*float diff = min + (float)(rand() % (max - min) * 100) / 100;
+		diff /= 100;
+		float fMin = min + diff;
+		float fMax = max - diff;*/
+
+		//float fMin = min + (float)(rand() % (int)((max - min) * 100)) / 100;
+		//float fMax = min + (float)(rand() % (int)((max - min) * 100)) / 100;
+
+		float fMin = min + (rand() % (int)(max - min));
+		float fMax = min + (rand() % (int)(max - min));
+
+		if (rand() % 10000 >= 9000)
+			fMin = 0;
+
+		if (fMin < fMax)
+			nF.AddInterval(fMin, fMax);
+		else
+			nF.AddInterval(fMax, fMin);
+
+		filter.push_back(nF);
+	}
+
+	return filter;
+}
+
+vector<DimFilter> DimFilterHelper::LoadFilterFromString(string filterString)
+{
+	vector<DimFilter> filter;
+
+	uint cursor = 0;
+
+	while (cursor < filterString.length())
+	{
+		uint vectorIndex = stoi(filterString.substr(cursor, filterString.find(":", cursor)));
+
+		DimFilter filterPart = DimFilter(vectorIndex);
+
+		cursor = filterString.find(":", cursor) + 1;
+
+		while (cursor < filterString.length() && filterString[cursor] != ';')
+		{
+			if (filterString[cursor] == '<')
+			{
+				cursor++;
+
+				uint del = filterString.find(",", cursor);
+				float val1 = stof(filterString.substr(cursor, del - cursor));
+
+				cursor = del + 1;
+				del = filterString.find(">", cursor);
+				float val2 = stof(filterString.substr(cursor, del - cursor));
+
+				filterPart.AddInterval(val1, val2);
+
+				cursor = del;
+			}
+			else if (filterString[cursor] == '(')
+			{
+				cursor++;
+
+				uint del = filterString.find(")", cursor);
+				float val = stof(filterString.substr(cursor, del - cursor));
+				filterPart.AddEqNumber(val);
+
+				cursor = del;
+			}
+
+			cursor++;
+		}
+		cursor++;
+
+
+		filter.push_back(filterPart);
+
+	}
+
+	return filter;
+}
+
+string DimFilterHelper::GetFilterString(vector<DimFilter> filter)
+{
+	//0:<50.55,250.00>(0.00);2:<10.00,20.00><30.00,100.30>;4:<0.00,100.00><150.00,200.00>;
+
+	string filterString = "";
+
+	for (auto f : filter)
+	{
+		filterString += to_string(f.index);
+		filterString += ":";
+
+		for (auto interval : f.intervals)
+		{
+			filterString += "<";
+
+			stringstream stream;
+			stream << std::fixed << std::setprecision(2) << get<0>(interval);
+			string val = stream.str();
+			filterString += val;
+
+			filterString += ",";
+
+			stream.str("");
+			stream << std::fixed << std::setprecision(2) << get<1>(interval);
+			val = stream.str();
+			filterString += val;
+
+			filterString += ">";
+		}
+
+		for (auto number : f.eqNumbers)
+		{
+			filterString += "(";
+
+			stringstream stream;
+			stream << std::fixed << std::setprecision(2) << number;
+			filterString += stream.str();
+
+			filterString += ")";
+		}
+
+		filterString += ";";
+	}
+
+	return filterString;
 }

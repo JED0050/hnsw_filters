@@ -65,6 +65,22 @@ vector<Node> LoadNodesFromFile(string fileName)
     return nodes;
 }
 
+Node GetRandomPoint(uint vecdim, float minV, float maxV)
+{
+    vector<float> vecVals;
+
+    for (uint i = 0; i < vecdim; i++)
+    {
+        float vecVal = minV + (float)(rand() % (int)((maxV - minV) * 100)) / 100;
+        vecVals.push_back(vecVal);
+    }
+
+    Node node = Node();
+    node.values = vecVals;
+
+    return node;
+}
+
 void GeneratePoints(int numOfPoints, int numOfVectors, int minV, int maxV)
 {
 
@@ -203,17 +219,17 @@ void HNSWSavePrint()
     vector<Node> nodes = LoadNodesFromFile(FILE_NAME);
     Hnsw hG = Hnsw(16, 16, EF_CONSTRUCTIONS);
 
-    std::cout << "Start inserting\n";
-    auto start = std::chrono::system_clock::now();
+    cout << "Start inserting\n";
+    auto start = system_clock::now();
 
     for (auto& n : nodes)
     {
         hG.Insert(&n);
     }
 
-    auto end = std::chrono::system_clock::now();
-    double dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-    std::cout << "Insert time " << dur / 1000 << " [s] \n";
+    auto end = system_clock::now();
+    double dur = duration_cast<milliseconds>(end - start).count();
+    cout << "Insert time " << dur / 1000 << " [s] \n";
 
     hG.SavePrint(NUMBER_OF_GRAPH_NODES, GFILE_NAME);
 
@@ -482,129 +498,315 @@ void FilterTest()
 
 void FilterFullTest()
 {
-    Node::vectorSize = VECTOR_SIZE;
+    /////////////////////////////// INIT ///////////////////////////////
+    uint graphNodesCount = 100000;// 1000000;
+    uint vecdim = 128;
 
+    Node::vectorSize = vecdim;
+
+    float* mass = new float[graphNodesCount * vecdim];
+    std::ifstream input("Data\\sift1M.bin", std::ios::binary);
+    if (!input.good()) throw std::runtime_error("Input data file not opened!");
+    input.read((char*)mass, graphNodesCount * vecdim * sizeof(float));
+    input.close();
+
+    vector<Node> graphNodes;
+    for (uint i = 0; i < graphNodesCount; i++)
+    {
+        vector<float> vecVal;
+        Node node;
+
+        for (uint j = 0; j < vecdim; j++)
+        {
+            vecVal.push_back(mass[i*vecdim + j]);
+        }
+
+        node.values = vecVal;
+
+        graphNodes.push_back(node);
+    }
+
+    delete[] mass;
+    mass = nullptr;
+
+    /////////////////////////////// INSERTING /////////////////////////////// 
     cout << "Inserting:" << endl;
     Hnsw hnsw = Hnsw(16, 16, 200);  //M MMax Efc
-    vector<Node> graphNodes = LoadNodesFromFile(FILE_NAME);
-    //for (int i = 0; i < 10000; i++)
-    for (int i = 0; i < graphNodes.size(); i++)
+
+    for (uint i = 0; i < graphNodes.size(); i++)
     {
         hnsw.Insert(&graphNodes[i]);
     }
-    cout << endl;
+    cout << "Done." << endl;
 
+
+    /////////////////////////////// SEARCH WITH AND WITHOUT FILTER IMPLEMENTATION ///////////////////////////////
     cout << "Serch implementation compare With filter and Without filter:" << endl;
-
-    Node queryNode = Node();
-    queryNode.values = vector<float>({ 0,10,20,30,40 });
 
     uint K = 10;
     uint efs = 200;
 
-    for (int i = 0; i < 10; i++)
+    float minDimVal = 0;
+    float maxDimVal = 219;
+
+    uint selVals[] = { 10, 25, 50, 75 };
+
+    string path = "Files\\Filters\\";
+
+    for (auto sel : selVals)
     {
-        cout << "Test " << i << endl;
-        cout << "Filter:" << endl;
-        //vector<DimFilter> filters = DimFilterHelper::GenerateFilter(Node::vectorSize, 0.1, 0, 250);
-        vector<DimFilter> filters = DimFilterHelper::GenerateFilterRandom(Node::vectorSize, 0, 250);
+        ifstream fileFilter(path + "sel" + to_string(sel) + ".txt");
 
-        cout << "With filter: (K: " << K << " efs: " << efs << ")" << endl;
-        vector<uint> resFilt = hnsw.KNNFilter(&queryNode, filters, K, efs);
+        uint tCtr = 0;
+        uint tCtrMax = 1000;
 
-        cout << "\tFound " << resFilt.size() << " / " << K << " nodes" << endl;
+        string filterString = "";
 
-        //if (resFilt.size() == 0)
-        //{
-        //    cout << endl;
-        //    continue;
-        //}
+        uint totalTime = 0;
+        uint allValidNodes = 0;
+        uint sameValidNodes = 0;
 
-        /*for (auto i : resFilt)
+        while (getline(fileFilter, filterString) && tCtr < tCtrMax)
         {
-            cout << "\t" << i << ":\t";
+            vector<DimFilter> filter = DimFilterHelper::LoadFilterFromString(filterString);
+            Node queryNode = GetRandomPoint(vecdim, minDimVal, maxDimVal);
 
-            for (auto v : graphNodes[i].values)
+            //  FILTER QUERY
+            //cout << "With filter: (K: " << K << " efs: " << efs << ")" << endl;
+            auto start = std::chrono::steady_clock::now();
+
+            vector<uint> resFilt = hnsw.KNNFilter(&queryNode, filter, K, efs);
+
+            auto end = std::chrono::steady_clock::now();
+            uint time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();            
+            //cout << "\tFound " << resFilt.size() << " / " << K << " nodes" << endl;
+
+            totalTime += time;
+
+            //  NON FILTER QUERY
+            vector<uint> resNoFilt;
+            uint tmpK = 0;
+            uint efsNF = efs;
+
+            while (resNoFilt.size() < K)
             {
-                cout << v << " ";
-            }
-            cout << endl;
-        }*/
+                if (tmpK < 100)
+                    tmpK += 10;
+                else if (tmpK < 500)
+                    tmpK += 50;
+                else if (tmpK < 1000)
+                    tmpK += 100;
+                else if (tmpK < 5000)
+                    tmpK += 500;
+                else
+                    tmpK += 1000;
 
+                if (efsNF < tmpK)
+                    efsNF = tmpK;
 
-        vector<uint> resNoFilt;
-        uint tmpK = 0;
-        uint efsNF = efs;
-
-        while (resNoFilt.size() < K)
-        {
-            if (tmpK < 100)
-                tmpK += 10;
-            else if (tmpK < 500)
-                tmpK += 50;
-            else if (tmpK < 1000)
-                tmpK += 100;
-            else if (tmpK < 5000)
-                tmpK += 500;
-            else if (tmpK < 10000)
-                tmpK += 1000;
-
-            if (efsNF < tmpK)
-                efsNF = tmpK;
-
-            if (tmpK > graphNodes.size() || tmpK > 9000)
-            {
-                break;
-            }
-
-            resNoFilt.clear();
-            vector<uint> res = hnsw.KNNSearchIndex(&queryNode, tmpK, efsNF);
-
-            for (auto v : res)
-            {
-                if (DimFilterHelper::IsVectorValid(filters, graphNodes[v].values))
+                if (tmpK > graphNodes.size() || tmpK > 900)
                 {
-                    resNoFilt.push_back(v);
+                    break;
+                }
+
+                resNoFilt.clear();
+                vector<uint> res = hnsw.KNNSearchIndex(&queryNode, tmpK, efsNF);
+
+                for (auto v : res)
+                {
+                    if (DimFilterHelper::IsVectorValid(filter, graphNodes[v].values))
+                    {
+                        resNoFilt.push_back(v);
+                    }
+                }
+                //cout << "\t" << tmpK << endl;
+            }
+
+            //cout << "Without filter: (K: " << tmpK << " efs : " << efsNF << ")" << endl;
+            //cout << "\tFound " << resNoFilt.size() << " / " << K << " nodes" << endl;
+            uint sameCtr = 0;
+            for (auto i : resFilt)
+            {
+                if (find(resNoFilt.begin(), resNoFilt.end(), i) != resNoFilt.end())
+                {
+                    sameCtr++;
                 }
             }
 
-            //cout << tmpK << endl;
-        }
+            sameValidNodes += sameCtr;
+            allValidNodes += resFilt.size();
 
+            //cout << "We found same nodes " << sameCtr << "/" << K << " times";
 
-        cout << "Without filter: (K: " << tmpK << " efs : " << efsNF << ")" << endl;
-        cout << "\tFound " << resNoFilt.size() << " / " << K << " nodes" << endl;
-
-        /*for (auto i : resNoFilt)
-        {
-            cout << "\t" << i << ":\t";
-
-            for (auto v : graphNodes[i].values)
+            /*if (sameCtr < K && efs < efsNF && resFilt.size() != 0)
             {
-                cout << v << " ";
+                cout << " (efs with filter was lower! could make difference " << efs << "/" << efsNF << ")";
             }
-            cout << endl;
-        }*/
+            cout << endl << endl;*/
 
-        uint sameCtr = 0;
-
-        for (auto i : resFilt)
-        {
-            if (find(resNoFilt.begin(), resNoFilt.end(), i) != resNoFilt.end())
-            {
-                sameCtr++;
-            }
+            tCtr++;
         }
 
-        cout << "We found same nodes " << sameCtr << "/" << K << " times";
+        float avgTime = totalTime / (float)tCtr;
+        float percSame = sameValidNodes / (float)allValidNodes;
 
-        if (sameCtr < K && efs < efsNF && resFilt.size() != 0)
-        {
-            cout << " (efs with filter was lower! could make difference " << efs << "/" << efsNF << ")";
-        }
+        printf("Selectivity: %d[%c]\tAvgTime: %.2f[us]\tSame: %.4f\tTests: %d\n",sel, '%', avgTime, percSame, tCtr);
 
-        cout << endl << endl;
+        fileFilter.close();
     }
+
+}
+
+void FilterSelectivityTest()
+{
+    uint node_count = 1000000;
+    uint vecdim = 128;
+
+    float* mass = new float[node_count * vecdim];
+    std::ifstream input("Data\\sift1M.bin", std::ios::binary);
+    if (!input.good()) throw std::runtime_error("Input data file not opened!");
+    input.read((char*)mass, node_count * vecdim * sizeof(float));
+    input.close();
+
+    vector<vector<float>> nodes;
+
+    for (uint i = 0; i < node_count; i++)
+    {
+        vector<float> node;
+
+        for (uint j = 0; j < vecdim; j++)
+        {
+            node.push_back(mass[i * vecdim + j]);
+        }
+
+        nodes.push_back(node);
+    }
+
+    //selektivita 10% 25% 50% 75% 90%
+
+    uint sel10 = 0, sel25 = 0, sel50 = 0, sel75 = 0, sel90 = 0;
+    uint selLimit = 100;
+
+    ifstream fileSel10("Files\\Filters\\sel10.txt");
+    string tLine;
+    while (getline(fileSel10, tLine))
+        sel10++;
+    fileSel10.close();
+
+    ifstream fileSel25("Files\\Filters\\sel25.txt");
+    while (getline(fileSel25, tLine))
+        sel25++;
+    fileSel25.close();
+
+    ifstream fileSel50("Files\\Filters\\sel50.txt");
+    while (getline(fileSel50, tLine))
+        sel50++;
+    fileSel50.close();
+
+    ifstream fileSel75("Files\\Filters\\sel75.txt");
+    while (getline(fileSel75, tLine))
+        sel75++;
+    fileSel75.close();
+
+    ifstream fileSel90("Files\\Filters\\sel90.txt");
+    while (getline(fileSel90, tLine))
+        sel90++;
+    fileSel90.close();
+
+    while(true)
+    {
+        if (sel10 >= selLimit && sel25 >= selLimit && sel50 >= selLimit && sel75 >= selLimit && sel90 >= selLimit)
+            break;
+
+        uint valid = 0;
+
+        vector<DimFilter> filter = DimFilterHelper::GenerateFilterTotalRandom(vecdim, 0, 219);//DimFilterHelper::GenerateFilter(vecdim, 0.0001, 0, 30);
+
+        for (uint i = 0; i < node_count; i++)
+        {
+            if (DimFilterHelper::IsVectorValid(filter, nodes[i]))
+            {
+                valid++;
+            }
+        }
+
+        float selVal;       //0 - hodně vybíravý filter, 1 - filter co příjme vše
+
+        if (valid == 0)
+        {
+            selVal = 0;
+        }
+        else
+        {
+            selVal = valid / (float)node_count;
+        }
+
+
+        //cout << valid << " " << selVal << " " << (int)(selVal * 100) << endl;
+
+        uint selPercVal = (int)(selVal * 100);
+
+        std::printf("valid/total %d/%d\tsel:%.2f perc:%d\t", valid, node_count, selVal, selPercVal);
+
+        if (7 <= selPercVal && selPercVal <= 13 && sel10 < selLimit)
+        {
+            cout << "10" << endl;
+            ofstream file_out;
+            file_out.open("Files\\Filters\\sel10.txt", std::ios_base::app);
+            file_out << DimFilterHelper::GetFilterString(filter) << endl;
+            file_out.close();
+
+            sel10++;
+        }
+        else if (22 <= selPercVal && selPercVal <= 28 && sel25 < selLimit)
+        {
+            cout << "25" << endl;
+            ofstream file_out;
+            file_out.open("Files\\Filters\\sel25.txt", std::ios_base::app);
+            file_out << DimFilterHelper::GetFilterString(filter) << endl;
+            file_out.close();
+
+            sel25++;
+        }
+        else if (47 <= selPercVal && selPercVal <= 53 && sel50 < selLimit)
+        {
+            cout << "50" << endl;
+            ofstream file_out;
+            file_out.open("Files\\Filters\\sel50.txt", std::ios_base::app);
+            file_out << DimFilterHelper::GetFilterString(filter) << endl;
+            file_out.close();
+
+            sel50++;
+        }
+        else if (72 <= selPercVal && selPercVal <= 78 && sel75 < selLimit)
+        {
+            cout << "75" << endl;
+            ofstream file_out;
+            file_out.open("Files\\Filters\\sel75.txt", std::ios_base::app);
+            file_out << DimFilterHelper::GetFilterString(filter) << endl;
+            file_out.close();
+
+            sel75++;
+        }
+        else if (87 <= selPercVal && selPercVal <= 93 && sel90 < selLimit)
+        {
+            cout << "90" << endl;
+            ofstream file_out;
+            file_out.open("Files\\Filters\\sel90.txt", std::ios_base::app);
+            file_out << DimFilterHelper::GetFilterString(filter) << endl;
+            file_out.close();
+
+            sel90++;
+        }
+        else
+        {
+            cout << endl;
+        }
+
+    }
+
+    delete[] mass;
+    mass = nullptr;
 }
 
 int main()
@@ -622,8 +824,10 @@ int main()
     //CompareFiles(GFILE_NAME, GUFILE_NAME);
     //CompareFiles(AFILE_NAME, UFILE_NAME);
 
+    FilterSelectivityTest();
     //FilterTest();
-    FilterFullTest();
+    //FilterFullTest();
+
 
     return 0;
 }

@@ -93,8 +93,11 @@ public:
 	}
 
 	static vector<DimFilter> GenerateFilter(uint dims, float perc, int min, int max);
-
 	static vector<DimFilter> GenerateFilterRandom(uint dims, int min, int max);
+	static vector<DimFilter> GenerateFilterTotalRandom(uint dims, int min, int max);
+
+	static vector<DimFilter> LoadFilterFromString(string filterString);
+	static string GetFilterString(vector<DimFilter> filter);
 };
 
 
