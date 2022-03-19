@@ -315,7 +315,19 @@ public:
 	{
 		vector<NodeDist> candidateNodes;
 		vector<NodeDist> nearestNodes;
-		linearHash visitedNodes = linearHash();
+
+		//uint hashSize = 1048576;
+
+		uint hashSize = 16384;			//2^14
+		if (K > 1000 && K < 10000)
+			hashSize = 65536;			//2^16
+		else if (K >= 10000)
+			hashSize = 262144;			//2^18
+		else if (K >= 100000)
+			hashSize = 1048576;			//2^20
+
+		linearHash visitedNodes = linearHash(hashSize);
+		
 		visitedNodes.clear();
 
 		float nNDist = entryPoint.distance;
@@ -337,10 +349,15 @@ public:
 			if (c.distance > nNDist)
 				break;
 
+			//cout << "For: " << allNodes[c.ID]->GetNeighboursVectorAtLayer(0).size() << endl;
+
 			for (auto n : allNodes[c.ID]->GetNeighboursVectorAtLayer(0))
 			{
+				//cout << "Is visited?" << endl;
 				if (!visitedNodes.get(n))
 				{
+					//cout << "New visited: " << n << endl;
+
 					visitedNodes.insert(n);
 
 					NodeDist newNode = NodeDist(n);
@@ -348,6 +365,8 @@ public:
 
 					if (newNode.distance < nNDist || nearestNodes.size() < K)
 					{
+						//cout << "Is closer " << endl;
+
 						candidateNodes.push_back(newNode);
 						std::push_heap(candidateNodes.begin(), candidateNodes.end(), NodeDistanceSortFurthest());
 						nearestNodes.push_back(newNode);
@@ -364,8 +383,13 @@ public:
 
 
 				}
+				//else
+					//cout << "Was visited!" << endl;
 			}
 		}
+
+
+		//cout << "Almost:" << nearestNodes.size() << endl;
 
 		sort(nearestNodes.begin(), nearestNodes.end(), NodeDistanceSortNearest());
 		return nearestNodes;
@@ -433,6 +457,7 @@ public:
 	{
 		vector<NodeDist> candidateNodes;
 		vector<NodeDist> nearestNodes;
+		//linearHash visitedNodes = linearHash(1048576);
 		linearHash visitedNodes = linearHash();
 		visitedNodes.clear();
 

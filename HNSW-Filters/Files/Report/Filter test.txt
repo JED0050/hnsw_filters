@@ -1,0 +1,70 @@
+Done. Insert time 1893.27 [s]
+
+Serch implementation compare With filter and Without filter:
+Selectivity: 10[%]      AvgTime: 3544.0300[us]  Same: 0.0000     (9.9960/10)    Tests: 1000
+Selectivity: 25[%]      AvgTime: 3481.4939[us]  Same: 0.0000     (10.0000/10)   Tests: 662
+Selectivity: 50[%]      AvgTime: 3426.1204[us]  Same: 0.0000     (10.0000/10)   Tests: 266
+Selectivity: 75[%]      AvgTime: 3509.4539[us]  Same: 0.0000     (10.0000/10)   Tests: 130
+
+Search KNN based on EF
+Start querying
+Precision: 0.83862, ef: 20, avg: 413.289 [us]; min: 412 [us];
+Precision: 0.8953, ef: 30, avg: 517.506 [us]; min: 515 [us];
+Precision: 0.92742, ef: 40, avg: 618.912 [us]; min: 616 [us];
+Precision: 0.94677, ef: 50, avg: 705.307 [us]; min: 704 [us];
+Precision: 0.95976, ef: 60, avg: 796.93 [us]; min: 796 [us];
+Precision: 0.96877, ef: 70, avg: 887.826 [us]; min: 884 [us];
+Precision: 0.97486, ef: 80, avg: 978.329 [us]; min: 978 [us];
+Precision: 0.97943, ef: 90, avg: 1068.17 [us]; min: 1066 [us];
+Precision: 0.98313, ef: 100, avg: 1158.61 [us]; min: 1155 [us];
+Precision: 0.98599, ef: 110, avg: 1245.67 [us]; min: 1244 [us];
+Precision: 0.98806, ef: 120, avg: 1332.38 [us]; min: 1328 [us];
+Precision: 0.98971, ef: 130, avg: 1413.94 [us]; min: 1411 [us];
+Precision: 0.99114, ef: 140, avg: 1500.58 [us]; min: 1496 [us];
+Precision: 0.99243, ef: 150, avg: 1585.35 [us]; min: 1582 [us];
+Precision: 0.99327, ef: 160, avg: 1670.44 [us]; min: 1668 [us];
+Precision: 0.99414, ef: 170, avg: 1750.63 [us]; min: 1747 [us];
+Precision: 0.99475, ef: 180, avg: 1832.2 [us]; min: 1827 [us];
+Precision: 0.99524, ef: 190, avg: 1915.4 [us]; min: 1912 [us];
+Precision: 0.99571, ef: 200, avg: 1997.4 [us]; min: 1993 [us];
+Precision: 0.99618, ef: 210, avg: 2072.92 [us]; min: 2068 [us];
+Precision: 0.99633, ef: 220, avg: 2152.36 [us]; min: 2150 [us];
+Precision: 0.99672, ef: 230, avg: 2233.03 [us]; min: 2225 [us];
+Precision: 0.99693, ef: 240, avg: 2327.24 [us]; min: 2308 [us];
+Precision: 0.99703, ef: 250, avg: 2382.41 [us]; min: 2374 [us];
+Precision: 0.99738, ef: 260, avg: 2840.25 [us]; min: 2609 [us];
+Precision: 0.99764, ef: 270, avg: 2609.32 [us]; min: 2605 [us];
+Precision: 0.99788, ef: 280, avg: 2671.21 [us]; min: 2669 [us];
+Precision: 0.99794, ef: 290, avg: 2752.72 [us]; min: 2748 [us];
+Precision: 0.99806, ef: 300, avg: 2832.61 [us]; min: 2829 [us];
+
+Precision Time [us]
+0.83862 412.114
+0.8953 515.597
+0.92742 616.118
+0.94677 704.325
+0.95976 796.472
+0.96877 884.949
+0.97486 978.253
+0.97943 1066.39
+0.98313 1155.64
+0.98599 1244.59
+0.98806 1328.51
+0.98971 1411.74
+0.99114 1496.98
+0.99243 1582.47
+0.99327 1668.72
+0.99414 1747.61
+0.99475 1827.99
+0.99524 1912.62
+0.99571 1993.68
+0.99618 2068.96
+0.99633 2150.11
+0.99672 2225.34
+0.99693 2308.21
+0.99703 2374.86
+0.99738 2609.75
+0.99764 2605.14
+0.99788 2669.85
+0.99794 2748.31
+0.99806 2829.61

@@ -499,8 +499,9 @@ void FilterTest()
 void FilterFullTest()
 {
     /////////////////////////////// INIT ///////////////////////////////
-    uint graphNodesCount = 100000;// 1000000;
+    uint graphNodesCount = 1000000;
     uint vecdim = 128;
+    uint efc = 200;
 
     Node::vectorSize = vecdim;
 
@@ -529,15 +530,20 @@ void FilterFullTest()
     delete[] mass;
     mass = nullptr;
 
-    /////////////////////////////// INSERTING /////////////////////////////// 
-    cout << "Inserting:" << endl;
-    Hnsw hnsw = Hnsw(16, 16, 200);  //M MMax Efc
 
+    /////////////////////////////// INSERTING /////////////////////////////// 
+    cout << "Start inserting:" << endl;
+    Hnsw hnsw = Hnsw(16, 16, efc);  //M MMax Efc
+
+    auto start = std::chrono::system_clock::now();
     for (uint i = 0; i < graphNodes.size(); i++)
     {
         hnsw.Insert(&graphNodes[i]);
     }
-    cout << "Done." << endl;
+    auto end = std::chrono::system_clock::now();
+    double dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+
+    cout << "Done. Insert time " << dur / 1000 << " [s] \n\n";
 
 
     /////////////////////////////// SEARCH WITH AND WITHOUT FILTER IMPLEMENTATION ///////////////////////////////
@@ -588,7 +594,7 @@ void FilterFullTest()
             uint tmpK = 0;
             uint efsNF = efs;
 
-            while (resNoFilt.size() < K)
+            while (resNoFilt.size() < resFilt.size())
             {
                 if (tmpK < 100)
                     tmpK += 10;
@@ -598,13 +604,17 @@ void FilterFullTest()
                     tmpK += 100;
                 else if (tmpK < 5000)
                     tmpK += 500;
-                else
+                else if (tmpK < 50000)
                     tmpK += 1000;
+                else if (tmpK < 500000)
+                    tmpK += 10000;
+                else
+                    tmpK += 100000;
 
                 if (efsNF < tmpK)
                     efsNF = tmpK;
 
-                if (tmpK > graphNodes.size() || tmpK > 900)
+                if (tmpK > graphNodes.size() || tmpK > 300000)
                 {
                     break;
                 }
@@ -649,11 +659,100 @@ void FilterFullTest()
 
         float avgTime = totalTime / (float)tCtr;
         float percSame = sameValidNodes / (float)allValidNodes;
+        float avgValid = allValidNodes / (float)tCtr;
 
-        printf("Selectivity: %d[%c]\tAvgTime: %.2f[us]\tSame: %.4f\tTests: %d\n",sel, '%', avgTime, percSame, tCtr);
+        printf("Selectivity: %d[%c]\tAvgTime: %.4f[us]\tSame: %.4f\t (%.4f/%d)\tTests: %d\n",sel, '%', avgTime, percSame, avgValid, K, tCtr);
 
         fileFilter.close();
     }
+    cout << endl;
+
+
+    /////////////////////////////// SEARCH KNN BASED ON EF ///////////////////////////////
+
+    uint qsize = 10000;
+    uint answer_size = 100;
+
+    vector<Node> queryNodes;
+    float* massQ = new float[qsize * vecdim];
+    std::ifstream inputQ("Data\\siftQ1M.bin", std::ios::binary);
+    if (!inputQ.good()) throw std::runtime_error("Input query file not opened!");
+    inputQ.read((char*)massQ, qsize * vecdim * sizeof(float));
+    inputQ.close();
+    for (int i = 0; i < qsize; i++)
+    {
+        Node queryNode = Node();
+        vector<float> position;
+
+        for (int p = 0; p < vecdim; p++)
+        {
+            position.push_back(massQ[(i * vecdim) + p]);
+        }
+
+        queryNode.values = position;
+
+        queryNodes.push_back(queryNode);
+    }
+    delete[] massQ;
+
+    uint* massQA = new uint[qsize * answer_size];
+    std::ifstream inputQA("Data\\knnQA1M.bin", std::ios::binary);
+    if (!inputQA.is_open()) throw std::runtime_error("Input result file not opened!");
+    inputQA.read((char*)massQA, qsize * answer_size * sizeof(int));
+    inputQA.close();
+
+    cout << "Search KNN based on EF\nStart querying\n";
+    vector<std::pair<float, float>> precision_time;
+    for (int ef = 20; ef <= 300; ef += 10)
+    {
+        //if (ef > 100) ef += 10;
+
+        float positive = 0;
+        for (int i = 0; i < qsize; i++)
+        {
+            vector<uint> result = hnsw.KNNSearchIndex(&queryNodes[i], K, ef);
+
+            int c2 = 0;
+            while (c2 < K)
+            {
+                if (std::find(result.begin(), result.end(), massQA[i * answer_size + c2]) != result.end())
+                {
+                    positive++;
+
+                }
+                c2++;
+            }
+        }
+        std::cout << "Precision: " << positive / (qsize * K) << ", ";
+
+        int sum = 0;
+        int min_time;
+        std::cout << "ef: " << ef << ", ";
+        for (int i = 0; i < 3; i++)
+        {
+            auto start = std::chrono::steady_clock::now();
+            for (int i = 0; i < qsize; i++)
+            {
+                hnsw.KNNSearchIndex(&queryNodes[i], K, ef);
+            }
+            auto end = std::chrono::steady_clock::now();
+            int time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+            sum += time;
+            min_time = i == 0 ? time : std::min(min_time, time);
+
+            //std::cout << (double)std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() / qsize << " [us]; ";
+        }
+        std::cout << "avg: " << (float)sum / (qsize * 3) << " [us]; " << "min: " << min_time / qsize << " [us]; \n";
+        precision_time.emplace_back((float)positive / (qsize * K), (float)min_time / qsize);
+
+    }
+    cout << "\nPrecision Time [us]\n";
+    for (auto item : precision_time)
+    {
+        cout << item.first << " " << item.second << "\n";
+    }
+
+    delete[] massQA;
 
 }
 
@@ -685,7 +784,7 @@ void FilterSelectivityTest()
     //selektivita 10% 25% 50% 75% 90%
 
     uint sel10 = 0, sel25 = 0, sel50 = 0, sel75 = 0, sel90 = 0;
-    uint selLimit = 100;
+    uint selLimit = 1000;
 
     ifstream fileSel10("Files\\Filters\\sel10.txt");
     string tLine;
@@ -824,10 +923,9 @@ int main()
     //CompareFiles(GFILE_NAME, GUFILE_NAME);
     //CompareFiles(AFILE_NAME, UFILE_NAME);
 
-    FilterSelectivityTest();
+    //FilterSelectivityTest();
     //FilterTest();
-    //FilterFullTest();
-
+    FilterFullTest();
 
     return 0;
 }

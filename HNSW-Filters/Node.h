@@ -199,7 +199,7 @@ class linearHash
 
 public:
 
-	uint32_t item_count;
+	uint32_t item_count = -1;
 
 	linearHash(uint32_t asize = 16384)
 	{
