@@ -1,10 +1,12 @@
-Done. Insert time 1893.27 [s]
+Inserted 1000000
+Done. Insert time 1954.5 [s]
 
 Serch implementation compare With filter and Without filter:
-Selectivity: 10[%]      AvgTime: 3544.0300[us]  Same: 0.0000     (9.9960/10)    Tests: 1000
-Selectivity: 25[%]      AvgTime: 3481.4939[us]  Same: 0.0000     (10.0000/10)   Tests: 662
-Selectivity: 50[%]      AvgTime: 3426.1204[us]  Same: 0.0000     (10.0000/10)   Tests: 266
-Selectivity: 75[%]      AvgTime: 3509.4539[us]  Same: 0.0000     (10.0000/10)   Tests: 130
+Selectivity: 10[%]      AvgTime: 2762.0410[us]  Same: 0.9075 (9.9790/10)         Tests: 1000
+Selectivity: 25[%]      AvgTime: 2570.5779[us]  Same: 0.9867 (10.0000/10)       Tests: 1000
+Selectivity: 50[%]      AvgTime: 2520.2190[us]  Same: 0.9964 (10.0000/10)       Tests: 1000
+Selectivity: 75[%]      AvgTime: 2517.8469[us]  Same: 1.0000 (10.0000/10)       Tests: 1000
+Selectivity: 90[%]      AvgTime: 2509.0569[us]  Same: 1.0000 (10.0000/10)       Tests: 1000
 
 Search KNN based on EF
 Start querying

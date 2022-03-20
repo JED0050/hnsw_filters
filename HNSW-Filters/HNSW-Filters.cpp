@@ -2,8 +2,9 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include "Hnsw.h"
 #include <chrono>
+
+#include "Hnsw.h"
 #include "DimFilter.h"
 
 #define FILE_NAME "Files\\space_points_100kp_5vd.txt"
@@ -555,33 +556,55 @@ void FilterFullTest()
     float minDimVal = 0;
     float maxDimVal = 219;
 
-    uint selVals[] = { 10, 25, 50, 75 };
+    uint selVals[] = { 10, 25, 50, 75, 90 };
 
     string path = "Files\\Filters\\";
+    uint tCtrMax = 10000;
+
+    vector<Node> filterQueryNode;
+
+    for (uint i = 0; i < tCtrMax; i++)
+    {
+        Node newNode = GetRandomPoint(vecdim, minDimVal, maxDimVal);
+        filterQueryNode.push_back(newNode);
+    }
 
     for (auto sel : selVals)
     {
         ifstream fileFilter(path + "sel" + to_string(sel) + ".txt");
 
         uint tCtr = 0;
-        uint tCtrMax = 1000;
 
         string filterString = "";
 
         uint totalTime = 0;
         uint allValidNodes = 0;
         uint sameValidNodes = 0;
+        uint tmpKSum = 0;
 
-        while (getline(fileFilter, filterString) && tCtr < tCtrMax)
+        while (tCtr < tCtrMax)
         {
+            if (!getline(fileFilter, filterString))
+            {
+                fileFilter.clear();
+                fileFilter.seekg(0);
+            }
+
             vector<DimFilter> filter = DimFilterHelper::LoadFilterFromString(filterString);
-            Node queryNode = GetRandomPoint(vecdim, minDimVal, maxDimVal);
+
+            if (filter.size() != 1)
+                continue;
+
+            //Node queryNode = GetRandomPoint(vecdim, minDimVal, maxDimVal);
 
             //  FILTER QUERY
             //cout << "With filter: (K: " << K << " efs: " << efs << ")" << endl;
+            printf("\x1b[2K");
+            printf("\rKNNFilter K:%d\tEfs:%d\tFilterString: %s", K, efs, filterString);
+
             auto start = std::chrono::steady_clock::now();
 
-            vector<uint> resFilt = hnsw.KNNFilter(&queryNode, filter, K, efs);
+            vector<uint> resFilt = hnsw.KNNFilter(&filterQueryNode[tCtr], filter, K, efs);
 
             auto end = std::chrono::steady_clock::now();
             uint time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();            
@@ -614,13 +637,18 @@ void FilterFullTest()
                 if (efsNF < tmpK)
                     efsNF = tmpK;
 
-                if (tmpK > graphNodes.size() || tmpK > 300000)
+                //if (tmpK > graphNodes.size() || tmpK > 50000)
+                if (tmpK > graphNodes.size())
                 {
                     break;
                 }
 
                 resNoFilt.clear();
-                vector<uint> res = hnsw.KNNSearchIndex(&queryNode, tmpK, efsNF);
+
+                printf("\x1b[2K");
+                printf("\rTmpK: %d\tTest: %d/%d\tFilterString:%s", tmpK, tCtr, tCtrMax, filterString);
+
+                vector<uint> res = hnsw.KNNSearchIndex(&filterQueryNode[tCtr], tmpK, efsNF);
 
                 for (auto v : res)
                 {
@@ -629,8 +657,9 @@ void FilterFullTest()
                         resNoFilt.push_back(v);
                     }
                 }
-                //cout << "\t" << tmpK << endl;
             }
+
+            tmpKSum += tmpK;
 
             //cout << "Without filter: (K: " << tmpK << " efs : " << efsNF << ")" << endl;
             //cout << "\tFound " << resNoFilt.size() << " / " << K << " nodes" << endl;
@@ -657,16 +686,19 @@ void FilterFullTest()
             tCtr++;
         }
 
+        printf("\x1b[2K\r");
+
         float avgTime = totalTime / (float)tCtr;
         float percSame = sameValidNodes / (float)allValidNodes;
         float avgValid = allValidNodes / (float)tCtr;
+        float avgTmpK = tmpKSum / (float)tCtr;
 
-        printf("Selectivity: %d[%c]\tAvgTime: %.4f[us]\tSame: %.4f\t (%.4f/%d)\tTests: %d\n",sel, '%', avgTime, percSame, avgValid, K, tCtr);
+        printf("Selectivity: %d[%c]\tAvgTime: %.4f[us]\tSame: %.4f (%.4f/%d)\tAvgKWtF: %.2f\tTests: %d\n",sel, '%', avgTime, percSame, avgValid, K, avgTmpK, tCtr);
 
         fileFilter.close();
     }
     cout << endl;
-
+    return;
 
     /////////////////////////////// SEARCH KNN BASED ON EF ///////////////////////////////
 
@@ -906,6 +938,79 @@ void FilterSelectivityTest()
 
     delete[] mass;
     mass = nullptr;
+}
+
+void CheckSelectivityFile()
+{
+    uint graphNodesCount = 1000000;
+    uint vecdim = 128;
+    uint efc = 200;
+
+    Node::vectorSize = vecdim;
+
+    float* mass = new float[graphNodesCount * vecdim];
+    std::ifstream input("Data\\sift1M.bin", std::ios::binary);
+    if (!input.good()) throw std::runtime_error("Input data file not opened!");
+    input.read((char*)mass, graphNodesCount * vecdim * sizeof(float));
+    input.close();
+
+    vector<Node> graphNodes;
+    for (uint i = 0; i < graphNodesCount; i++)
+    {
+        vector<float> vecVal;
+        Node node;
+
+        for (uint j = 0; j < vecdim; j++)
+        {
+            vecVal.push_back(mass[i * vecdim + j]);
+        }
+
+        node.values = vecVal;
+
+        graphNodes.push_back(node);
+    }
+
+    delete[] mass;
+    mass = nullptr;
+
+
+    uint selVals[] = { 10, 25, 50, 75, 90 };
+
+    string path = "Files\\Filters\\";
+
+    for (auto sel : selVals)
+    {
+        ifstream fileFilter(path + "sel" + to_string(sel) + ".txt");
+
+        string filterString;
+        //uint l = 0;
+
+        while (getline(fileFilter, filterString))
+        {
+            //l++;
+            //if (l > 100)
+            //    break;
+
+            vector<DimFilter> filter = DimFilterHelper::LoadFilterFromString(filterString);
+
+            if (filter.size() > 1)
+                continue;
+
+            uint xctr = 0;
+            for (uint x = 0; x < graphNodes.size(); x++)
+            {
+
+                if (DimFilterHelper::IsVectorValid(filter, graphNodes[x].values))
+                {
+                    xctr++;
+                }
+
+            }
+
+            cout << sel << "\t" << (xctr / (float)graphNodes.size()) * (float)100 << endl;
+        }
+
+    }
 }
 
 int main()

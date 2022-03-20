@@ -319,12 +319,16 @@ public:
 		//uint hashSize = 1048576;
 
 		uint hashSize = 16384;			//2^14
-		if (K > 1000 && K < 10000)
+
+		if (K > 300)
+			hashSize = 1048576;			//2^20
+
+		/*if (K > 1000 && K < 10000)
 			hashSize = 65536;			//2^16
 		else if (K >= 10000)
 			hashSize = 262144;			//2^18
 		else if (K >= 100000)
-			hashSize = 1048576;			//2^20
+			hashSize = 1048576;			//2^20*/
 
 		linearHash visitedNodes = linearHash(hashSize);
 		
@@ -387,7 +391,6 @@ public:
 					//cout << "Was visited!" << endl;
 			}
 		}
-
 
 		//cout << "Almost:" << nearestNodes.size() << endl;
 
@@ -496,15 +499,18 @@ public:
 					NodeDist newNode = NodeDist(n);
 					newNode.SetDistance(allNodes[n]->values, queryNode->values);
 
-					if (DimFilterHelper::IsVectorValid(filters, allNodes[n]->values))
+					if (filteredNodes.size() < KNN || newNode.distance < filteredNodes.front().distance)
 					{
-						filteredNodes.push_back(newNode);
-						std::push_heap(filteredNodes.begin(), filteredNodes.end(), NodeDistanceSortNearest());
-
-						if (filteredNodes.size() > KNN)
+						if (DimFilterHelper::IsVectorValid(filters, allNodes[n]->values))
 						{
-							std::pop_heap(filteredNodes.begin(), filteredNodes.end(), NodeDistanceSortNearest());
-							filteredNodes.pop_back();
+							filteredNodes.push_back(newNode);
+							std::push_heap(filteredNodes.begin(), filteredNodes.end(), NodeDistanceSortNearest());
+
+							if (filteredNodes.size() > KNN)
+							{
+								std::pop_heap(filteredNodes.begin(), filteredNodes.end(), NodeDistanceSortNearest());
+								filteredNodes.pop_back();
+							}
 						}
 					}
 
