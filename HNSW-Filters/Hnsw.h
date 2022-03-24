@@ -460,8 +460,11 @@ public:
 	{
 		vector<NodeDist> candidateNodes;
 		vector<NodeDist> nearestNodes;
-		//linearHash visitedNodes = linearHash(1048576);
-		linearHash visitedNodes = linearHash();
+
+		uint hashSize = 16384;			//2^14
+		if (K >= 100)
+			hashSize = 262144;			//2^18
+		linearHash visitedNodes = linearHash(hashSize);
 		visitedNodes.clear();
 
 		float nNDist = entryPoint.distance;

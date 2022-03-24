@@ -550,7 +550,7 @@ void FilterFullTest()
     /////////////////////////////// SEARCH WITH AND WITHOUT FILTER IMPLEMENTATION ///////////////////////////////
     cout << "Serch implementation compare With filter and Without filter:" << endl;
 
-    uint K = 10;
+    //uint K = 10;
     uint efs = 200;
 
     float minDimVal = 0;
@@ -559,7 +559,7 @@ void FilterFullTest()
     uint selVals[] = { 10, 25, 50, 75, 90 };
 
     string path = "Files\\Filters\\";
-    uint tCtrMax = 10000;
+    uint tCtrMax = 1000;
 
     vector<Node> filterQueryNode;
 
@@ -569,134 +569,145 @@ void FilterFullTest()
         filterQueryNode.push_back(newNode);
     }
 
-    for (auto sel : selVals)
+    uint Ks[] = {10, 50, 100, 150, 200};
+
+    for (auto K : Ks)
     {
-        ifstream fileFilter(path + "sel" + to_string(sel) + ".txt");
+        cout << "K: " << K << endl;
 
-        uint tCtr = 0;
-
-        string filterString = "";
-
-        uint totalTime = 0;
-        uint allValidNodes = 0;
-        uint sameValidNodes = 0;
-        uint tmpKSum = 0;
-
-        while (tCtr < tCtrMax)
+        for (auto sel : selVals)
         {
-            if (!getline(fileFilter, filterString))
+            ifstream fileFilter(path + "sel" + to_string(sel) + ".txt");
+
+            uint tCtr = 0;
+
+            string filterString = "";
+
+            uint totalTime = 0;
+            uint allValidNodes = 0;
+            uint sameValidNodes = 0;
+            uint tmpKSum = 0;
+
+            while (tCtr < tCtrMax)
             {
-                fileFilter.clear();
-                fileFilter.seekg(0);
-            }
-
-            vector<DimFilter> filter = DimFilterHelper::LoadFilterFromString(filterString);
-
-            if (filter.size() != 1)
-                continue;
-
-            //Node queryNode = GetRandomPoint(vecdim, minDimVal, maxDimVal);
-
-            //  FILTER QUERY
-            //cout << "With filter: (K: " << K << " efs: " << efs << ")" << endl;
-            printf("\x1b[2K");
-            printf("\rKNNFilter K:%d\tEfs:%d\tFilterString: %s", K, efs, filterString);
-
-            auto start = std::chrono::steady_clock::now();
-
-            vector<uint> resFilt = hnsw.KNNFilter(&filterQueryNode[tCtr], filter, K, efs);
-
-            auto end = std::chrono::steady_clock::now();
-            uint time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();            
-            //cout << "\tFound " << resFilt.size() << " / " << K << " nodes" << endl;
-
-            totalTime += time;
-
-            //  NON FILTER QUERY
-            vector<uint> resNoFilt;
-            uint tmpK = 0;
-            uint efsNF = efs;
-
-            while (resNoFilt.size() < resFilt.size())
-            {
-                if (tmpK < 100)
-                    tmpK += 10;
-                else if (tmpK < 500)
-                    tmpK += 50;
-                else if (tmpK < 1000)
-                    tmpK += 100;
-                else if (tmpK < 5000)
-                    tmpK += 500;
-                else if (tmpK < 50000)
-                    tmpK += 1000;
-                else if (tmpK < 500000)
-                    tmpK += 10000;
-                else
-                    tmpK += 100000;
-
-                if (efsNF < tmpK)
-                    efsNF = tmpK;
-
-                //if (tmpK > graphNodes.size() || tmpK > 50000)
-                if (tmpK > graphNodes.size())
+                if (!getline(fileFilter, filterString))
                 {
-                    break;
+                    fileFilter.clear();
+                    fileFilter.seekg(0);
                 }
 
-                resNoFilt.clear();
+                vector<DimFilter> filter = DimFilterHelper::LoadFilterFromString(filterString);
 
+                if (filter.size() != 1)
+                    continue;
+
+                //Node queryNode = GetRandomPoint(vecdim, minDimVal, maxDimVal);
+
+                //  FILTER QUERY
+                //cout << "With filter: (K: " << K << " efs: " << efs << ")" << endl;
                 printf("\x1b[2K");
-                printf("\rTmpK: %d\tTest: %d/%d\tFilterString:%s", tmpK, tCtr, tCtrMax, filterString);
+                printf("\rKNNFilter K:%d\tEfs:%d\tFilterString: %s", K, efs, filterString);
 
-                vector<uint> res = hnsw.KNNSearchIndex(&filterQueryNode[tCtr], tmpK, efsNF);
+                auto start = std::chrono::steady_clock::now();
 
-                for (auto v : res)
+                vector<uint> resFilt = hnsw.KNNFilter(&filterQueryNode[tCtr], filter, K, efs);
+
+                auto end = std::chrono::steady_clock::now();
+                uint time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+                //cout << "\tFound " << resFilt.size() << " / " << K << " nodes" << endl;
+
+                totalTime += time;
+
+                //  NON FILTER QUERY
+                vector<uint> resNoFilt;
+                uint tmpK = 0;
+                uint efsNF = efs;
+
+                while (resNoFilt.size() < resFilt.size())
                 {
-                    if (DimFilterHelper::IsVectorValid(filter, graphNodes[v].values))
+                    if (tmpK < 100)
+                        tmpK += 10;
+                    else if (tmpK < 500)
+                        tmpK += 50;
+                    else if (tmpK < 1000)
+                        tmpK += 100;
+                    else if (tmpK < 5000)
+                        tmpK += 500;
+                    else if (tmpK < 50000)
+                        tmpK += 1000;
+                    else if (tmpK < 500000)
+                        tmpK += 10000;
+                    else
+                        tmpK += 100000;
+
+                    if (efsNF < tmpK)
+                        efsNF = tmpK;
+
+                    //if (tmpK > graphNodes.size() || tmpK > 50000)
+                    if (tmpK > graphNodes.size())
                     {
-                        resNoFilt.push_back(v);
+                        break;
+                    }
+
+                    resNoFilt.clear();
+
+                    printf("\x1b[2K");
+                    printf("\rTmpK: %d\tTest: %d/%d\tFilterString: %s", tmpK, tCtr, tCtrMax, filterString);
+
+                    vector<uint> res = hnsw.KNNSearchIndex(&filterQueryNode[tCtr], tmpK, efsNF);
+
+                    for (auto v : res)
+                    {
+                        if (DimFilterHelper::IsVectorValid(filter, graphNodes[v].values))
+                        {
+                            resNoFilt.push_back(v);
+                        }
                     }
                 }
-            }
 
-            tmpKSum += tmpK;
+                tmpKSum += tmpK;
 
-            //cout << "Without filter: (K: " << tmpK << " efs : " << efsNF << ")" << endl;
-            //cout << "\tFound " << resNoFilt.size() << " / " << K << " nodes" << endl;
-            uint sameCtr = 0;
-            for (auto i : resFilt)
-            {
-                if (find(resNoFilt.begin(), resNoFilt.end(), i) != resNoFilt.end())
+                //cout << "Without filter: (K: " << tmpK << " efs : " << efsNF << ")" << endl;
+                //cout << "\tFound " << resNoFilt.size() << " / " << K << " nodes" << endl;
+                uint sameCtr = 0;
+                for (auto i : resFilt)
                 {
-                    sameCtr++;
+                    if (find(resNoFilt.begin(), resNoFilt.end(), i) != resNoFilt.end())
+                    {
+                        sameCtr++;
+                    }
                 }
+
+                sameValidNodes += sameCtr;
+                allValidNodes += resFilt.size();
+
+                //cout << "We found same nodes " << sameCtr << "/" << K << " times";
+
+                /*if (sameCtr < K && efs < efsNF && resFilt.size() != 0)
+                {
+                    cout << " (efs with filter was lower! could make difference " << efs << "/" << efsNF << ")";
+                }
+                cout << endl << endl;*/
+
+                tCtr++;
             }
 
-            sameValidNodes += sameCtr;
-            allValidNodes += resFilt.size();
+            printf("\x1b[2K\r");
 
-            //cout << "We found same nodes " << sameCtr << "/" << K << " times";
+            float avgTime = totalTime / (float)tCtr;
+            float percSame = sameValidNodes / (float)allValidNodes;
+            float avgValid = allValidNodes / (float)tCtr;
+            float avgTmpK = tmpKSum / (float)tCtr;
 
-            /*if (sameCtr < K && efs < efsNF && resFilt.size() != 0)
-            {
-                cout << " (efs with filter was lower! could make difference " << efs << "/" << efsNF << ")";
-            }
-            cout << endl << endl;*/
+            printf("Selectivity: %d[%c]\tAvgTime: %.4f[us]\tSame: %.4f (%.4f/%d)\tAvgKWtF: %.2f\tTests: %d\n", sel, '%', avgTime, percSame, avgValid, K, avgTmpK, tCtr);
 
-            tCtr++;
+            fileFilter.close();
         }
 
-        printf("\x1b[2K\r");
+        cout << endl;
 
-        float avgTime = totalTime / (float)tCtr;
-        float percSame = sameValidNodes / (float)allValidNodes;
-        float avgValid = allValidNodes / (float)tCtr;
-        float avgTmpK = tmpKSum / (float)tCtr;
-
-        printf("Selectivity: %d[%c]\tAvgTime: %.4f[us]\tSame: %.4f (%.4f/%d)\tAvgKWtF: %.2f\tTests: %d\n",sel, '%', avgTime, percSame, avgValid, K, avgTmpK, tCtr);
-
-        fileFilter.close();
     }
+
     cout << endl;
     return;
 
@@ -704,6 +715,7 @@ void FilterFullTest()
 
     uint qsize = 10000;
     uint answer_size = 100;
+    uint K = 10;
 
     vector<Node> queryNodes;
     float* massQ = new float[qsize * vecdim];

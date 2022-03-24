@@ -1,0 +1,38 @@
+Inserted 1000000
+Done. Insert time 2734.8 [s]
+
+Serch implementation compare With filter and Without filter:
+K: 10
+Selectivity: 10[%]      AvgTime: 4827.1040[us]  Same: 0.9092 (9.9960/10)        AvgKWtF: 715.28 Tests: 1000
+Selectivity: 25[%]      AvgTime: 4613.5850[us]  Same: 0.9875 (10.0000/10)       AvgKWtF: 124.00 Tests: 1000
+Selectivity: 50[%]      AvgTime: 4516.5908[us]  Same: 0.9988 (10.0000/10)       AvgKWtF: 25.96  Tests: 1000
+Selectivity: 75[%]      AvgTime: 4493.5640[us]  Same: 1.0000 (10.0000/10)       AvgKWtF: 15.83  Tests: 1000
+Selectivity: 90[%]      AvgTime: 4541.4580[us]  Same: 1.0000 (10.0000/10)       AvgKWtF: 13.34  Tests: 1000
+
+K: 50
+Selectivity: 10[%]      AvgTime: 5324.3252[us]  Same: 0.7296 (49.6690/50)       AvgKWtF: 1800.22        Tests: 1000
+Selectivity: 25[%]      AvgTime: 4798.6831[us]  Same: 0.9342 (49.9630/50)       AvgKWtF: 426.49 Tests: 1000
+Selectivity: 50[%]      AvgTime: 4622.7798[us]  Same: 0.9873 (50.0000/50)       AvgKWtF: 105.44 Tests: 1000
+Selectivity: 75[%]      AvgTime: 4585.7471[us]  Same: 0.9998 (50.0000/50)       AvgKWtF: 71.57  Tests: 1000
+Selectivity: 90[%]      AvgTime: 4566.4692[us]  Same: 1.0000 (50.0000/50)       AvgKWtF: 58.76  Tests: 1000
+
+K: 100
+Selectivity: 10[%]      AvgTime: 5768.3560[us]  Same: 0.5845 (98.7660/100)      AvgKWtF: 2747.15        Tests: 1000
+Selectivity: 25[%]      AvgTime: 5001.2612[us]  Same: 0.8539 (99.8830/100)      AvgKWtF: 753.35 Tests: 1000
+Selectivity: 50[%]      AvgTime: 4751.0498[us]  Same: 0.9702 (100.0000/100)     AvgKWtF: 221.45 Tests: 1000
+Selectivity: 75[%]      AvgTime: 4696.0830[us]  Same: 0.9959 (100.0000/100)     AvgKWtF: 160.95 Tests: 1000
+Selectivity: 90[%]      AvgTime: 4627.9849[us]  Same: 1.0000 (100.0000/100)     AvgKWtF: 142.65 Tests: 1000
+
+K: 150
+Selectivity: 10[%]      AvgTime: 6193.0142[us]  Same: 0.4990 (147.3840/150)     AvgKWtF: 3547.55        Tests: 1000
+Selectivity: 25[%]      AvgTime: 5151.7202[us]  Same: 0.7631 (149.7830/150)     AvgKWtF: 1060.20        Tests: 1000
+Selectivity: 50[%]      AvgTime: 4854.2119[us]  Same: 0.9452 (150.0000/150)     AvgKWtF: 319.30 Tests: 1000
+Selectivity: 75[%]      AvgTime: 4761.0088[us]  Same: 0.9784 (150.0000/150)     AvgKWtF: 226.25 Tests: 1000
+Selectivity: 90[%]      AvgTime: 4725.6270[us]  Same: 0.9992 (150.0000/150)     AvgKWtF: 197.20 Tests: 1000
+
+K: 200
+Selectivity: 10[%]      AvgTime: 6555.7910[us]  Same: 0.4478 (195.2930/200)     AvgKWtF: 4234.40        Tests: 1000
+Selectivity: 25[%]      AvgTime: 5280.5200[us]  Same: 0.6822 (199.6750/200)     AvgKWtF: 1367.60        Tests: 1000
+Selectivity: 50[%]      AvgTime: 4884.1108[us]  Same: 0.8984 (200.0000/200)     AvgKWtF: 417.50 Tests: 1000
+Selectivity: 75[%]      AvgTime: 4796.6689[us]  Same: 0.9486 (200.0000/200)     AvgKWtF: 290.35 Tests: 1000
+Selectivity: 90[%]      AvgTime: 4761.3789[us]  Same: 0.9897 (200.0000/200)     AvgKWtF: 251.65 Tests: 1000
