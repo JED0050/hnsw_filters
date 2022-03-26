@@ -1,0 +1,38 @@
+Inserted 1000000
+Done. Insert time 1888.67 [s]
+
+Serch implementation compare With filter and Without filter:
+K: 10
+Sel: 10[%]   AvgTime: 3040.97[us]   Same: 0.91 (10.00/10)   AvgTimeWtF: 7056.26[us]   AvgTimeWtFS: 79790.23[us]   AvgKWtF: 715.28[us]   Tests: 1000
+Sel: 25[%]   AvgTime: 2867.57[us]   Same: 0.99 (10.00/10)   AvgTimeWtF: 2703.60[us]   AvgTimeWtFS: 16985.01[us]   AvgKWtF: 124.00[us]   Tests: 1000
+Sel: 50[%]   AvgTime: 2817.17[us]   Same: 1.00 (10.00/10)   AvgTimeWtF: 2168.04[us]   AvgTimeWtFS: 4859.92[us]   AvgKWtF: 25.96[us]   Tests: 1000
+Sel: 75[%]   AvgTime: 2805.95[us]   Same: 1.00 (10.00/10)   AvgTimeWtF: 2163.28[us]   AvgTimeWtFS: 3428.85[us]   AvgKWtF: 15.83[us]   Tests: 1000
+Sel: 90[%]   AvgTime: 2811.61[us]   Same: 1.00 (10.00/10)   AvgTimeWtF: 2163.50[us]   AvgTimeWtFS: 2913.87[us]   AvgKWtF: 13.34[us]   Tests: 1000
+
+K: 50
+Sel: 10[%]   AvgTime: 3534.66[us]   Same: 0.73 (49.67/50)   AvgTimeWtF: 16451.46[us]   AvgTimeWtFS: 184799.88[us]   AvgKWtF: 1800.22[us]   Tests: 1000
+Sel: 25[%]   AvgTime: 3076.86[us]   Same: 0.93 (49.96/50)   AvgTimeWtF: 4966.35[us]   AvgTimeWtFS: 47088.80[us]   AvgKWtF: 426.49[us]   Tests: 1000
+Sel: 50[%]   AvgTime: 2921.99[us]   Same: 0.99 (50.00/50)   AvgTimeWtF: 2435.99[us]   AvgTimeWtFS: 17480.93[us]   AvgKWtF: 105.44[us]   Tests: 1000
+Sel: 75[%]   AvgTime: 2903.95[us]   Same: 1.00 (50.00/50)   AvgTimeWtF: 2129.43[us]   AvgTimeWtFS: 14288.62[us]   AvgKWtF: 71.57[us]   Tests: 1000
+Sel: 90[%]   AvgTime: 2891.03[us]   Same: 1.00 (50.00/50)   AvgTimeWtF: 2113.17[us]   AvgTimeWtFS: 12517.38[us]   AvgKWtF: 58.76[us]   Tests: 1000
+
+K: 100
+Sel: 10[%]   AvgTime: 3961.65[us]   Same: 0.58 (98.77/100)   AvgTimeWtF: 25212.24[us]   AvgTimeWtFS: 268201.44[us]   AvgKWtF: 2747.15[us]   Tests: 1000
+Sel: 25[%]   AvgTime: 3268.71[us]   Same: 0.85 (99.88/100)   AvgTimeWtF: 8161.75[us]   AvgTimeWtFS: 73253.24[us]   AvgKWtF: 753.35[us]   Tests: 1000
+Sel: 50[%]   AvgTime: 2999.55[us]   Same: 0.97 (100.00/100)   AvgTimeWtF: 2952.85[us]   AvgTimeWtFS: 28992.94[us]   AvgKWtF: 221.45[us]   Tests: 1000
+Sel: 75[%]   AvgTime: 2946.42[us]   Same: 1.00 (100.00/100)   AvgTimeWtF: 2226.74[us]   AvgTimeWtFS: 23993.09[us]   AvgKWtF: 160.95[us]   Tests: 1000
+Sel: 90[%]   AvgTime: 2930.98[us]   Same: 1.00 (100.00/100)   AvgTimeWtF: 2117.40[us]   AvgTimeWtFS: 23017.12[us]   AvgKWtF: 142.65[us]   Tests: 1000
+
+K: 150
+Sel: 10[%]   AvgTime: 4292.07[us]   Same: 0.50 (147.38/150)   AvgTimeWtF: 32129.19[us]   AvgTimeWtFS: 335989.62[us]   AvgKWtF: 3547.55[us]   Tests: 1000
+Sel: 25[%]   AvgTime: 3411.34[us]   Same: 0.76 (149.78/150)   AvgTimeWtF: 11481.21[us]   AvgTimeWtFS: 97723.45[us]   AvgKWtF: 1060.20[us]   Tests: 1000
+Sel: 50[%]   AvgTime: 3089.03[us]   Same: 0.95 (150.00/150)   AvgTimeWtF: 3804.70[us]   AvgTimeWtFS: 35563.33[us]   AvgKWtF: 319.30[us]   Tests: 1000
+Sel: 75[%]   AvgTime: 3036.32[us]   Same: 0.98 (150.00/150)   AvgTimeWtF: 2642.55[us]   AvgTimeWtFS: 27639.43[us]   AvgKWtF: 226.25[us]   Tests: 1000
+Sel: 90[%]   AvgTime: 2992.38[us]   Same: 1.00 (150.00/150)   AvgTimeWtF: 2173.99[us]   AvgTimeWtFS: 25423.86[us]   AvgKWtF: 197.20[us]   Tests: 1000
+
+K: 200
+Sel: 10[%]   AvgTime: 4578.50[us]   Same: 0.45 (195.29/200)   AvgTimeWtF: 37901.86[us]   AvgTimeWtFS: 392768.22[us]   AvgKWtF: 4234.40[us]   Tests: 1000
+Sel: 25[%]   AvgTime: 3587.91[us]   Same: 0.68 (199.68/200)   AvgTimeWtF: 14764.61[us]   AvgTimeWtFS: 123976.12[us]   AvgKWtF: 1367.60[us]   Tests: 1000
+Sel: 50[%]   AvgTime: 3175.45[us]   Same: 0.90 (200.00/200)   AvgTimeWtF: 5156.43[us]   AvgTimeWtFS: 43400.67[us]   AvgKWtF: 417.50[us]   Tests: 1000
+Sel: 75[%]   AvgTime: 3096.15[us]   Same: 0.95 (200.00/200)   AvgTimeWtF: 3594.97[us]   AvgTimeWtFS: 32500.83[us]   AvgKWtF: 290.35[us]   Tests: 1000
+Sel: 90[%]   AvgTime: 3051.25[us]   Same: 0.99 (200.00/200)   AvgTimeWtF: 2810.96[us]   AvgTimeWtFS: 28504.26[us]   AvgKWtF: 251.65[us]   Tests: 1000

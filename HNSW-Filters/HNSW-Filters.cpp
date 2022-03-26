@@ -583,10 +583,12 @@ void FilterFullTest()
 
             string filterString = "";
 
-            uint totalTime = 0;
+            uint totalFilterTime = 0;
             uint allValidNodes = 0;
             uint sameValidNodes = 0;
             uint tmpKSum = 0;
+            uint totalNonFilterTime = 0;
+            uint totNFTAllIt = 0;
 
             while (tCtr < tCtrMax)
             {
@@ -616,7 +618,7 @@ void FilterFullTest()
                 uint time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
                 //cout << "\tFound " << resFilt.size() << " / " << K << " nodes" << endl;
 
-                totalTime += time;
+                totalFilterTime += time;
 
                 //  NON FILTER QUERY
                 vector<uint> resNoFilt;
@@ -654,6 +656,8 @@ void FilterFullTest()
                     printf("\x1b[2K");
                     printf("\rTmpK: %d\tTest: %d/%d\tFilterString: %s", tmpK, tCtr, tCtrMax, filterString);
 
+                    auto start2 = std::chrono::steady_clock::now();
+                    
                     vector<uint> res = hnsw.KNNSearchIndex(&filterQueryNode[tCtr], tmpK, efsNF);
 
                     for (auto v : res)
@@ -663,8 +667,14 @@ void FilterFullTest()
                             resNoFilt.push_back(v);
                         }
                     }
+
+                    auto end2 = std::chrono::steady_clock::now();
+                    time = std::chrono::duration_cast<std::chrono::microseconds>(end2 - start2).count();
+
+                    totNFTAllIt += time;
                 }
 
+                totalNonFilterTime += time;
                 tmpKSum += tmpK;
 
                 //cout << "Without filter: (K: " << tmpK << " efs : " << efsNF << ")" << endl;
@@ -694,12 +704,14 @@ void FilterFullTest()
 
             printf("\x1b[2K\r");
 
-            float avgTime = totalTime / (float)tCtr;
+            float avgTime = totalFilterTime / (float)tCtr;
             float percSame = sameValidNodes / (float)allValidNodes;
             float avgValid = allValidNodes / (float)tCtr;
             float avgTmpK = tmpKSum / (float)tCtr;
+            float avgTimeNF = totalNonFilterTime / (float)tCtr;
+            float avgTimeNFAI = totNFTAllIt / (float)tCtr;
 
-            printf("Selectivity: %d[%c]\tAvgTime: %.4f[us]\tSame: %.4f (%.4f/%d)\tAvgKWtF: %.2f\tTests: %d\n", sel, '%', avgTime, percSame, avgValid, K, avgTmpK, tCtr);
+            printf("Sel: %d[%c]   AvgTime: %.2f[us]   Same: %.2f (%.2f/%d)   AvgTimeWtF: %.2f[us]   AvgTimeWtFS: %.2f[us]   AvgKWtF: %.2f[us]   Tests: %d\n", sel, '%', avgTime, percSame, avgValid, K, avgTimeNF, avgTimeNFAI, avgTmpK, tCtr);
 
             fileFilter.close();
         }
