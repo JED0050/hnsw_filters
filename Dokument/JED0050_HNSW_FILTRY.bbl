@@ -1,5 +1,5 @@
 % $ biblatex auxiliary file $
-% $ biblatex bbl format version 3.1 $
+% $ biblatex bbl format version 3.2 $
 % Do not modify the above lines!
 %
 % This is an auxiliary file used by the 'biblatex' package.
@@ -54,6 +54,19 @@
     \field{year}{2022}
     \field{urlday}{06}
     \field{urlmonth}{03}
+    \field{urlyear}{2022}
+  \endentry
+
+  \entry{OptINFORMIX}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{Optimalizace v INFORMIXU}
+    \verb{url}
+    \verb http://www.ms.mff.cuni.cz/~jkoc5219/Optimalizace_v_INFORMIXU.html
+    \endverb
+    \field{langid}{czech}
+    \field{year}{2022}
+    \field{urlday}{04}
+    \field{urlmonth}{04}
     \field{urlyear}{2022}
   \endentry
 \enddatalist
