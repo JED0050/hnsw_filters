@@ -41,7 +41,7 @@
   >
 ]>
 <requests version="1.0">
-  <internal package="biblatex" priority="9" active="0">
+  <internal package="biblatex" priority="9" active="1">
     <generic>latex</generic>
     <provides type="dynamic">
       <file>JED0050_HNSW_FILTRY.aux</file>
@@ -54,7 +54,6 @@
       <file>blx-dm.def</file>
       <file>iso-numeric.dbx</file>
       <file>blx-compat.def</file>
-      <file>blx-case-expl3.def</file>
       <file>blx-bibtex.def</file>
       <file>biblatex.def</file>
       <file>iso.bbx</file>
@@ -69,7 +68,7 @@
       <file>english-iso.lbx</file>
     </requires>
   </internal>
-  <external package="biblatex" priority="5" active="0">
+  <external package="biblatex" priority="5" active="1">
     <generic>bibtex</generic>
     <cmdline>
       <binary>bibtex</binary>

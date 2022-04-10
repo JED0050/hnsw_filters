@@ -1,5 +1,5 @@
 % $ biblatex auxiliary file $
-% $ biblatex bbl format version 3.1 $
+% $ biblatex bbl format version 3.2 $
 % Do not modify the above lines!
 %
 % This is an auxiliary file used by the 'biblatex' package.
@@ -44,6 +44,20 @@
     \field{urlyear}{2022}
   \endentry
 
+  \entry{git-hnsw}{online}{}
+    \field{labeltitlesource}{title}
+    \field{subtitle}{hnswlib}
+    \field{title}{git-hnsw}
+    \verb{url}
+    \verb https://github.com/RadimBaca/HNSW
+    \endverb
+    \field{langid}{english}
+    \field{year}{2022}
+    \field{urlday}{10}
+    \field{urlmonth}{04}
+    \field{urlyear}{2022}
+  \endentry
+
   \entry{NNS}{online}{}
     \field{labeltitlesource}{title}
     \field{title}{Nearest neighbor search}
@@ -68,6 +82,38 @@
     \field{urlday}{04}
     \field{urlmonth}{04}
     \field{urlyear}{2022}
+  \endentry
+
+  \entry{malkov2018efficient}{article}{}
+    \name{author}{2}{}{%
+      {{hash=MYA}{%
+         family={Malkov},
+         familyi={M\bibinitperiod},
+         given={Yu\bibnamedelima A},
+         giveni={Y\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+      {{hash=YDA}{%
+         family={Yashunin},
+         familyi={Y\bibinitperiod},
+         given={Dmitry\bibnamedelima A},
+         giveni={D\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {IEEE}%
+    }
+    \strng{namehash}{MYAYDA1}
+    \strng{fullhash}{MYAYDA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{number}{4}
+    \field{pages}{824\bibrangedash 836}
+    \field{title}{Efficient and robust approximate nearest neighbor search
+  using hierarchical navigable small world graphs}
+    \field{volume}{42}
+    \field{journaltitle}{IEEE transactions on pattern analysis and machine
+  intelligence}
+    \field{year}{2018}
   \endentry
 \enddatalist
 \endinput
