@@ -1,49 +1,55 @@
-\babel@toc {czech}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {english}{}\relax 
-\babel@toc {czech}{}\relax 
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {english}{}
+\babel@toc {czech}{}
+\defcounter {refsection}{0}\relax 
 \contentsline {chapter}{Seznam použitých symbolů a zkratek}{5}{chapter*.2}%
+\defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {1}Úvod}{6}{chapter.1}%
+\defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {2}KNN}{7}{chapter.2}%
-\contentsline {section}{\numberline {2.1}HNSW}{7}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Implementace HNSW}{7}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Filtr}{8}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Implementace filtru}{8}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Použití filtru v HNSW}{8}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Problém filtru s vysokou selektivitou u HNSW}{8}{subsection.2.3.3}%
-\contentsline {chapter}{\numberline {3}Závěr}{10}{chapter.3}%
-\contentsline {chapter}{Literatura}{11}{chapter*.3}%
-\babel@toc {english}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {english}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {english}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {english}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {english}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {english}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {english}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {english}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {english}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {english}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {english}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {english}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {czech}{}\relax 
-\babel@toc {czech}{}\relax 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {3}HNSW}{8}{chapter.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {4}Filtr}{10}{chapter.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.1}Problém filtru s vysokou selektivitou u HNSW}{11}{section.4.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {5}Závěr}{12}{chapter.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Literatura}{13}{chapter*.3}%
+\babel@toc {english}{}
+\babel@toc {czech}{}
+\babel@toc {english}{}
+\babel@toc {czech}{}
+\babel@toc {english}{}
+\babel@toc {czech}{}
+\babel@toc {english}{}
+\babel@toc {czech}{}
+\babel@toc {english}{}
+\babel@toc {czech}{}
+\babel@toc {english}{}
+\babel@toc {czech}{}
+\babel@toc {english}{}
+\babel@toc {czech}{}
+\babel@toc {english}{}
+\babel@toc {czech}{}
+\babel@toc {english}{}
+\babel@toc {czech}{}
+\babel@toc {english}{}
+\babel@toc {czech}{}
+\babel@toc {english}{}
+\babel@toc {czech}{}
+\babel@toc {english}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
