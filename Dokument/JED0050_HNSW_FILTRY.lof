@@ -8,12 +8,16 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Vrstvy grafu\relax }}{12}{figure.caption.5}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Pseudokód metody Insert Node\relax }}{13}{figure.caption.6}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Pseudokód metody Search Layer\relax }}{14}{figure.caption.7}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Pseudokód metody Select Nearest Neighbors\relax }}{14}{figure.caption.8}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Pseudokód metody KNN\relax }}{15}{figure.caption.9}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Graf závislosti času na přesnosti\relax }}{15}{figure.caption.10}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Pseudokód metody Insert Node\relax }}{12}{figure.caption.6}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Pseudokód metody Search Layer\relax }}{13}{figure.caption.7}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Pseudokód metody Select Nearest Neighbors\relax }}{13}{figure.caption.8}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Pseudokód metody KNN\relax }}{14}{figure.caption.9}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Graf závislosti času na přesnosti\relax }}{16}{figure.caption.10}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Porovnání průměrného času operace u implementací F a B, K: 10\relax }}{21}{figure.caption.11}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Porovnání průměrného času operace u implementací F a B, K: 50\relax }}{21}{figure.caption.12}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Porovnání průměrného času operace u implementací F a B, K: 100\relax }}{22}{figure.caption.13}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Porovnání průměrného času operace u implementací F a B, K: 200\relax }}{22}{figure.caption.14}%
 \addvspace {10\p@ }
 \babel@toc {czech}{}\relax 
 \babel@toc {czech}{}\relax 
