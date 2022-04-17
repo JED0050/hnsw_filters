@@ -17,73 +17,6 @@
 \endgroup
 
 \datalist[entry]{none/global//global/global}
-  \entry{ann-benchmarks}{online}{}
-    \field{labeltitlesource}{title}
-    \field{title}{ann-benchmarks}
-    \verb{url}
-    \verb http://ann-benchmarks.com/index.html
-    \endverb
-    \field{langid}{english}
-    \field{year}{2022}
-    \field{urlday}{06}
-    \field{urlmonth}{03}
-    \field{urlyear}{2022}
-  \endentry
-
-  \entry{git-hnswlib}{online}{}
-    \field{labeltitlesource}{title}
-    \field{subtitle}{hnswlib}
-    \field{title}{git-hnswlib}
-    \verb{url}
-    \verb https://github.com/nmslib/hnswlib
-    \endverb
-    \field{langid}{english}
-    \field{year}{2022}
-    \field{urlday}{06}
-    \field{urlmonth}{03}
-    \field{urlyear}{2022}
-  \endentry
-
-  \entry{git-hnsw}{online}{}
-    \field{labeltitlesource}{title}
-    \field{subtitle}{hnswlib}
-    \field{title}{git-hnsw}
-    \verb{url}
-    \verb https://github.com/RadimBaca/HNSW
-    \endverb
-    \field{langid}{english}
-    \field{year}{2022}
-    \field{urlday}{10}
-    \field{urlmonth}{04}
-    \field{urlyear}{2022}
-  \endentry
-
-  \entry{NNS}{online}{}
-    \field{labeltitlesource}{title}
-    \field{title}{Nearest neighbor search}
-    \verb{url}
-    \verb https://en.wikipedia.org/wiki/Nearest_neighbor_search
-    \endverb
-    \field{langid}{english}
-    \field{year}{2022}
-    \field{urlday}{06}
-    \field{urlmonth}{03}
-    \field{urlyear}{2022}
-  \endentry
-
-  \entry{OptINFORMIX}{online}{}
-    \field{labeltitlesource}{title}
-    \field{title}{Optimalizace v INFORMIXU}
-    \verb{url}
-    \verb http://www.ms.mff.cuni.cz/~jkoc5219/Optimalizace_v_INFORMIXU.html
-    \endverb
-    \field{langid}{czech}
-    \field{year}{2022}
-    \field{urlday}{04}
-    \field{urlmonth}{04}
-    \field{urlyear}{2022}
-  \endentry
-
   \entry{malkov2018efficient}{article}{}
     \name{author}{2}{}{%
       {{hash=MYA}{%
@@ -114,6 +47,73 @@
     \field{journaltitle}{IEEE transactions on pattern analysis and machine
   intelligence}
     \field{year}{2018}
+  \endentry
+
+  \entry{git-hnswlib}{online}{}
+    \field{labeltitlesource}{title}
+    \field{subtitle}{hnswlib}
+    \field{title}{git-hnswlib}
+    \verb{url}
+    \verb https://github.com/nmslib/hnswlib
+    \endverb
+    \field{langid}{english}
+    \field{year}{2022}
+    \field{urlday}{06}
+    \field{urlmonth}{03}
+    \field{urlyear}{2022}
+  \endentry
+
+  \entry{git-hnsw}{online}{}
+    \field{labeltitlesource}{title}
+    \field{subtitle}{hnswlib}
+    \field{title}{git-hnsw}
+    \verb{url}
+    \verb https://github.com/RadimBaca/HNSW
+    \endverb
+    \field{langid}{english}
+    \field{year}{2022}
+    \field{urlday}{10}
+    \field{urlmonth}{04}
+    \field{urlyear}{2022}
+  \endentry
+
+  \entry{ann-benchmarks}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{ann-benchmarks}
+    \verb{url}
+    \verb http://ann-benchmarks.com/index.html
+    \endverb
+    \field{langid}{english}
+    \field{year}{2022}
+    \field{urlday}{06}
+    \field{urlmonth}{03}
+    \field{urlyear}{2022}
+  \endentry
+
+  \entry{NNS}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{Nearest neighbor search}
+    \verb{url}
+    \verb https://en.wikipedia.org/wiki/Nearest_neighbor_search
+    \endverb
+    \field{langid}{english}
+    \field{year}{2022}
+    \field{urlday}{06}
+    \field{urlmonth}{03}
+    \field{urlyear}{2022}
+  \endentry
+
+  \entry{OptINFORMIX}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{Optimalizace v INFORMIXU}
+    \verb{url}
+    \verb http://www.ms.mff.cuni.cz/~jkoc5219/Optimalizace_v_INFORMIXU.html
+    \endverb
+    \field{langid}{czech}
+    \field{year}{2022}
+    \field{urlday}{04}
+    \field{urlmonth}{04}
+    \field{urlyear}{2022}
   \endentry
 \enddatalist
 \endinput

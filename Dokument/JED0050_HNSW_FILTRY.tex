@@ -45,22 +45,30 @@
 		Pro určení vzdálenosti mezi jednotlivými prvky v n-dimenzionálním prostoru můžeme využít celou řadu metrik. Mezi ty nejznámější patří Euklidova, Hammingova, Minkovského případně Čebyševova. Ve vypracované implementaci se vždy pracuje s Euklidovou vzdáleností, nicméně by nebyl problém zaměnit definici metody pro určení vzdálenosti mezi prvky a tím pádem změnit použitou metriku.
 		
 		Dimenze prostoru ve kterém vyhledáváme prvky nemusí být vůbec nízká. Dimenze prostoru se může pohybovat v rozmezí od jednotek (2,5,...) do stovek (sift vecdim = 128). A hodnoty jednotlivých atributů se mohou rovněž tak pohybovat v širokém spektru, s tím že v mé práci jsou všechny atributy datového typu float.
-		
-		Jako datový soubor pro vytvoření bodů v prostoru a možnosti následného testování byl vybrán Sift1M. V souboru se nachází binární data obsahující 1 000 000 rozdílných bodů, v prostoru o dimenzi 128 a floatové hodnotě jendotlivých atributů v rozmezí od 0 do 217, přičemž v atributech jsou pouze celočíselné hodnoty.
 	
 	\chapter{HNSW}
 	
 		Hierarchical Navigable Small Worlds \cite{malkov2018efficient}, dále jen zkráceně HNSW, je jeden ze způsobů jakým řešit KNN problém. Tato metoda je založena na přibližném vyhledávání (ANN) za použití grafů. To znamená že výsledek je poskytován pouze s určitou přesností která je definována pomocí Recall, což je poměr relevantních výsledků které jsme získali.
 		
-		Přesnost s jakou chceme získat výsledných K sousedů lze měnit. Metoda pro vyhledání KNN má parametr Ef udávající počet prvků které vyhledáváme, z nichž nakonec vracíme K nejbližších. Čím vyšší hodnota Ef bude tím s větší přesností proběhne vyhledání, zároveň tak poroste i čas vyhledávání (\ref{HNSWM}). Z měření lze vidět že ideální hodnota Ef je okolo 200, získáváme vysoukou přesnost za přijatelný čas vykonání operace.
+		Přesnost s jakou chceme získat výsledných K sousedů lze měnit. Metoda pro vyhledání KNN má parametr Ef udávající počet prvků které vyhledáváme, z nichž nakonec vracíme K nejbližších. Čím vyšší bude hodnota Ef tím s větší přesností proběhne vyhledání, zároveň tak poroste i čas vyhledávání a proto je potřeba najít vhodné Ef pro naše potřeby (\ref{HNSWM}) (\ref{graf_hnsw}).
 		
 		Důvod přibližného vyhledávání a ne procházení všech prvků je prostý, chceme co nejvyšší propustnost. Určování vzdálenosti mezi prvky nám zabírá mnoho času, okolo 90\%, a proto chceme tuto operaci provádět co nejméně. V HNSW se vzhledem k přibližnému vyhledávání zhruba 90\% prvků vůbec neprochází což ušetří velkou část času vykonání operace a proto tento způsob vyhledávání KNN dosahuje dobrých výsledků.
 		
 		Jak již bylo zmíněno HNSW je založen na uložení dat pomocí grafů, konkrétně několikavrstvých grafů. Každý node v prostoru má Mmax sousedů, většinou 16/32, s tím že prvky mohou být a většinou i bývají sousedi navzájem. Vrstvy (layers) (\ref{hnsw_layers}) grafů fungují tak že v nejvyšší vrstvě, v mé implementaci se jedná o vrstvu 3, se nachází poze zlomek prvků (okolo 500 z 1 000 000) a slouží poze k rychlému průchodu a nálezu nového entryPoint, tedy prvku z kterého se posuneme do nižší vrstvy a kde nakonec začně vyhledávání. Takto se prochází i nižší vrstvy, v mém případě vrstva 2 a hledá se v nich pouze 1 nový entryPoint. Když narazíme na nízkou vrstvu, vrstvu 1 která již obsahuje zhruba 10\% všech prvků, a vstoupíme do ní pomocí dříve nalezeného entryPoint a vyhledáváme již EfC prvků. EfC je většinou 200 a EfC prvků se vyhledává ve vrstvě 1 pokud tuto vrstu procházíme z důvodu vložení nového prvku do grafu, pokud bychom do této vrstvy vstupovali z důvodu vyhledání K sousedů tak nám i vrstva vrací pouze 1 entryNode jako vyšší vrstvy. A nakonec vstupujeme do nejnižší vrstvy, vrstvy 0, buď s W o velikosti EfC v případě vkládání nového prvku nebo W o velikosti 1 v případě vyhledání KNN.
 		
+		\section{Implementace HNSW}
+		
+		Pro lepší pochopení HNSW se již naimplementované projekty \cite{git-hnswlib} \cite{git-hnsw} využívaly pouze jako reference pro porovnání podobnosti výsledků a srovnání časů vykonání operací. Implemence HNSW se tedy vytvořila od základu nová dle referenčního projektu a pseudokódu v článku popisujícím principy HNSW. Vlastní implementace celého projektu přinesla výhodu v maximálním porozumění kódu a algoritmům použitým v HNSW. Na druhou stranu je tato implementace přibližně 2,5x pomalejší než referenční kód, výsledky ale vrací rovněž validní jako reference. Čas vkládání všech 1 000 000 prvků do grafu trvá přibližně 30 minut, u reference trvalo vytváření 15 minut lze tedy vidět dvojnásobné zpomalení.
+		
 		Metoda Search (\ref{hnsw_search}) pro vyhledání K nejbližších prvků v grafu od queryNodu s tím že máme zadaný 1 nebo více entryPoint prvků ($W$) se využívá s drobnými úpravami jak pro operaci vložení prvku do grafu (\ref{hnsw_insert}) tak i pro vyhledávání KNN prvků (\ref{hnsw_knn}). Pokud chceme prvek vložit tak musíme najít pozici kam do grafu ho dát a s kým bude sousedit což nám Search vrátí. Pokud vyhledáváme KNN prvků tak nám Search vrací K nejbližších prvků. Tato metoda funguje na jednoduchém prinicpu. Na začátku máme $W$ již nalezených prvků které následně prohlásíme za ty nejbližší (entryPoint/s), $V$ již navštívených prvku, a $C$ potencionálních kandidátů na nejbližší prvky tedy prvky v $W$. Před začátkem průchodu jsou v $C$ i $V$ uloženy všechny prvky co jsou v $W$. Následně začíná průchod, který se opakuje dokud je $C > 0$. Získáme si prvek $c$, nejbližší prvek z $C$ (vzdálenosti prvků, nejbližší/nejvzdálenější jsou vždy vohodnoceny jako vzdálenost daného prvku ku zadanéme queryNodu) a $f$, nejvzdálenšjší prvek z $W$. Pokud je vzdálenost $c$ vetší než vzdálenost $f$ tak průchod končí a našli jsme $W$ s námi hledanými prvky. V opačném případě jdeme dál. Procházíme všechny sousedy $e$ od prvku $c$. Pokud $e$ není mezi navšívenými prvky $V$ tak jeji přidáme do $V$, do $f$ opět uložíme nejvzdálenější prvek z $W$ a pokud je vzdálenost mezi $e$ a $q$ menší než vzdálenost mezi $f$ a $q$ a nebo je velikost $W$ menší než zadané Ef tak pokračujeme dál. Do $C$ i $W$ vložíme prvek $e$ a pokud je velikost $W$ větší než Ef tak z $W$ odstraníme nejvzdálenější prvek. Takto procházíme všechny prvky $c$ z $C$ a následně všechny sousedy $e$ z $c$ dokud není $C == 0$ nebo není vzdálenost mezi nejbližšího prvku z $C$ ($c$) větší jak vzdálenost nejvzdálenějšího prvku z $W$ ($f$).
-	
-		Pro lepší pochopení HNSW se již naimplementované projekty \cite{git-hnswlib} \cite{git-hnsw} využívaly pouze jako reference pro porovnání podobnosti výsledků a srovnání časů vykonání operací. Implemence HNSW se tedy vytvořila od základu nová dle referenčního projektu a pseudokódu v článku popisujícím principy HNSW. Vlastní implementace celého projektu přinesla výhodu v maximálním porozumění kódu a algoritmům použitým v HNSW. Na druhou stranu je tato implementace přibližně 2.5x pomalejší než referenční kód, výsledky ale vrací rovněž validní jako reference. Čas vkládání všech 1 000 000 prvků do grafu trvá přibližně 30 minut, u reference trvalo vytváření 15 minut lze tedy vidět dvojnásobné zpomalení.
+		
+		\section{Měření závislosti času operace KNN na přesnosti}
+		
+		Testování a měření probíhalo nad datovou kolekcí Sift1M. Tato kolekce obsahuje jak data prvků v prostoru tak i dotazy a očekávané množiny výsledků nad těmito dotazy. V hlavním souboru sift1M se nachází binární data obsahující 1 000 000 rozdílných bodů v prostoru o dimenzi 128 a floatové hodnotě jendotlivých atributů v rozmezí od 0 do 217, přičemž v atributech jsou pouze celočíselné hodnoty.
+		
+		Při vkládání prvků do hnsw bylo EfC nastaveno na 200, a M i MMax na hodnotu 16.
+		
+		Z tabulky (\ref{HNSWM}) i grafu (\ref{graf_hnsw}) lze vidět že při nízkém Ef = 20 je čas operace také velice nízký, a to 0,413ms, přesnost je ale bohužel rovněž až moc nízká 0,8386 a proto je Ef = 20 nevyhovující. Naopak příliš vysoká hodnota Ef = 300, má sice velice vysoukou přesnost 0,9980, bohužel čas operace je v tomto případě zbytečně přiliš vysoký 2,8ms na to jaký nárůst přesnosti získáme. Pro představu oproti Ef = 20, se u Ef = 300 čas operace zvedl 6,8x a přesnost stoupla o 15,94\%. Proto je i Ef = 300 nevyhovující. Z měření lze vidět že ideální hodnota Ef pokud nám závisí na přesnosti nad 99,5\% je okolo 200, získáváme vysoukou přesnost 0,9957 za přijatelný čas vykonání operace 1,9ms. Při porovnání s Ef = 20, dojde k 4,8x zpomalení ale přesnost se zvedne o 15,7\%. Nicméně hodnota Ef = 200 má stále relativně vysoký čas vzhledem k násrůstu přesnoti, takže pokud bychom upřednostnili hlavně vysokou propustnost a spokojili se s přesností 98\% tak bychom mohli volit i podstatně nižší Ef. Při Ef = 100 máme přesnost 0,9831 a čas 1,2ms, opět při porovnání s Ef = 20 nám dochází k zpomalení, tentorkát pouze 2,8x a přesnost nám stoupá o 14,5\%. Z měření tedy můžeme vyvodit že pro naši kolekci a vybrané parametry vytváření je pro KNN vhodné Ef v rozmezí od 100-200 dle toho zda preferujeme propustnost nebo přesnost.
 		
 		\begin{figure}
 			\centering
@@ -97,42 +105,47 @@
 			\label{hnsw_knn}
 		\end{figure}
 		
-		\newpage
+		\begin{figure}
+			\centering
+			\includegraphics[scale=0.5]{Figures/graf_hnsw.png}
+			\caption{Graf závislosti času na přesnosti}
+			\label{graf_hnsw}
+		\end{figure}
+		
 		\begin{center}
-			\newpage
 			\begin{tabular}{c c c c}\label{HNSWM}
 				
-				Přesnost & Ef & Prům. čas [us] & Min čas [us] \\
+				Přesnost & Ef & Prům. čas [us] & Min. čas [us] \\
 				\midrule
-				0.83862 & 20 & 413.289 & 412 \\
-				0.8953 & 30 & 517.506 & 515 \\
-				0.92742 & 40 & 618.912 & 616 \\
-				0.94677 & 50 & 705.307 & 704 \\
-				0.95976 & 60 & 796.93 & 796 \\
-				0.96877 & 70 & 887.826 & 884 \\
-				0.97486 & 80 & 978.329 & 978 \\
-				0.97943 & 90 & 1068.17 & 1066 \\
-				0.98313 & 100 & 1158.61 & 1155 \\
-				0.98599 & 110 & 1245.67 & 1244 \\
-				0.98806 & 120 & 1332.38 & 1328 \\
-				0.98971 & 130 & 1413.94 & 1411 \\
-				0.99114 & 140 & 1500.58 & 1496 \\
-				0.99243 & 150 & 1585.35 & 1582 \\
-				0.99327 & 160 & 1670.44 & 1668 \\
-				0.99414 & 170 & 1750.63 & 1747 \\
-				0.99475 & 180 & 1832.2 & 1827 \\
-				0.99524 & 190 & 1915.4 & 1912 \\
-				0.99571 & 200 & 1997.4 & 1993 \\
-				0.99618 & 210 & 2072.92 & 2068 \\
-				0.99633 & 220 & 2152.36 & 2150 \\
-				0.99672 & 230 & 2233.03 & 2225 \\
-				0.99693 & 240 & 2327.24 & 2308 \\
-				0.99703 & 250 & 2382.41 & 2374 \\
-				0.99738 & 260 & 2840.25 & 2609 \\
-				0.99764 & 270 & 2609.32 & 2605 \\
-				0.99788 & 280 & 2671.21 & 2669 \\
-				0.99794 & 290 & 2752.72 & 2748 \\
-				0.99806 & 300 & 2832.61 & 2829 \\
+				0,83862 & 20 & 413,289 & 412 \\
+				0,8953 & 30 & 517,506 & 515 \\
+				0,92742 & 40 & 618,912 & 616 \\
+				0,94677 & 50 & 705,307 & 704 \\
+				0,95976 & 60 & 796,93 & 796 \\
+				0,96877 & 70 & 887,826 & 884 \\
+				0,97486 & 80 & 978,329 & 978 \\
+				0,97943 & 90 & 1068,17 & 1066 \\
+				0,98313 & 100 & 1158,61 & 1155 \\
+				0,98599 & 110 & 1245,67 & 1244 \\
+				0,98806 & 120 & 1332,38 & 1328 \\
+				0,98971 & 130 & 1413,94 & 1411 \\
+				0,99114 & 140 & 1500,58 & 1496 \\
+				0,99243 & 150 & 1585,35 & 1582 \\
+				0,99327 & 160 & 1670,44 & 1668 \\
+				0,99414 & 170 & 1750,63 & 1747 \\
+				0,99475 & 180 & 1832,2 & 1827 \\
+				0,99524 & 190 & 1915,4 & 1912 \\
+				0,99571 & 200 & 1997,4 & 1993 \\
+				0,99618 & 210 & 2072,92 & 2068 \\
+				0,99633 & 220 & 2152,36 & 2150 \\
+				0,99672 & 230 & 2233,03 & 2225 \\
+				0,99693 & 240 & 2327,24 & 2308 \\
+				0,99703 & 250 & 2382,41 & 2374 \\
+				0,99738 & 260 & 2540,25 & 2529 \\
+				0,99764 & 270 & 2609,32 & 2605 \\
+				0,99788 & 280 & 2671,21 & 2669 \\
+				0,99794 & 290 & 2752,72 & 2748 \\
+				0,99806 & 300 & 2832,61 & 2829 \\
 			\end{tabular}
 		
 			\captionof{table}{Nárůst přesnosti a času operace u HNSW\_KNN s rostoucím Ef}
@@ -156,50 +169,52 @@
 		
 		\section{Měření HNSW implementace s filtrem}
 		
-		Při měření se provádělo 1000 testů pro jednotlivé selektivity s různými K. Hodnota Ef byla nastavena na hodnotu 200. Pro získání filtrů s určitou selektivitou se provádělo náhodné generování filtrů, spočítání kolika prvkům z celkových dat vyhovují a pokud filtry spadaly do požadovaných hranic tak se ukládaly do souborů a následně použili při testování.
+		Při měření se provádělo 1000 testů pro každé K a různé selektivity, z výsledků těchto testů se následně získával průměr. U rozšířené HNSW\_KNN implementace s filtrem (F) byla hodnota Ef nastavena pevně na 200. U implementace bez filtru (B) získáváme z metody KNN Kb prvků, a v těchto prvcích následně kontrolujeme zda se v nic hnachází alespoň K prvků vyhovujících filtru a ty následně vracíme jako výsledek. Implementace bez filtru měla Ef nastavené také na 200, ale pokud v získaném Kb nebylo alespoň K prvků vyhovujících filtru, tak se zvedalo Kb, a pokud bylo $Kb > Ef$ tak se hodnota Ef nastavovala na hodnotu Kb (Ef nemůže být nikdy menší než K protože z nalezeného Ef se vrací K nejbližščích prvků). Pro získání filtrů s určitou selektivitou se provádělo náhodné generování filtrů, spočítání kolika prvkům z celkových dat filtry vyhovují a pokud selektivity spadaly do požadovaných hranic tak se textové reprezentace filtrů ukládaly do souborů a následně použili při testování. Veškeré výsledky testů jsou zaznamenány v tabulce (\ref{FBC}).
 		
-		V tabulce (\ref{FBC}) lze vidět že čím nižší je selektivita filtru tím kratší dobu operace KNN zabírá u implementace s filtrem i bez něj. Dokonce ve při K << Ef dochází k tomu že filtry se selektivitou 50\%, 75\% a 90\% mají praticky stejné časy u obou implementací. Je tomu tak protože ve vyhledaném Ef prvků se nalezne K a tím pádem není potřeba provádět průchody navíc pro dohledání potřebného počtu prvků. Dále lze vidět že s rostoucím K a konstantním Ef se stává že získaný počet KNN je o něco menší než bylo požadované K u implementace s filtrem a je proto potřeba Ef zvyšovat při rostoucím K (\ref{FP}). Implementace s filtrem vrací obdobné výsledky jako ta bez filtru, pokud se liší tak kvůli tomu že implementace bez filtru vyhledává až příliš prvků a tím pádem zahodí ty které jsou daleko od queryNodu a implementace s filtrem ponechala.
+		V tabulce (\ref{FBC}) lze vidět že čím nižší je selektivita filtru tím kratší dobu operace KNN zabírá u implementace s filtrem i bez něj. Dokonce při $K << Ef$ dochází k tomu že filtry se selektivitou 50\%, 75\% a 90\% mají praticky stejné časy u jednotlivých implementací. Je tomu tak protože ve vyhledaném Ef prvků se nalezne požadované K které vyhovuje filtru a tím pádem není potřeba provádět průchody navíc pro dohledání potřebného počtu prvků do K. Konkrétně pro $K = 10, Ef = 200$ trvá KNN přibližně 2,8ms pro všechny selektivity u implementace s filtrem. Implementace bez filtru je obecně rychlejší při nízkém K se selektivitě od 50\% do 90\% za předpokladu že známe požadované potřebné Kb ve kterém najdeme K hledaných prvků, což by v praxi úplně neplatilo protože nevíme kolik přesně prvků musíme vrátit. Implementace B má čas operace přibližně 2,1ms pro nízké selektivity, 2,7ms pro selektivitu 25\% což je srovnatelné s časem 2,8ms u implementace F. Každopádně u vysokých selektivit vidímě že implementace B se vyplatí, má totiž 2,3x lepší čas než implementace B, konkrétně 3ms oproti 7ms. Stejně tak při stoupajícím K a konstantním Ef můžeme vidět že implementace F má lepší časy KNN operací než B i pro nižší selektivity.
+		 
+		Dále lze vidět že s rostoucím K a konstantním Ef se stává že získaný počet KNN v implementaci F je o něco málo menší než bylo požadované K a je proto potřeba Ef zvyšovat při rostoucím K (\ref{FP}). Implementace s filtrem vrací obdobné výsledky jako ta bez filtru, pokud se získané výsledky liší tak kvůli tomu že implementace bez filtru vyhledává až příliš prvků (může mít mnohem vyšší Ef) a tím pádem zahodí ty které jsou daleko od queryNodu a implementace s filtrem si tyto prvky ponechala a ukončila se jakmile našla požadované K v Ef prvcích.
 		
 		\begin{center}
 			
 			\begin{tabular}{c c c c c c c c}\label{FBC}
 				
-				Sel[\%] & tF[us] & tB[us] & Shoda FB & Získ. KNN u F & Prům. potř. K u B \\
+				Sel[\%] & tF[us] & tB[us] & Shoda FB & Získ. KNN u F & Prům. potř. Kb u B \\
 				\midrule
 			 	K: 10\\
-			 	10 & 3040.97 & 7056.26 & 0.91 & 10.00 & 715.28\\
-			 	25 & 2867.57 & 2703.60 & 0.99 & 10.00 & 124.00\\
-			 	50 & 2817.17 & 2168.04 & 1.00 & 10.00 & 25.96\\
-			 	75 & 2805.95 & 2163.28 & 1.00 & 10.00 & 15.83\\
-			 	90 & 2811.61 & 2163.50 & 1.00 & 10.00 & 13.34\\
+			 	10 & 3040,97 & 7056,26 & 0,91 & 10,00 & 715,28\\
+			 	25 & 2867,57 & 2703,60 & 0,99 & 10,00 & 124,00\\
+			 	50 & 2817,17 & 2168,04 & 1,00 & 10,00 & 25,96\\
+			 	75 & 2805,95 & 2163,28 & 1,00 & 10,00 & 15,83\\
+			 	90 & 2811,61 & 2163,50 & 1,00 & 10,00 & 13,34\\
 			 	K: 50\\
-			 	10 & 3534.66 & 16451.46 & 0.73 & 49.67 & 1800.22\\
-			 	25 & 3076.86 & 4966.35 & 0.93 & 49.96 & 426.49\\
-			 	50 & 2921.99 & 2435.99 & 0.99 & 50.00 & 105.44\\
-			 	75 & 2903.95 & 2129.43 & 1.00 & 50.00 & 71.57\\
-			 	90 & 2891.03 & 2113.17 & 1.00 & 50.00 & 58.76\\
+			 	10 & 3534,66 & 16451,46 & 0,73 & 49,67 & 1800,22\\
+			 	25 & 3076,86 & 4966,35 & 0,93 & 49,96 & 426,49\\
+			 	50 & 2921,99 & 2435,99 & 0,99 & 50,00 & 105,44\\
+			 	75 & 2903,95 & 2129,43 & 1,00 & 50,00 & 71,57\\
+			 	90 & 2891,03 & 2113,17 & 1,00 & 50,00 & 58,76\\
 			 	K: 100\\
-			 	10 & 3961.65 & 25212.24 & 0.58 & 98.77 & 2747.15\\
-			 	25 & 3268.71 & 8161.75 & 0.85 & 99.88 & 753.35\\
-			 	50 & 2999.55 & 2952.85 & 0.97 & 100.00 & 221.45\\
-			 	75 & 2946.42 & 2226.74 & 1.00 & 100.00 & 160.95\\
-			 	90 & 2930.98 & 2117.40 & 1.00 & 100.00 & 142.65\\
+			 	10 & 3961,65 & 25212,24 & 0,58 & 98,77 & 2747,15\\
+			 	25 & 3268,71 & 8161,75 & 0,85 & 99,88 & 753,35\\
+			 	50 & 2999,55 & 2952,85 & 0,97 & 100,00 & 221,45\\
+			 	75 & 2946,42 & 2226,74 & 1,00 & 100,00 & 160,95\\
+			 	90 & 2930,98 & 2117,40 & 1,00 & 100,00 & 142,65\\
 			 	K: 150\\
-			 	10 & 4292.07 & 32129.19 & 0.50 & 147.38 & 3547.55\\
-			 	25 & 3411.34 & 11481.21 & 0.76 & 149.78 & 1060.20\\
-			 	50 & 3089.03 & 3804.70 & 0.95 & 150.00 & 319.30\\
-			 	75 & 3036.32 & 2642.55 & 0.98 & 150.00 & 226.25\\
-			 	90 & 2992.38 & 2173.99 & 1.00 & 150.00 & 197.20\\
+			 	10 & 4292,07 & 32129,19 & 0,50 & 147,38 & 3547,55\\
+			 	25 & 3411,34 & 11481,21 & 0,76 & 149,78 & 1060,20\\
+			 	50 & 3089,03 & 3804,70 & 0,95 & 150,00 & 319,30\\
+			 	75 & 3036,32 & 2642,55 & 0,98 & 150,00 & 226,25\\
+			 	90 & 2992,38 & 2173,99 & 1,00 & 150,00 & 197,20\\
 			 	K: 200\\
-			 	10 & 4578.50 & 37901.86 & 0.45 & 195.29 & 4234.40\\
-			 	25 & 3587.91 & 14764.61 & 0.68 & 199.68 & 1367.60\\
-			 	50 & 3175.45 & 5156.43 & 0.90 & 200.00 & 417.50\\
-			 	75 & 3096.15 & 3594.97 & 0.95 & 200.00 & 290.35\\
-			 	90 & 3051.25 & 2810.96 & 0.99 & 200.00 & 251.65\\
+			 	10 & 4578,50 & 37901,86 & 0,45 & 195,29 & 4234,40\\
+			 	25 & 3587,91 & 14764,61 & 0,68 & 199,68 & 1367,60\\
+			 	50 & 3175,45 & 5156,43 & 0,90 & 200,00 & 417,50\\
+			 	75 & 3096,15 & 3594,97 & 0,95 & 200,00 & 290,35\\
+			 	90 & 3051,25 & 2810,96 & 0,99 & 200,00 & 251,65\\
 			 	\\
 			\end{tabular}
 			
-			{\footnotesize *F = implem. KNN s filtrem, B = impl. KNN bez filtru, sel = selektivita filtru, tF = prům. čas F, tB = průměrný čas B, Shoda FB = shoda získaných prvků z F a B, Získ. KNN u F = prům. počet získaných prvků ze zvoleného K u F, Prům. potř. K u B = průměrný počet zadaného K v B pro získání K prvků}\\
+			{\footnotesize *F = implem. KNN s filtrem, B = impl. KNN bez filtru, sel = selektivita filtru, tF = prům. čas F, tB = průměrný čas B, Shoda FB = shoda získaných prvků z F a B, Získ. KNN u F = prům. počet získaných prvků ze zvoleného K u F, Prům. potř. Kb u B = průměrný počet zadaného Kb v B pro získání K prvků}\\
 			
 			\captionof{table}{Porovnání vlastností u implementase KNN s filtrem a bez filtru}
 		
