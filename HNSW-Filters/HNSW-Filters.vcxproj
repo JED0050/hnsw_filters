@@ -140,7 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DimFilter.cpp" />
-    <ClCompile Include="HNSW-Filters.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Hnsw.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Node.cpp" />

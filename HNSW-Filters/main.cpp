@@ -271,7 +271,7 @@ void HNSWGraphAndQuerySavePrint()
     start = std::chrono::system_clock::now();
     for (int i = 0; i < NUMBER_OF_QUERY_NODES; i++)
     {
-        vector<uint> closestNodes = hG.KNNSearchIndex(&queryNodes[i], K, EF_CONSTRUCTIONS);
+        vector<uint> closestNodes = hG.KNN(&queryNodes[i], K, EF_CONSTRUCTIONS);
 
         //cout << K << " nearest point: ";
 
@@ -386,7 +386,7 @@ void SiftTest()
         float positive = 0;
         for (int i = 0; i < qsize; i++)
         {
-            vector<uint> result = hnsw.KNNSearchIndex(queryNodes[i], k, ef);
+            vector<uint> result = hnsw.KNN(queryNodes[i], k, ef);
 
             //int c1 = result.size();
 
@@ -418,7 +418,7 @@ void SiftTest()
             auto start = std::chrono::steady_clock::now();
             for (int i = 0; i < qsize; i++)
             {
-                hnsw.KNNSearchIndex(queryNodes[i], k, ef);
+                hnsw.KNN(queryNodes[i], k, ef);
             }
             auto end = std::chrono::steady_clock::now();
             int time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
@@ -658,7 +658,7 @@ void FilterFullTest()
 
                     auto start2 = std::chrono::steady_clock::now();
                     
-                    vector<uint> res = hnsw.KNNSearchIndex(&filterQueryNode[tCtr], tmpK, efsNF);
+                    vector<uint> res = hnsw.KNN(&filterQueryNode[tCtr], tmpK, efsNF);
 
                     for (auto v : res)
                     {
@@ -766,7 +766,7 @@ void FilterFullTest()
         float positive = 0;
         for (int i = 0; i < qsize; i++)
         {
-            vector<uint> result = hnsw.KNNSearchIndex(&queryNodes[i], K, ef);
+            vector<uint> result = hnsw.KNN(&queryNodes[i], K, ef);
 
             int c2 = 0;
             while (c2 < K)
@@ -789,7 +789,7 @@ void FilterFullTest()
             auto start = std::chrono::steady_clock::now();
             for (int i = 0; i < qsize; i++)
             {
-                hnsw.KNNSearchIndex(&queryNodes[i], K, ef);
+                hnsw.KNN(&queryNodes[i], K, ef);
             }
             auto end = std::chrono::steady_clock::now();
             int time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();

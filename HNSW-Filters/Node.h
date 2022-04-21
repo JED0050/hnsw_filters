@@ -12,28 +12,14 @@ class Node;
 class Neighbours
 {
 public:
-	int layerID;
 	vector<uint> neighbours;
+	int layerID;
 
-	Neighbours(int lID)
-	{
-		layerID = lID;
-	}
+	Neighbours(int lID);
 
-	void Insert(uint newNode)
-	{
-		neighbours.push_back(newNode);
-	}
-
-	uint Size()
-	{
-		return neighbours.size();
-	}
-
-	vector<uint> GetNeighbours()
-	{
-		return neighbours;
-	}
+	void Insert(uint newNode);
+	uint Size();
+	vector<uint> GetNeighbours();
 
 };
 
@@ -46,105 +32,16 @@ public:
 	vector<float> values;
 	vector<Neighbours*> lNaighbours;
 
-	~Node()
-	{
-		for (int i = 0; i < lNaighbours.size(); i++)
-		{
-			delete lNaighbours[i];
-			lNaighbours[i] = nullptr;
-		}
+	~Node();
 
-		//lNaighbours.clear();
-	}
+	void Insert(uint node, int layerID);
+	void InsertValue(float v, int index);
+	void SetNeighbours(Neighbours* nbrs);
 
-	void Insert(uint node, int layerID)
-	{
-		if (lNaighbours.size() == 0)
-		{
-			Neighbours* newNeighbours = new Neighbours(layerID);
-			newNeighbours->Insert(node);
-			lNaighbours.push_back(newNeighbours);
+	Neighbours* GetNeighboursAtLayer(int layerID);
+	vector<uint> GetNeighboursVectorAtLayer(int layerID);
 
-		}
-		else
-		{
-			for (auto& nbr : lNaighbours)
-			{
-				if (nbr->layerID == layerID)
-				{
-					nbr->Insert(node);
-					return;
-				}
-			}
-
-			Neighbours* newNeighbours = new Neighbours(layerID);
-			newNeighbours->Insert(node);
-			lNaighbours.push_back(newNeighbours);
-		}
-	}
-
-	void SetNeighbours(Neighbours* nbrs)
-	{
-		for (auto nbr : lNaighbours)
-		{
-			if (nbr->layerID == nbrs->layerID)
-			{
-				nbr->neighbours = nbrs->neighbours;
-				return;
-			}
-		}
-
-		lNaighbours.push_back(nbrs);
-	}
-
-	Neighbours* GetNeighboursAtLayer(int layerID)
-	{
-		for (auto& nbr : lNaighbours)
-		{
-			if (nbr->layerID == layerID)
-			{
-				return nbr;
-			}
-		}
-
-		return new Neighbours(layerID);
-	}
-
-	vector<uint> GetNeighboursVectorAtLayer(int layerID)
-	{
-		for (auto& nbr : lNaighbours)
-		{
-			if (nbr->layerID == layerID)
-			{
-				return nbr->neighbours;
-			}
-		}
-
-		vector<uint> emptyVector;
-		return emptyVector;
-	}
-
-	void InsertValue(float v, int index)
-	{
-		values[index] = v;
-	}
-
-	float GetDistance(vector<float> node)
-	{
-		float distance = 0;
-
-		for (uint i = 0; i < vectorSize; i++)
-		{
-			float x = node[i];
-			float y = values[i];
-			float z = x - y;
-
-			distance += (z * z);
-		}
-
-		return distance;
-	}
-
+	float GetDistance(vector<float> node);
 };
 
 class NodeDist
@@ -153,30 +50,10 @@ public:
 	uint ID;
 	float distance;
 
-	NodeDist(uint id)
-	{
-		ID = id;
-	}
+	NodeDist(uint id);
+	NodeDist(uint id, float dist);
 
-	NodeDist(uint id, float dist)
-	{
-		ID = id;
-		distance = dist;
-	}
-
-	void SetDistance(vector<float> n1, vector<float> n2)
-	{
-		distance = 0;
-
-		for (uint i = 0; i < Node::vectorSize; i++)
-		{
-			float x = n1[i];
-			float y = n2[i];
-			float z = x - y;
-
-			distance += (z * z);
-		}
-	}
+	void SetDistance(vector<float> n1, vector<float> n2);
 };
 
 struct NodeDistanceSortNearest {

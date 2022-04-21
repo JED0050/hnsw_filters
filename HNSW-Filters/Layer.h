@@ -10,14 +10,8 @@ public:
 	static int maxLayer;
 	int ID;
 	unsigned int entryPoint;
-	int numberOfNodes = 0;
+	int numberOfNodes;
 
-	Layer(int eP)
-	{
-		entryPoint = eP;
-		ID = maxLayer;
-		maxLayer++;
-	}
-
+	Layer(int eP);
 };
 

@@ -6,6 +6,78 @@
 #include <iomanip>
 #include <sstream>
 
+DimFilter::DimFilter(uint ind)
+{
+	index = ind;
+	emptyFilter = true;
+}
+
+void DimFilter::AddEqNumber(float val)
+{
+	emptyFilter = false;
+	eqNumbers.push_back(val);
+}
+
+void DimFilter::AddInterval(float start, float end)
+{
+	emptyFilter = false;
+	intervals.push_back(make_tuple(start, end));
+}
+
+bool DimFilter::IsDimValid(float val)
+{
+	if (emptyFilter)
+		return true;
+
+	for (auto& i : intervals)
+	{
+		if (get<0>(i) <= val && val <= get<1>(i))
+			return true;
+	}
+
+	for (auto& v : eqNumbers)
+	{
+		if (v == val)
+			return true;
+	}
+
+	return false;
+}
+
+
+vector<DimFilter> DimFilterHelper::GetNumOfFilters(int n)
+{
+	vector<DimFilter> newFilters;
+
+	for (int i = 0; i < n; i++)
+	{
+		newFilters.push_back(DimFilter(i));
+	}
+
+	return newFilters;
+}
+
+bool DimFilterHelper::IsVectorValid(vector<DimFilter> filters, vector<float> vec)
+{
+
+	if (filters.size() == 0)
+	{
+		return true;
+	}
+
+	for (int i = 0; i < filters.size(); i++)
+	{
+		uint vecIdx = filters[i].index;
+
+		if (!filters[i].IsDimValid(vec[vecIdx]))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
 vector<DimFilter> DimFilterHelper::GenerateFilter(uint dims, float perc, int min, int max)
 {
 	if (perc < 0)
