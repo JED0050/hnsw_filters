@@ -17,6 +17,17 @@
 \endgroup
 
 \datalist[entry]{none/global//global/global}
+  \entry{Metriky}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{Metrický prostor}
+    \verb{url}
+    \verb https://cs.wikipedia.org/wiki/Metrick%C3%BD_prostor#Definice
+    \endverb
+    \field{langid}{english}
+    \field{year}{2022}
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
   \entry{malkov2018efficient}{article}{}
     \name{author}{2}{}{%
       {{hash=MYA}{%
@@ -77,6 +88,19 @@
     \field{urlyear}{2022}
   \endentry
 
+  \entry{OptINFORMIX}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{Optimalizace v INFORMIXU}
+    \verb{url}
+    \verb http://www.ms.mff.cuni.cz/~jkoc5219/Optimalizace_v_INFORMIXU.html
+    \endverb
+    \field{langid}{czech}
+    \field{year}{2022}
+    \field{urlday}{04}
+    \field{urlmonth}{04}
+    \field{urlyear}{2022}
+  \endentry
+
   \entry{ann-benchmarks}{online}{}
     \field{labeltitlesource}{title}
     \field{title}{ann-benchmarks}
@@ -103,17 +127,16 @@
     \field{urlyear}{2022}
   \endentry
 
-  \entry{OptINFORMIX}{online}{}
+  \entry{KNN-Real-World}{online}{}
     \field{labeltitlesource}{title}
-    \field{title}{Optimalizace v INFORMIXU}
+    \field{title}{K-Nearest Neighbors (KNN) algorithm}
     \verb{url}
-    \verb http://www.ms.mff.cuni.cz/~jkoc5219/Optimalizace_v_INFORMIXU.html
+    \verb https://towardsdatascience.com/k-nearest-neighbors-knn-algorithm-2383
+    \verb 2490e3f4
     \endverb
     \field{langid}{czech}
     \field{year}{2022}
-    \field{urlday}{04}
-    \field{urlmonth}{04}
-    \field{urlyear}{2022}
+    \warn{\item Invalid format of field 'urldate'}
   \endentry
 \enddatalist
 \endinput

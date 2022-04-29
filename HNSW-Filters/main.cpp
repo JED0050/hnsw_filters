@@ -543,7 +543,6 @@ void FilterFullTest()
     }
     auto end = std::chrono::system_clock::now();
     double dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-
     cout << "Done. Insert time " << dur / 1000 << " [s] \n\n";
 
 
