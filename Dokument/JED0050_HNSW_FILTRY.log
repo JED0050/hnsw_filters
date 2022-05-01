@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.16)  30 APR 2022 16:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.16)  1 MAY 2022 16:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1309,20 +1309,17 @@ Package pdftex.def Info: Figures/hnsw_knn.png  used on input line 89.
  [11] [12 <./Figures/hnsw_layers.png> <./Figures/hnsw_search.png>]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 128.
+(caption)                particular \caption on input line 130.
 See the caption package documentation for explanation.
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [13 <./Figures/hnsw_knn.png>]
+[13 <./Figures/hnsw_knn.png>]
 <Figures/graf_hnsw.png, id=212, 1002.74625pt x 456.20438pt>
 File: Figures/graf_hnsw.png Graphic file (type png)
 <use Figures/graf_hnsw.png>
-Package pdftex.def Info: Figures/graf_hnsw.png  used on input line 133.
+Package pdftex.def Info: Figures/graf_hnsw.png  used on input line 135.
 (pdftex.def)             Requested size: 501.3719pt x 228.10162pt.
 
-Overfull \hbox (29.34067pt too wide) in paragraph at lines 133--134
+Overfull \hbox (29.34067pt too wide) in paragraph at lines 135--136
  [][] 
  []
 
@@ -1333,46 +1330,46 @@ Kapitola 4.
 ] [16] [17]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 206.
+(caption)                particular \caption on input line 208.
 See the caption package documentation for explanation.
 
-<Figures/graf_filtr_k10.png, id=241, 599.99156pt x 240.14719pt>
+<Figures/graf_filtr_k10.png, id=242, 599.99156pt x 240.14719pt>
 File: Figures/graf_filtr_k10.png Graphic file (type png)
 <use Figures/graf_filtr_k10.png>
-Package pdftex.def Info: Figures/graf_filtr_k10.png  used on input line 213.
+Package pdftex.def Info: Figures/graf_filtr_k10.png  used on input line 215.
 (pdftex.def)             Requested size: 479.9939pt x 192.11798pt.
 
-Overfull \hbox (7.96266pt too wide) in paragraph at lines 213--214
+Overfull \hbox (7.96266pt too wide) in paragraph at lines 215--216
  [][] 
  []
 
-<Figures/graf_filtr_k50.png, id=242, 601.4972pt x 240.14719pt>
+<Figures/graf_filtr_k50.png, id=243, 601.4972pt x 240.14719pt>
 File: Figures/graf_filtr_k50.png Graphic file (type png)
 <use Figures/graf_filtr_k50.png>
-Package pdftex.def Info: Figures/graf_filtr_k50.png  used on input line 220.
+Package pdftex.def Info: Figures/graf_filtr_k50.png  used on input line 222.
 (pdftex.def)             Requested size: 481.19841pt x 192.11798pt.
 
-Overfull \hbox (9.16718pt too wide) in paragraph at lines 220--221
+Overfull \hbox (9.16718pt too wide) in paragraph at lines 222--223
  [][] 
  []
 
-<Figures/graf_filtr_k100.png, id=243, 606.76688pt x 246.1697pt>
+<Figures/graf_filtr_k100.png, id=244, 606.76688pt x 246.1697pt>
 File: Figures/graf_filtr_k100.png Graphic file (type png)
 <use Figures/graf_filtr_k100.png>
-Package pdftex.def Info: Figures/graf_filtr_k100.png  used on input line 227.
+Package pdftex.def Info: Figures/graf_filtr_k100.png  used on input line 229.
 (pdftex.def)             Requested size: 485.41415pt x 196.936pt.
 
-Overfull \hbox (13.38292pt too wide) in paragraph at lines 227--228
+Overfull \hbox (13.38292pt too wide) in paragraph at lines 229--230
  [][] 
  []
 
-<Figures/graf_filtr_k200.png, id=244, 605.26125pt x 245.41687pt>
+<Figures/graf_filtr_k200.png, id=245, 605.26125pt x 245.41687pt>
 File: Figures/graf_filtr_k200.png Graphic file (type png)
 <use Figures/graf_filtr_k200.png>
-Package pdftex.def Info: Figures/graf_filtr_k200.png  used on input line 234.
+Package pdftex.def Info: Figures/graf_filtr_k200.png  used on input line 236.
 (pdftex.def)             Requested size: 484.20964pt x 196.33376pt.
 
-Overfull \hbox (12.1784pt too wide) in paragraph at lines 234--235
+Overfull \hbox (12.1784pt too wide) in paragraph at lines 236--237
  [][] 
  []
 
@@ -1387,7 +1384,7 @@ Kapitola 5.
 
 ]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
-65.
+67.
  (D:\Skola-SW\MikTex\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [23
@@ -1414,7 +1411,7 @@ Here is how much of TeX's memory you used:
  45678 multiletter control sequences out of 15000+600000
  525389 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 92i,7n,93p,2257b,4704s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 92i,7n,93p,2295b,4704s stack positions out of 10000i,1000n,20000p,200000b,80000s
 {D:/Skola-SW/MikTex/fonts/enc/dvips/lm/lm-ec.enc}{D:/Skola-SW/MikTex/fonts/en
 c/dvips/lm/lm-rm.enc}{D:/Skola-SW/MikTex/fonts/enc/dvips/lm/lm-mathit.enc}<D:/S
 kola-SW/MikTex/fonts/type1/public/lm/lmbx10.pfb><D:/Skola-SW/MikTex/fonts/type1
@@ -1423,9 +1420,9 @@ kola-SW/MikTex/fonts/type1/public/lm/lmr9.pfb><D:/Skola-SW/MikTex/fonts/type1/p
 ublic/lm/lmri10.pfb><D:/Skola-SW/MikTex/fonts/type1/public/lm/lmss12.pfb><D:/Sk
 ola-SW/MikTex/fonts/type1/public/lm/lmss17.pfb><D:/Skola-SW/MikTex/fonts/type1/
 public/lm/lmssbx10.pfb><D:/Skola-SW/MikTex/fonts/type1/public/lm/lmtt10.pfb>
-Output written on JED0050_HNSW_FILTRY.pdf (23 pages, 1257404 bytes).
+Output written on JED0050_HNSW_FILTRY.pdf (23 pages, 1257984 bytes).
 PDF statistics:
- 352 PDF objects out of 1000 (max. 8388607)
+ 353 PDF objects out of 1000 (max. 8388607)
  57 named destinations out of 1000 (max. 500000)
  170 words of extra memory for PDF output out of 10000 (max. 10000000)
 
