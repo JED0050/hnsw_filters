@@ -28,6 +28,18 @@
     \warn{\item Invalid format of field 'urldate'}
   \endentry
 
+  \entry{KNN-Real-World}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{K-Nearest Neighbors (KNN) algorithm}
+    \verb{url}
+    \verb https://towardsdatascience.com/k-nearest-neighbors-knn-algorithm-2383
+    \verb 2490e3f4
+    \endverb
+    \field{langid}{czech}
+    \field{year}{2022}
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
   \entry{malkov2018efficient}{article}{}
     \name{author}{2}{}{%
       {{hash=MYA}{%
@@ -125,18 +137,6 @@
     \field{urlday}{06}
     \field{urlmonth}{03}
     \field{urlyear}{2022}
-  \endentry
-
-  \entry{KNN-Real-World}{online}{}
-    \field{labeltitlesource}{title}
-    \field{title}{K-Nearest Neighbors (KNN) algorithm}
-    \verb{url}
-    \verb https://towardsdatascience.com/k-nearest-neighbors-knn-algorithm-2383
-    \verb 2490e3f4
-    \endverb
-    \field{langid}{czech}
-    \field{year}{2022}
-    \warn{\item Invalid format of field 'urldate'}
   \endentry
 \enddatalist
 \endinput

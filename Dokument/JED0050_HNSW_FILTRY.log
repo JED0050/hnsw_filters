@@ -1,39 +1,39 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.16)  1 MAY 2022 16:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.3)  2 MAY 2022 00:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **./JED0050_HNSW_FILTRY.tex
 (JED0050_HNSW_FILTRY.tex
 LaTeX2e <2021-11-15> patch level 1
-L3 programming layer <2022-04-10> (diploma.cls
+L3 programming layer <2022-02-24> (diploma.cls
 Document Class: diploma 2021/04/08 5.01 diploma LaTeX document class
-(D:\Skola-SW\MikTex\tex/latex/base\ifthen.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/base\ifthen.sty
 Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
 )
-(D:\Skola-SW\MikTex\tex/latex/base\inputenc.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/base\inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
 \inpenc@prehook=\toks16
 \inpenc@posthook=\toks17
 )
-(D:\Skola-SW\MikTex\tex/latex/xassoccnt\xassoccnt.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/xassoccnt\xassoccnt.sty
 Package: xassoccnt 2021/11/21 - v2.0
 
-(D:\Skola-SW\MikTex\tex/latex/etoolbox\etoolbox.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/etoolbox\etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count185
 )
-(D:\Skola-SW\MikTex\tex/latex/letltxmacro\letltxmacro.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/letltxmacro\letltxmacro.sty
 Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
 )
-(D:\Skola-SW\MikTex\tex/latex/xcolor\xcolor.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/xcolor\xcolor.sty
 Package: xcolor 2021/10/31 v2.13 LaTeX color extensions (UK)
 
-(D:\Skola-SW\MikTex\tex/latex/graphics-cfg\color.cfg
+(D:\VSBProgramFiles\MiKTeX\tex/latex/graphics-cfg\color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: pdftex.def on input line 227.
 
-(D:\Skola-SW\MikTex\tex/latex/graphics-def\pdftex.def
+(D:\VSBProgramFiles\MiKTeX\tex/latex/graphics-def\pdftex.def
 File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 )
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1352.
@@ -46,18 +46,18 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1373.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
 )
-(D:\Skola-SW\MikTex\tex/latex/l3packages/xparse\xparse.sty
-(D:\Skola-SW\MikTex\tex/latex/l3kernel\expl3.sty
-Package: expl3 2022-04-10 L3 programming layer (loader) 
+(D:\VSBProgramFiles\MiKTeX\tex/latex/l3packages/xparse\xparse.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/l3kernel\expl3.sty
+Package: expl3 2022-02-24 L3 programming layer (loader) 
 
-(D:\Skola-SW\MikTex\tex/latex/l3backend\l3backend-pdftex.def
-File: l3backend-pdftex.def 2022-04-14 L3 backend support: PDF output (pdfTeX)
+(D:\VSBProgramFiles\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
+File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count186
 \l__pdf_internal_box=\box50
 ))
 Package: xparse 2022-01-12 L3 Experimental document command parser
 )
-(D:\Skola-SW\MikTex\tex/latex/l3packages/l3keys2e\l3keys2e.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/l3packages/l3keys2e\l3keys2e.sty
 Package: l3keys2e 2022-01-12 LaTeX2e option processing using LaTeX3 keys
 )
 \g__xassoccnt_tmpa_int=\count187
@@ -94,9 +94,9 @@ features on input line 34.
 \c@Dipl@TotalTables=\count198
 \c@xassoccnt@total@Dipl@TotalTables=\count199
 
-(D:\Skola-SW\MikTex\tex/latex/base\book.cls
+(D:\VSBProgramFiles\MiKTeX\tex/latex/base\book.cls
 Document Class: book 2021/10/04 v1.4n Standard LaTeX document class
-(D:\Skola-SW\MikTex\tex/latex/base\bk11.clo
+(D:\VSBProgramFiles\MiKTeX\tex/latex/base\bk11.clo
 File: bk11.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count266
@@ -112,10 +112,10 @@ File: bk11.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
 )
-(D:\Skola-SW\MikTex\tex/latex/base\fontenc.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/base\fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 )
-(D:\Skola-SW\MikTex\tex/latex/lm\lmodern.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/lm\lmodern.sty
 Package: lmodern 2009/10/30 v1.6 Latin Modern Fonts
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
@@ -150,17 +150,17 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
 )
-(D:\Skola-SW\MikTex\tex/latex/geometry\geometry.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/geometry\geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
 
-(D:\Skola-SW\MikTex\tex/latex/graphics\keyval.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/graphics\keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks35
 )
-(D:\Skola-SW\MikTex\tex/generic/iftex\ifvtex.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/iftex\ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 
-(D:\Skola-SW\MikTex\tex/generic/iftex\iftex.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/iftex\iftex.sty
 Package: iftex 2022/02/03 v1.0f TeX engine tests
 ))
 \Gm@cnth=\count275
@@ -176,8 +176,8 @@ Package: iftex 2022/02/03 v1.0f TeX engine tests
 \Gm@layoutvoffset=\dimen146
 \Gm@dimlist=\toks36
 
-(D:\Skola-SW\MikTex\tex/latex/geometry\geometry.cfg))
-(D:\Skola-SW\MikTex\tex/latex/booktabs\booktabs.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/geometry\geometry.cfg))
+(D:\VSBProgramFiles\MiKTeX\tex/latex/booktabs\booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen147
 \lightrulewidth=\dimen148
@@ -197,16 +197,16 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@lastruleclass=\count281
 \@thisrulewidth=\dimen159
 )
-(D:\Skola-SW\MikTex\tex/latex/graphics\graphicx.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/graphics\graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
 
-(D:\Skola-SW\MikTex\tex/latex/graphics\graphics.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/graphics\graphics.sty
 Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
 
-(D:\Skola-SW\MikTex\tex/latex/graphics\trig.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/graphics\trig.sty
 Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
 )
-(D:\Skola-SW\MikTex\tex/latex/graphics-cfg\graphics.cfg
+(D:\VSBProgramFiles\MiKTeX\tex/latex/graphics-cfg\graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 107.
@@ -214,7 +214,7 @@ Package graphics Info: Driver file: pdftex.def on input line 107.
 \Gin@req@height=\dimen160
 \Gin@req@width=\dimen161
 )
-(D:\Skola-SW\MikTex\tex/latex/tools\longtable.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/tools\longtable.sty
 Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
 \LTleft=\skip49
 \LTright=\skip50
@@ -233,10 +233,10 @@ Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
 \c@LT@chunks=\count286
 \LT@p@ftn=\toks37
 )
-(D:\Skola-SW\MikTex\tex/latex/caption\caption.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/caption\caption.sty
 Package: caption 2022/03/01 v3.6b Customizing captions (AR)
 
-(D:\Skola-SW\MikTex\tex/latex/caption\caption3.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/caption\caption3.sty
 Package: caption3 2022/03/17 v2.3b caption3 kernel (AR)
 \caption@tempdima=\dimen163
 \captionmargin=\dimen164
@@ -252,10 +252,10 @@ Package caption Info: Standard document class detected.
 \c@continuedfloat=\count288
 Package caption Info: longtable package is loaded.
 
-(D:\Skola-SW\MikTex\tex/latex/caption\ltcaption.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/caption\ltcaption.sty
 Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 ))
-(D:\Skola-SW\MikTex\tex/latex/graphics\rotating.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/graphics\rotating.sty
 Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
 \c@r@tfl@t=\count289
 \rotFPtop=\skip53
@@ -263,20 +263,20 @@ Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
 \rot@float@box=\box56
 \rot@mess@toks=\toks38
 )
-(D:\Skola-SW\MikTex\tex/latex/setspace\setspace.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/setspace\setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
 )
-(D:\Skola-SW\MikTex\tex/latex/tools\theorem.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/tools\theorem.sty
 Package: theorem 2014/10/28 v2.2c Theorem extension package (FMi)
 \theorem@style=\toks39
 \theorem@bodyfont=\toks40
 \theorempreskipamount=\skip55
 \theorempostskipamount=\skip56
 
-(D:\Skola-SW\MikTex\tex/latex/tools\thp.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/tools\thp.sty
 File: thp.sty 2014/10/28 v2.2c Theorem extension package (FMi)
 ))
-(D:\Skola-SW\MikTex\tex/latex/titlesec\titlesec.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/titlesec\titlesec.sty
 Package: titlesec 2021/07/05 v2.14 Sectioning titles
 \ttl@box=\box57
 \beforetitleunit=\skip57
@@ -288,30 +288,30 @@ Package: titlesec 2021/07/05 v2.14 Sectioning titles
 \titlewidthlast=\dimen174
 \titlewidthfirst=\dimen175
 )
-(D:\Skola-SW\MikTex\tex/latex/tocbibind\tocbibind.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/tocbibind\tocbibind.sty
 Package: tocbibind 2010/10/13 v1.5k extra ToC listings
 Package tocbibind Info: The document has chapter divisions on input line 50.
 
 
 Package tocbibind Note: Using chapter style headings, unless overridden.
 
-) (D:\Skola-SW\MikTex\tex/latex/pdfx\pdfx.sty
+) (D:\VSBProgramFiles\MiKTeX\tex/latex/pdfx\pdfx.sty
 Package: pdfx 2019/02/27 v1.6.3 PDF/X and PDF/A support (CVR/HTH/RRM/PS)
 \pdfx@minorversion=\count290
 
-(D:\Skola-SW\MikTex\tex/generic/iftex\ifpdf.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/iftex\ifpdf.sty
 Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
 )
-(D:\Skola-SW\MikTex\tex/generic/iftex\ifxetex.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/iftex\ifxetex.sty
 Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
 )
-(D:\Skola-SW\MikTex\tex/latex/everyshi\everyshi.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/everyshi\everyshi.sty
 Package: everyshi 2020/11/18 v4.00 EveryShipout Package
 )
-(D:\Skola-SW\MikTex\tex/generic/iftex\ifluatex.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/iftex\ifluatex.sty
 Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
-){C:/Users/Honza_PC/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}
-(D:\Skola-SW\MikTex\tex/latex/pdfx\l8u-penc.def
+){C:/Users/honzo/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}
+(D:\VSBProgramFiles\MiKTeX\tex/latex/pdfx\l8u-penc.def
 File: l8u-penc.def 2017/06/23 v0.8 Custom LaTeX file, for UTF8 encoded letters 
 and symbols
 LaTeX Info: Composite with undeclared \b in encoding L8U on input line 278.
@@ -319,57 +319,57 @@ LaTeX Info: Composite with undeclared \b in encoding L8U on input line 278.
 \pdfxsafeforxmp@toks=\toks42
 \pdfx@tmptoks=\toks43
 
-(D:\Skola-SW\MikTex\tex/latex/hyperref\hyperref.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/hyperref\hyperref.sty
 Package: hyperref 2022-02-21 v7.00n Hypertext links for LaTeX
 
-(D:\Skola-SW\MikTex\tex/generic/ltxcmds\ltxcmds.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
 Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
 )
-(D:\Skola-SW\MikTex\tex/generic/pdftexcmds\pdftexcmds.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
 Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
 )
 
-(D:\Skola-SW\MikTex\tex/generic/infwarerr\infwarerr.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/infwarerr\infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
 )
-(D:\Skola-SW\MikTex\tex/generic/kvsetkeys\kvsetkeys.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/kvsetkeys\kvsetkeys.sty
 Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
 )
-(D:\Skola-SW\MikTex\tex/generic/kvdefinekeys\kvdefinekeys.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/kvdefinekeys\kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
 )
-(D:\Skola-SW\MikTex\tex/generic/pdfescape\pdfescape.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/pdfescape\pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
 )
-(D:\Skola-SW\MikTex\tex/latex/hycolor\hycolor.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/hycolor\hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
 )
-(D:\Skola-SW\MikTex\tex/latex/auxhook\auxhook.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/auxhook\auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 )
-(D:\Skola-SW\MikTex\tex/latex/kvoptions\kvoptions.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/kvoptions\kvoptions.sty
 Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
 )
 \@linkdim=\dimen176
 \Hy@linkcounter=\count291
 \Hy@pagecounter=\count292
 
-(D:\Skola-SW\MikTex\tex/latex/hyperref\pd1enc.def
+(D:\VSBProgramFiles\MiKTeX\tex/latex/hyperref\pd1enc.def
 File: pd1enc.def 2022-02-21 v7.00n Hyperref: PDFDocEncoding definition (HO)
 )
-(D:\Skola-SW\MikTex\tex/generic/intcalc\intcalc.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/intcalc\intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-(D:\Skola-SW\MikTex\tex/generic/etexcmds\etexcmds.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/etexcmds\etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
 \Hy@SavedSpaceFactor=\count293
 
-(D:\Skola-SW\MikTex\tex/latex/hyperref\puenc.def
+(D:\VSBProgramFiles\MiKTeX\tex/latex/hyperref\puenc.def
 File: puenc.def 2022-02-21 v7.00n Hyperref: PDF Unicode definition (HO)
 )
 Package hyperref Info: Option `pdfa' set `true' on input line 4018.
@@ -382,17 +382,17 @@ Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4390.
 \c@Hy@tempcnt=\count294
 
-(D:\Skola-SW\MikTex\tex/latex/url\url.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/url\url.sty
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4749.
 \XeTeXLinkMargin=\dimen177
 
-(D:\Skola-SW\MikTex\tex/generic/bitset\bitset.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/bitset\bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 
-(D:\Skola-SW\MikTex\tex/generic/bigintcalc\bigintcalc.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/bigintcalc\bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
@@ -409,7 +409,7 @@ Package hyperref Info: PDF/A mode ON on input line 6055.
 LaTeX Info: Redefining \ref on input line 6097.
 LaTeX Info: Redefining \pageref on input line 6101.
 
-(D:\Skola-SW\MikTex\tex/latex/base\atbegshi-ltx.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/base\atbegshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
@@ -419,10 +419,10 @@ package with kernel methods
 )
 Package hyperref Info: Driver: hpdftex.
 
-(D:\Skola-SW\MikTex\tex/latex/hyperref\hpdftex.def
+(D:\VSBProgramFiles\MiKTeX\tex/latex/hyperref\hpdftex.def
 File: hpdftex.def 2022-02-21 v7.00n Hyperref driver for pdfTeX
 
-(D:\Skola-SW\MikTex\tex/latex/base\atveryend-ltx.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/base\atveryend-ltx.sty
 Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
 kage
 with kernel methods
@@ -430,10 +430,10 @@ with kernel methods
 \Fld@listcount=\count299
 \c@bookmark@seq@number=\count300
 
-(D:\Skola-SW\MikTex\tex/latex/rerunfilecheck\rerunfilecheck.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/rerunfilecheck\rerunfilecheck.sty
 Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
 
-(D:\Skola-SW\MikTex\tex/generic/uniquecounter\uniquecounter.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/uniquecounter\uniquecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
@@ -443,45 +443,45 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 Package hyperref Info: Option `unicode' set `true' on input line 1463.
 
-(D:\Skola-SW\MikTex\tex/generic/stringenc\stringenc.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/stringenc\stringenc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
 )
 )
 Package hyperref Info: Option `psdextra' set `true' on input line 1465.
 
-(D:\Skola-SW\MikTex\tex/latex/hyperref\puenc-greekbasic.def
+(D:\VSBProgramFiles\MiKTeX\tex/latex/hyperref\puenc-greekbasic.def
 File: puenc-greekbasic.def 2022-02-21 v7.00n Hyperref: PDF Unicode definition (
 greek block) (HO)
 )
-(D:\Skola-SW\MikTex\tex/latex/hyperref\psdextra.def
+(D:\VSBProgramFiles\MiKTeX\tex/latex/hyperref\psdextra.def
 File: psdextra.def 2022-02-21 v7.00n Hyperref: Additions to PDF string support
 )
-(D:\Skola-SW\MikTex\tex/generic/colorprofiles\colorprofiles.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/colorprofiles\colorprofiles.sty
 Package: colorprofiles 2018/11/01 v1.0.1 color profiles for PDF/X and PDF/A sup
 port
 
-(D:\Skola-SW\MikTex\tex/generic/colorprofiles\colorprofiles.tex))
-(D:\Skola-SW\MikTex\tex/generic/stringenc\se-pdfdoc.def
+(D:\VSBProgramFiles\MiKTeX\tex/generic/colorprofiles\colorprofiles.tex))
+(D:\VSBProgramFiles\MiKTeX\tex/generic/stringenc\se-pdfdoc.def
 File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
 )
-(D:\Skola-SW\MikTex\tex/latex/pdfx\AdobeColorProfiles.tex)
-(D:\Skola-SW\MikTex\tex/latex/pdfx\8bit.def
+(D:\VSBProgramFiles\MiKTeX\tex/latex/pdfx\AdobeColorProfiles.tex)
+(D:\VSBProgramFiles\MiKTeX\tex/latex/pdfx\8bit.def
 File: 8bit.def 2008/03/30 v1.1d Input encoding file
 )
 ** pdfx: No file JED0050_HNSW_FILTRY.xmpdata . Metadata will be incomplete!
-<<sRGB.icc>> (D:\Skola-SW\MikTex\tex/latex/pdfx\8bit.def
+<<sRGB.icc>> (D:\VSBProgramFiles\MiKTeX\tex/latex/pdfx\8bit.def
 File: 8bit.def 2008/03/30 v1.1d Input encoding file
 )
 Package hyperref Info: Option `unicode' set `true' on input line 2411.
 Package hyperref Info: Option `unicode' set `true' on input line 2412.
 
-(D:\Skola-SW\MikTex\tex/generic/pdftex\glyphtounicode.tex)
-(D:\Skola-SW\MikTex\tex/latex/pdfx\glyphtounicode-cmr.tex)
-(D:\Skola-SW\MikTex\tex/latex/pdfx\glyphtounicode-ntx.tex)
-(D:\Skola-SW\MikTex\tex/latex/xmpincl\xmpincl.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/pdftex\glyphtounicode.tex)
+(D:\VSBProgramFiles\MiKTeX\tex/latex/pdfx\glyphtounicode-cmr.tex)
+(D:\VSBProgramFiles\MiKTeX\tex/latex/pdfx\glyphtounicode-ntx.tex)
+(D:\VSBProgramFiles\MiKTeX\tex/latex/xmpincl\xmpincl.sty
 Package: xmpincl 2021/09/22 v2.4 Include XMP data in pdflatex
 )
-(D:\Skola-SW\MikTex\tex/latex/pdfx\8bit.def
+(D:\VSBProgramFiles\MiKTeX\tex/latex/pdfx\8bit.def
 File: 8bit.def 2008/03/30 v1.1d Input encoding file
 )
 Using XMP template file: pdfa.xmp
@@ -489,20 +489,20 @@ Using XMP template file: pdfa.xmp
 \xmpinclRead=\read2
 \openout3 = `pdfa.xmpi'.
 
-<<pdfa.xmpi>>) (D:\Skola-SW\MikTex\tex/generic/babel\babel.sty
+<<pdfa.xmpi>>) (D:\VSBProgramFiles\MiKTeX\tex/generic/babel\babel.sty
 Package: babel 2022/02/26 3.73 The Babel package
 \babel@savecnt=\count301
 \U@D=\dimen180
 \l@unhyphenated=\language79
 
-(D:\Skola-SW\MikTex\tex/generic/babel\txtbabel.def)
+(D:\VSBProgramFiles\MiKTeX\tex/generic/babel\txtbabel.def)
 \bbl@readstream=\read3
 \bbl@dirlevel=\count302
 
 *************************************
 * Local config file bblopts.cfg used
 *
-(D:\Skola-SW\MikTex\tex/latex/arabi\bblopts.cfg
+(D:\VSBProgramFiles\MiKTeX\tex/latex/arabi\bblopts.cfg
 File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
  babel
 )
@@ -510,7 +510,7 @@ Package babel Info: Main language set with 'main='. Except if you have
 (babel)             problems, prefer the default mechanism for setting
 (babel)             the main language. Reported on input line 4219.
 
-(D:\Skola-SW\MikTex\tex/latex/babel-english\english.ldf
+(D:\VSBProgramFiles\MiKTeX\tex/latex/babel-english\english.ldf
 Language: english 2017/06/06 v3.3r English support from the babel system
 Package babel Info: Hyphen rules for 'canadian' set to \l@english
 (babel)             (\language0). Reported on input line 102.
@@ -519,7 +519,7 @@ Package babel Info: Hyphen rules for 'australian' set to \l@ukenglish
 Package babel Info: Hyphen rules for 'newzealand' set to \l@ukenglish
 (babel)             (\language73). Reported on input line 108.
 )
-(D:\Skola-SW\MikTex\tex/latex/babel-czech\czech.ldf
+(D:\VSBProgramFiles\MiKTeX\tex/latex/babel-czech\czech.ldf
 Language: czech 2008/07/06 v3.1a Czech support from the babel system
 Package babel Info: Making " an active character on input line 172.
 \cs@wordlen=\count303
@@ -657,14 +657,14 @@ Package babel Info: Making - an active character on input line 226.
 \c@theorem=\count305
 \c@remark=\count306
 
-(D:\Skola-SW\MikTex\tex/latex/tools\thb.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/tools\thb.sty
 File: thb.sty 2014/10/28 v2.2c Theorem extension package (FMi)
 )
 \c@Dipl@examplebody=\count307
 Package hyperref Info: Option `unicode' set `true' on input line 366.
 Package hyperref Info: Option `colorlinks' set `true' on input line 366.
 )
-(D:\Skola-SW\MikTex\tex/latex/csquotes\csquotes.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/csquotes\csquotes.sty
 Package: csquotes 2021-02-22 v5.2l context-sensitive quotations (JAW)
 \csq@reset=\count308
 \csq@gtype=\count309
@@ -674,26 +674,26 @@ Package: csquotes 2021-02-22 v5.2l context-sensitive quotations (JAW)
 \csq@tshold=\count313
 \csq@ltx@everypar=\toks44
 
-(D:\Skola-SW\MikTex\tex/latex/csquotes\csquotes.def
+(D:\VSBProgramFiles\MiKTeX\tex/latex/csquotes\csquotes.def
 File: csquotes.def 2021-02-22 v5.2l csquotes generic definitions (JAW)
 )
 Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
 Package csquotes Info: ... configuration file loaded successfully.
 
-(D:\Skola-SW\MikTex\tex/latex/csquotes\csquotes.cfg
+(D:\VSBProgramFiles\MiKTeX\tex/latex/csquotes\csquotes.cfg
 File: csquotes.cfg 
 )
 Package csquotes Info: Enabling multilingual quotes.
 Package csquotes Info: Redefining alias 'czech' -> 'czech/quotes'.
 )
-(D:\Skola-SW\MikTex\tex/latex/biblatex\biblatex.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex\biblatex.sty
 Package: biblatex 2022/02/02 v3.17 programmable bibliographies (PK/MW)
 
-(D:\Skola-SW\MikTex\tex/latex/logreq\logreq.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/logreq\logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
 \lrq@indent=\count314
 
-(D:\Skola-SW\MikTex\tex/latex/logreq\logreq.def
+(D:\VSBProgramFiles\MiKTeX\tex/latex/logreq\logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 ))
 \c@tabx@nest=\count315
@@ -755,13 +755,13 @@ File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex\blx-dm.def
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex\blx-dm.def
 File: blx-dm.def 2022/02/02 v3.17 biblatex localization (PK/MW)
 )
 Package biblatex Info: Trying to load biblatex style data model...
 Package biblatex Info: ... file 'iso-numeric.dbx' found.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex-iso690\iso-numeric.dbx
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex-iso690\iso-numeric.dbx
 File: iso-numeric.dbx 2022/03/20 v0.4.1 ISO 690 biblatex data model extension
 )
 Package biblatex Info: Trying to load biblatex custom data model...
@@ -853,13 +853,13 @@ Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
 Package biblatex Info: Trying to load compatibility code...
 Package biblatex Info: ... file 'blx-compat.def' found.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex\blx-compat.def
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex\blx-compat.def
 File: blx-compat.def 2022/02/02 v3.17 biblatex compatibility (PK/MW)
 )
 Package biblatex Info: Trying to load BibTeX backend compatibility...
 Package biblatex Info: ... file 'blx-bibtex.def' found.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex\blx-bibtex.def
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex\blx-bibtex.def
 File: blx-bibtex.def 2022/02/02 v3.17 biblatex compatibility (PK/MW)
 
 
@@ -869,7 +869,7 @@ Package biblatex Warning: Using fall-back BibTeX(8) backend:
 )
 Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
- (D:\Skola-SW\MikTex\tex/latex/biblatex\biblatex.def
+ (D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex\biblatex.def
 File: biblatex.def 2022/02/02 v3.17 biblatex compatibility (PK/MW)
 \c@textcitecount=\count430
 \c@textcitetotal=\count431
@@ -888,12 +888,12 @@ File: biblatex.def 2022/02/02 v3.17 biblatex compatibility (PK/MW)
 Package biblatex Info: Trying to load bibliography style 'iso-numeric'...
 Package biblatex Info: ... file 'iso-numeric.bbx' found.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex-iso690\iso-numeric.bbx
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex-iso690\iso-numeric.bbx
 File: iso-numeric.bbx 2022/03/20 v0.4.1 ISO 690 biblatex bibliography style
 Package biblatex Info: Trying to load bibliography style 'iso'...
 Package biblatex Info: ... file 'iso.bbx' found.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex-iso690\iso.bbx
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex-iso690\iso.bbx
 File: iso.bbx 2022/03/20 v0.4.1 ISO 690 biblatex bibliography style
 Package biblatex-iso690 Info: Space colon enabled: false.
 Package biblatex-iso690 Info: Total pages enabled: false.
@@ -920,12 +920,12 @@ d, overwriting.
 Package biblatex Info: Trying to load citation style 'iso-numeric'...
 Package biblatex Info: ... file 'iso-numeric.cbx' found.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex-iso690\iso-numeric.cbx
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex-iso690\iso-numeric.cbx
 File: iso-numeric.cbx 2022/03/20 v0.4.1 ISO 690 biblatex citation style
 Package biblatex Info: Trying to load citation style 'numeric'...
 Package biblatex Info: ... file 'numeric.cbx' found.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex/cbx\numeric.cbx
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex/cbx\numeric.cbx
 File: numeric.cbx 2022/02/02 v3.17 biblatex citation style (PK/MW)
 Package biblatex Info: Redefining '\cite'.
 Package biblatex Info: Redefining '\parencite'.
@@ -942,7 +942,7 @@ Package biblatex Info: Redefining '\smartcites'.
 Package biblatex Info: Trying to load citation style 'iso-fullcite'...
 Package biblatex Info: ... file 'iso-fullcite.cbx' found.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex-iso690\iso-fullcite.cbx
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex-iso690\iso-fullcite.cbx
 File: iso-fullcite.cbx 2022/03/20 v0.4.1 ISO 690 biblatex fullcite modification
 s
 Package biblatex Info: Redefining '\fullcite'.
@@ -953,23 +953,23 @@ Package biblatex Info: Redefining '\parencite'.
 Package biblatex Info: Trying to load configuration file...
 Package biblatex Info: ... file 'biblatex.cfg' found.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex\biblatex.cfg
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex\biblatex.cfg
 File: biblatex.cfg 
 )
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Document encoding is UTF8 ....
 Package biblatex Info: ... and expl3
-(biblatex)             2022-04-10 L3 programming layer (loader) 
+(biblatex)             2022-02-24 L3 programming layer (loader) 
 (biblatex)             is new enough (at least 2020/04/06),
 (biblatex)             setting 'casechanger=expl3'.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex\blx-case-expl3.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex\blx-case-expl3.sty
 Package: blx-case-expl3 2022/02/02 v3.17 expl3 case changing code for biblatex
 ))
-(D:\Skola-SW\MikTex\tex/latex/tools\dcolumn.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/tools\dcolumn.sty
 Package: dcolumn 2014/10/28 v1.06 decimal alignment package (DPC)
 
-(D:\Skola-SW\MikTex\tex/latex/tools\array.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/tools\array.sty
 Package: array 2021/10/04 v2.5f Tabular extension package (FMi)
 \col@sep=\dimen181
 \ar@mcellbox=\box58
@@ -979,7 +979,7 @@ Package: array 2021/10/04 v2.5f Tabular extension package (FMi)
 \backup@length=\skip83
 \ar@cellbox=\box59
 ))
-(D:\Skola-SW\MikTex\tex/latex/subfig\subfig.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/subfig\subfig.sty
 Package: subfig 2005/06/28 ver: 1.3 subfig package
 \c@KVtest=\count439
 \sf@farskip=\skip84
@@ -995,7 +995,7 @@ Package: subfig 2005/06/28 ver: 1.3 subfig package
 \sf@top=\skip87
 \sf@bottom=\skip88
 )
-(D:\Skola-SW\MikTex\tex/latex/listings\listings.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/listings\listings.sty
 \lst@mode=\count446
 \lst@gtempboxa=\box60
 \lst@token=\toks46
@@ -1009,13 +1009,13 @@ Package: subfig 2005/06/28 ver: 1.3 subfig package
 \lst@lineno=\count451
 \lst@maxwidth=\dimen187
 
-(D:\Skola-SW\MikTex\tex/latex/listings\lstmisc.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/listings\lstmisc.sty
 File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
 \c@lstnumber=\count452
 \lst@skipnumbers=\count453
 \lst@framebox=\box61
 )
-(D:\Skola-SW\MikTex\tex/latex/listings\listings.cfg
+(D:\VSBProgramFiles\MiKTeX\tex/latex/listings\listings.cfg
 File: listings.cfg 2020/03/24 1.8d listings configuration
 ))
 Package: listings 2020/03/24 1.8d (Carsten Heinz)
@@ -1024,7 +1024,7 @@ Package csquotes Info: ... found 'babel' package.
 LaTeX Font Info:    Trying to load font information for T1+lmr on input line 36
 .
 
-(D:\Skola-SW\MikTex\tex/latex/lm\t1lmr.fd
+(D:\VSBProgramFiles\MiKTeX\tex/latex/lm\t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) (JED0050_HNSW_FILTRY.aux)
 \openout1 = `JED0050_HNSW_FILTRY.aux'.
@@ -1048,7 +1048,7 @@ LaTeX Font Info:    ... okay on input line 36.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 36.
 LaTeX Font Info:    ... okay on input line 36.
 
-(D:\Skola-SW\MikTex\tex/context/base/mkii\supp-pdf.mkii
+(D:\VSBProgramFiles\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count454
 \scratchdimen=\dimen188
@@ -1061,12 +1061,12 @@ LaTeX Font Info:    ... okay on input line 36.
 \MPnumerator=\count458
 \makeMPintoPDFobject=\count459
 \everyMPtoPDFconversion=\toks48
-) (D:\Skola-SW\MikTex\tex/latex/epstopdf-pkg\epstopdf-base.sty
+) (D:\VSBProgramFiles\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 85.
 
-(D:\Skola-SW\MikTex\tex/latex/00miktex\epstopdf-sys.cfg
+(D:\VSBProgramFiles\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 *geometry* driver: auto-detecting
@@ -1110,13 +1110,13 @@ Package caption Info: listings package is loaded.
 Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
 Package hyperref Info: Link coloring ON on input line 36.
-(D:\Skola-SW\MikTex\tex/latex/hyperref\nameref.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/hyperref\nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 
-(D:\Skola-SW\MikTex\tex/latex/refcount\refcount.sty
+(D:\VSBProgramFiles\MiKTeX\tex/latex/refcount\refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 )
-(D:\Skola-SW\MikTex\tex/generic/gettitlestring\gettitlestring.sty
+(D:\VSBProgramFiles\MiKTeX\tex/generic/gettitlestring\gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count460
@@ -1132,35 +1132,35 @@ LaTeX Info: Redefining \nameref on input line 36.
 Package biblatex Info: Trying to load language 'czech' -> 'czech-iso'...
 Package biblatex Info: ... file 'czech-iso.lbx' found.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex-iso690\czech-iso.lbx
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex-iso690\czech-iso.lbx
 File: czech-iso.lbx 2022/03/20 v0.4.1 ISO 690 extended biblatex localization
 Package biblatex Info: Trying to load language 'czech'...
 Package biblatex Info: ... file 'czech.lbx' found.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex/lbx\czech.lbx
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex/lbx\czech.lbx
 File: czech.lbx 2022/02/02 v3.17 biblatex localization (PK/MW)
 )
 Package biblatex Info: Trying to load language 'czech'...
 Package biblatex Info: ... file 'czech.lbx' found.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex/lbx\czech.lbx
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex/lbx\czech.lbx
 File: czech.lbx 2022/02/02 v3.17 biblatex localization (PK/MW)
 ))
 Package biblatex Info: Trying to load language 'english' -> 'english-iso'...
 Package biblatex Info: ... file 'english-iso.lbx' found.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex-iso690\english-iso.lbx
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex-iso690\english-iso.lbx
 File: english-iso.lbx 2022/03/20 v0.4.1 ISO 690 extended biblatex localization
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex/lbx\english.lbx
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex/lbx\english.lbx
 File: english.lbx 2022/02/02 v3.17 biblatex localization (PK/MW)
 )
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
 
-(D:\Skola-SW\MikTex\tex/latex/biblatex/lbx\english.lbx
+(D:\VSBProgramFiles\MiKTeX\tex/latex/biblatex/lbx\english.lbx
 File: english.lbx 2022/02/02 v3.17 biblatex localization (PK/MW)
 ))
 Package biblatex Info: Input encoding 'utf8' detected.
@@ -1191,7 +1191,7 @@ Package biblatex Info: Reference segment=0 on input line 36.
 \c@lstlisting=\count461
 LaTeX Font Info:    Trying to load font information for T1+lmss on input line 3
 8.
- (D:\Skola-SW\MikTex\tex/latex/lm\t1lmss.fd
+ (D:\VSBProgramFiles\MiKTeX\tex/latex/lm\t1lmss.fd
 File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 
@@ -1204,25 +1204,25 @@ Package pdftex.def Info: Figures/FEI_CZ.pdf  used on input line 38.
 (pdftex.def)             Requested size: 274.11765pt x 85.35826pt.
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 3
 8.
-(D:\Skola-SW\MikTex\tex/latex/lm\ot1lmr.fd
+(D:\VSBProgramFiles\MiKTeX\tex/latex/lm\ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 3
 8.
 
-(D:\Skola-SW\MikTex\tex/latex/lm\omllmm.fd
+(D:\VSBProgramFiles\MiKTeX\tex/latex/lm\omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
 38.
 
-(D:\Skola-SW\MikTex\tex/latex/lm\omslmsy.fd
+(D:\VSBProgramFiles\MiKTeX\tex/latex/lm\omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
 38.
 
-(D:\Skola-SW\MikTex\tex/latex/lm\omxlmex.fd
+(D:\VSBProgramFiles\MiKTeX\tex/latex/lm\omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -1291,110 +1291,117 @@ Kapitola 3.
 [10
 
 ]
-<Figures/hnsw_layers.png, id=187, 365.11406pt x 372.64218pt>
+<Figures/hnsw_layers.png, id=190, 365.11406pt x 372.64218pt>
 File: Figures/hnsw_layers.png Graphic file (type png)
 <use Figures/hnsw_layers.png>
-Package pdftex.def Info: Figures/hnsw_layers.png  used on input line 75.
+Package pdftex.def Info: Figures/hnsw_layers.png  used on input line 77.
 (pdftex.def)             Requested size: 182.55658pt x 186.32063pt.
-<Figures/hnsw_search.png, id=189, 529.98pt x 525.46312pt>
+<Figures/hnsw_search.png, id=192, 529.98pt x 525.46312pt>
 File: Figures/hnsw_search.png Graphic file (type png)
 <use Figures/hnsw_search.png>
-Package pdftex.def Info: Figures/hnsw_search.png  used on input line 82.
+Package pdftex.def Info: Figures/hnsw_search.png  used on input line 84.
 (pdftex.def)             Requested size: 264.98933pt x 262.73091pt.
-<Figures/hnsw_knn.png, id=190, 531.48563pt x 306.39468pt>
+<Figures/hnsw_knn.png, id=193, 531.48563pt x 306.39468pt>
 File: Figures/hnsw_knn.png Graphic file (type png)
 <use Figures/hnsw_knn.png>
-Package pdftex.def Info: Figures/hnsw_knn.png  used on input line 89.
+Package pdftex.def Info: Figures/hnsw_knn.png  used on input line 91.
 (pdftex.def)             Requested size: 265.74216pt x 153.19696pt.
- [11] [12 <./Figures/hnsw_layers.png> <./Figures/hnsw_search.png>]
+ [11] [12 <./Figures/hnsw_layers.png> <./Figures/hnsw_search.png>] [13 <./Figur
+es/hnsw_knn.png>]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 130.
+(caption)                particular \caption on input line 121.
 See the caption package documentation for explanation.
 
-[13 <./Figures/hnsw_knn.png>]
-<Figures/graf_hnsw.png, id=212, 1002.74625pt x 456.20438pt>
+[14]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 150.
+See the caption package documentation for explanation.
+
+<Figures/graf_hnsw.png, id=223, 1002.74625pt x 456.20438pt>
 File: Figures/graf_hnsw.png Graphic file (type png)
 <use Figures/graf_hnsw.png>
-Package pdftex.def Info: Figures/graf_hnsw.png  used on input line 135.
+Package pdftex.def Info: Figures/graf_hnsw.png  used on input line 156.
 (pdftex.def)             Requested size: 501.3719pt x 228.10162pt.
 
-Overfull \hbox (29.34067pt too wide) in paragraph at lines 135--136
+Overfull \hbox (29.34067pt too wide) in paragraph at lines 156--157
  [][] 
  []
 
-[14 <./Figures/graf_hnsw.png>]
+[15 <./Figures/graf_hnsw.png>]
 Kapitola 4.
-[15
+[16
 
-] [16] [17]
+] [17] [18]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 208.
+(caption)                particular \caption on input line 229.
 See the caption package documentation for explanation.
 
-<Figures/graf_filtr_k10.png, id=242, 599.99156pt x 240.14719pt>
+<Figures/graf_filtr_k10.png, id=254, 599.99156pt x 240.14719pt>
 File: Figures/graf_filtr_k10.png Graphic file (type png)
 <use Figures/graf_filtr_k10.png>
-Package pdftex.def Info: Figures/graf_filtr_k10.png  used on input line 215.
+Package pdftex.def Info: Figures/graf_filtr_k10.png  used on input line 237.
 (pdftex.def)             Requested size: 479.9939pt x 192.11798pt.
 
-Overfull \hbox (7.96266pt too wide) in paragraph at lines 215--216
+Overfull \hbox (7.96266pt too wide) in paragraph at lines 237--238
  [][] 
  []
 
-<Figures/graf_filtr_k50.png, id=243, 601.4972pt x 240.14719pt>
+<Figures/graf_filtr_k50.png, id=255, 601.4972pt x 240.14719pt>
 File: Figures/graf_filtr_k50.png Graphic file (type png)
 <use Figures/graf_filtr_k50.png>
-Package pdftex.def Info: Figures/graf_filtr_k50.png  used on input line 222.
+Package pdftex.def Info: Figures/graf_filtr_k50.png  used on input line 244.
 (pdftex.def)             Requested size: 481.19841pt x 192.11798pt.
 
-Overfull \hbox (9.16718pt too wide) in paragraph at lines 222--223
+Overfull \hbox (9.16718pt too wide) in paragraph at lines 244--245
  [][] 
  []
 
-<Figures/graf_filtr_k100.png, id=244, 606.76688pt x 246.1697pt>
+<Figures/graf_filtr_k100.png, id=256, 606.76688pt x 246.1697pt>
 File: Figures/graf_filtr_k100.png Graphic file (type png)
 <use Figures/graf_filtr_k100.png>
-Package pdftex.def Info: Figures/graf_filtr_k100.png  used on input line 229.
+Package pdftex.def Info: Figures/graf_filtr_k100.png  used on input line 251.
 (pdftex.def)             Requested size: 485.41415pt x 196.936pt.
 
-Overfull \hbox (13.38292pt too wide) in paragraph at lines 229--230
+Overfull \hbox (13.38292pt too wide) in paragraph at lines 251--252
  [][] 
  []
 
-<Figures/graf_filtr_k200.png, id=245, 605.26125pt x 245.41687pt>
+<Figures/graf_filtr_k200.png, id=257, 605.26125pt x 245.41687pt>
 File: Figures/graf_filtr_k200.png Graphic file (type png)
 <use Figures/graf_filtr_k200.png>
-Package pdftex.def Info: Figures/graf_filtr_k200.png  used on input line 236.
+Package pdftex.def Info: Figures/graf_filtr_k200.png  used on input line 258.
 (pdftex.def)             Requested size: 484.20964pt x 196.33376pt.
 
-Overfull \hbox (12.1784pt too wide) in paragraph at lines 236--237
+Overfull \hbox (12.1784pt too wide) in paragraph at lines 258--259
  [][] 
  []
 
 
 Underfull \vbox (badness 4060) has occurred while \output is active []
 
- [18]
-[19 <./Figures/graf_filtr_k10.png> <./Figures/graf_filtr_k50.png>] [20 <./Figur
-es/graf_filtr_k100.png> <./Figures/graf_filtr_k200.png>] [21]
+ [19]
+[20 <./Figures/graf_filtr_k10.png> <./Figures/graf_filtr_k50.png>] [21 <./Figur
+es/graf_filtr_k100.png> <./Figures/graf_filtr_k200.png>] [22]
 Kapitola 5.
-[22
+[23
 
 ]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
-67.
- (D:\Skola-SW\MikTex\tex/latex/lm\t1lmtt.fd
+89.
+ (D:\VSBProgramFiles\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [23
+) [24
 
-] (JED0050_HNSW_FILTRY.aux)
+]
+(JED0050_HNSW_FILTRY.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `JED0050_HNSW_FILTRY.out' has not changed.
-(rerunfilecheck)             Checksum: AE3E8237E24D8ADEAF6CFB6BEE01B53F;2166.
+(rerunfilecheck)             Checksum: 6420987F7D3A76A9BC41E523AC7C5855;2161.
 
 Package biblatex Warning: Please (re)run BibTeX on the file(s):
 (biblatex)                JED0050_HNSW_FILTRY
@@ -1405,24 +1412,29 @@ Package logreq Info: Writing requests to 'JED0050_HNSW_FILTRY.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 27925 strings out of 478552
- 489591 string characters out of 2854123
- 1012219 words of memory out of 3000000
- 45678 multiletter control sequences out of 15000+600000
+ 27909 strings out of 478582
+ 491022 string characters out of 2853256
+ 1011476 words of memory out of 3000000
+ 45630 multiletter control sequences out of 15000+600000
  525389 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 92i,7n,93p,2295b,4704s stack positions out of 10000i,1000n,20000p,200000b,80000s
-{D:/Skola-SW/MikTex/fonts/enc/dvips/lm/lm-ec.enc}{D:/Skola-SW/MikTex/fonts/en
-c/dvips/lm/lm-rm.enc}{D:/Skola-SW/MikTex/fonts/enc/dvips/lm/lm-mathit.enc}<D:/S
-kola-SW/MikTex/fonts/type1/public/lm/lmbx10.pfb><D:/Skola-SW/MikTex/fonts/type1
-/public/lm/lmmi10.pfb><D:/Skola-SW/MikTex/fonts/type1/public/lm/lmr10.pfb><D:/S
-kola-SW/MikTex/fonts/type1/public/lm/lmr9.pfb><D:/Skola-SW/MikTex/fonts/type1/p
-ublic/lm/lmri10.pfb><D:/Skola-SW/MikTex/fonts/type1/public/lm/lmss12.pfb><D:/Sk
-ola-SW/MikTex/fonts/type1/public/lm/lmss17.pfb><D:/Skola-SW/MikTex/fonts/type1/
-public/lm/lmssbx10.pfb><D:/Skola-SW/MikTex/fonts/type1/public/lm/lmtt10.pfb>
-Output written on JED0050_HNSW_FILTRY.pdf (23 pages, 1257984 bytes).
+ 92i,7n,93p,2104b,4704s stack positions out of 10000i,1000n,20000p,200000b,80000s
+{D:/VSBProgramFiles/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{D:/VSBProgramFiles/M
+iKTeX/fonts/enc/dvips/lm/lm-rm.enc}{D:/VSBProgramFiles/MiKTeX/fonts/enc/dvips/l
+m/lm-mathsy.enc}{D:/VSBProgramFiles/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}<D:
+/VSBProgramFiles/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><D:/VSBProgramFiles/Mi
+KTeX/fonts/type1/public/lm/lmmi10.pfb><D:/VSBProgramFiles/MiKTeX/fonts/type1/pu
+blic/lm/lmmi8.pfb><D:/VSBProgramFiles/MiKTeX/fonts/type1/public/lm/lmr10.pfb><D
+:/VSBProgramFiles/MiKTeX/fonts/type1/public/lm/lmr8.pfb><D:/VSBProgramFiles/MiK
+TeX/fonts/type1/public/lm/lmr9.pfb><D:/VSBProgramFiles/MiKTeX/fonts/type1/publi
+c/lm/lmri10.pfb><D:/VSBProgramFiles/MiKTeX/fonts/type1/public/lm/lmss12.pfb><D:
+/VSBProgramFiles/MiKTeX/fonts/type1/public/lm/lmss17.pfb><D:/VSBProgramFiles/Mi
+KTeX/fonts/type1/public/lm/lmssbx10.pfb><D:/VSBProgramFiles/MiKTeX/fonts/type1/
+public/lm/lmsy8.pfb><D:/VSBProgramFiles/MiKTeX/fonts/type1/public/lm/lmtt10.pfb
+>
+Output written on JED0050_HNSW_FILTRY.pdf (24 pages, 1298507 bytes).
 PDF statistics:
- 353 PDF objects out of 1000 (max. 8388607)
- 57 named destinations out of 1000 (max. 500000)
+ 378 PDF objects out of 1000 (max. 8388607)
+ 59 named destinations out of 1000 (max. 500000)
  170 words of extra memory for PDF output out of 10000 (max. 10000000)
 
