@@ -28,8 +28,8 @@
 \AddAcronym{KNN}{K-nearest neighbors}
 \AddAcronym{HNSW}{Hierarchical Navigable Small Worlds}
 \AddAcronym{ANN}{Approximate Nearest Neighbor}
-\AddAcronym{Impl. B}{Původní implementace HNSW KNN bez využití filtru}
-\AddAcronym{Impl. F}{Rozšířená implementace HNSW KNNFilter s využitím filtru}
+\AddAcronym{Impl. KNN}{Původní implementace HNSW KNN bez využití filtru}
+\AddAcronym{Impl. KNNFilter}{Rozšířená implementace HNSW KNNFilter s využitím filtru}
 
 \addbibresource{citace.bib}
 
@@ -152,13 +152,13 @@
 		
 		\section{Měření HNSW implementace s filtrem}
 		
-		Při měření se provádělo 1000 testů pro každé K a různé selektivity, z výsledků těchto testů se následně získával průměr. U rozšířené KNNFilter implementace s filtrem (F) byla hodnota Ef nastavena pevně na 200. U implementace bez filtru (B) získáváme z metody KNN Kb prvků, a v těchto prvcích následně kontrolujeme zda se v nich nachází alespoň K prvků vyhovujících filtru a ty následně vracíme jako výsledek. Implementace bez filtru měla Ef nastavené také na 200, ale pokud v získaném Kb nebylo alespoň K prvků vyhovujících filtru, tak se zvedalo Kb, a pokud bylo $Kb > Ef$ tak se hodnota Ef nastavovala na hodnotu Kb (Ef nemůže být nikdy menší než K protože z nalezeného Ef se vrací K nejbližších prvků). Pro získání filtrů s určitou selektivitou se provádělo náhodné generování filtrů, spočítání kolika prvkům z celkových dat filtry vyhovují a pokud selektivity spadaly do požadovaných hranic tak se textové reprezentace filtrů ukládaly do souborů a následně se použili při testování. Veškeré výsledky testů jsou zaznamenány v tabulce (viz Tabulka \ref{FBC}).
+		Při měření se provádělo 1000 testů pro každé K a různé selektivity, z výsledků těchto testů se následně získával průměr. U rozšířené implementace s filtrem (KNNFilter) byla hodnota Ef nastavena pevně na 200. U implementace bez filtru (KNN) získáváme z metody KNN Kb prvků, a v těchto prvcích následně kontrolujeme zda se v nich nachází alespoň K prvků vyhovujících filtru a ty následně vracíme jako výsledek. Implementace bez filtru měla Ef nastavené také na 200, ale pokud v získaném Kb nebylo alespoň K prvků vyhovujících filtru, tak se zvedalo Kb, a pokud bylo $Kb > Ef$ tak se hodnota Ef nastavovala na hodnotu Kb (Ef nemůže být nikdy menší než K protože z nalezeného Ef se vrací K nejbližších prvků). Pro získání filtrů s určitou selektivitou se provádělo náhodné generování filtrů, spočítání kolika prvkům z celkových dat filtry vyhovují a pokud selektivity spadaly do požadovaných hranic tak se textové reprezentace filtrů ukládaly do souborů a následně se použili při testování. Veškeré výsledky testů jsou zaznamenány v tabulce (viz Tabulka \ref{FBC}).
 		
-		V tabulce (viz Tabulka \ref{FBC}) lze vidět že čím nižší je selektivita filtru tím kratší dobu operace KNN zabírá u implementace s filtrem i bez něj. Dokonce při $K << Ef$ dochází k tomu že filtry se selektivitou 50\%, 75\% a 90\% mají prakticky stejné časy u jednotlivých implementací. Je tomu tak protože ve vyhledaném Ef prvků se nalezne požadované K které vyhovuje filtru a tím pádem není potřeba provádět průchody navíc pro dohledání potřebného počtu prvků do K. Konkrétně pro $K = 10, Ef = 200$ trvá KNN přibližně 2,8ms pro všechny selektivity u implementace s filtrem (F). Implementace bez filtru (B) je obecně rychlejší při nízkém K a selektivitě od 50\% do 90\% za předpokladu že známe požadované potřebné Kb ve kterém najdeme K hledaných prvků, což by v praxi úplně neplatilo protože nevíme kolik přesně prvků musíme vrátit a muselo by tedy dojít k přibližným odhadům případně k opakovanému vyhledávání. Implementace B má čas operace přibližně 2,1ms pro nízké selektivity, 2,7ms pro selektivitu 25\% což je srovnatelné s časem 2,8ms u implementace F. Každopádně u vysokých selektivit vidíme že implementace F se vyplatí, má totiž 2,3x lepší čas než implementace B, konkrétně 3ms oproti 7ms. Stejně tak při stoupajícím K a konstantním Ef můžeme vidět že implementace F má lepší časy KNN operací než B i pro nižší selektivity.
+		V tabulce (viz Tabulka \ref{FBC}) lze vidět že čím nižší je selektivita filtru tím kratší dobu operace KNN zabírá u implementace s filtrem i bez něj. Dokonce při $K << Ef$ dochází k tomu že filtry se selektivitou 50\%, 75\% a 90\% mají prakticky stejné časy u jednotlivých implementací. Je tomu tak protože ve vyhledaném Ef prvků se nalezne požadované K které vyhovuje filtru a tím pádem není potřeba provádět průchody navíc pro dohledání potřebného počtu prvků do K. Konkrétně pro $K = 10, Ef = 200$ trvá KNN přibližně 2,8ms pro všechny selektivity u implementace s filtrem (KNNFilter). Implementace bez filtru (KNN) je obecně rychlejší při nízkém K a selektivitě od 50\% do 90\% za předpokladu že známe požadované potřebné Kb ve kterém najdeme K hledaných prvků, což by v praxi úplně neplatilo protože nevíme kolik přesně prvků musíme vrátit a muselo by tedy dojít k přibližným odhadům případně k opakovanému vyhledávání. Implementace KNN má čas operace přibližně 2,1ms pro nízké selektivity, 2,7ms pro selektivitu 25\% což je srovnatelné s časem 2,8ms u implementace KNNFilter. Každopádně u vysokých selektivit vidíme že implementace KNNFilter se vyplatí, má totiž 2,3x lepší čas než implementace KNN, konkrétně 3ms oproti 7ms. Stejně tak při stoupajícím K a konstantním Ef můžeme vidět že implementace KNNFilter má lepší časy získání KNN dotazů než implementace KNN i pro nižší selektivity.
 		
-		Z grafů porovnání průměrného času KNN operace implementace s a bez filtru pro různá K (viz Obrázek \ref{graf_filtr_all}) můžeme vidět již zmíněné chování. Tedy to že když známe Kb pro impl. B tak pro K = 10 (viz Obrázek \ref{graf_filtr_k10}) je impl. F rychlejší pouze pro vysokou selektivitu 10\%. S rostoucím K = 50 (viz Obrázek \ref{graf_filtr_k50}) je impl. F rychlejší až do selektivity  25\%. Při K = 100 (viz Obrázek \ref{graf_filtr_k100}) je impl. F rychlejší až do selektivity 50\% a nakonec u K = 200 (viz Obrázek \ref{graf_filtr_k200}) je impl. F rychlejší až do 75\% s tím že u selektivity 90\% mají impl. F i B relativně srovnatelné časy 3,05ms (F) a 2,81ms (B). Každopádně pro vysoké selektivity okolo 10\% je impl. F vždy rychlejší pro jakékoliv K než impl. B i když známe potřebné Kb pro impl. B.
+		Z grafů porovnání průměrného času KNN operace implementace s a bez filtru pro různá K (viz Obrázek \ref{graf_filtr_all}) můžeme vidět již zmíněné chování. Tedy to že když známe Kb pro impl. KNN tak pro K = 10 (viz Obrázek \ref{graf_filtr_k10}) je impl. KNNFilter rychlejší pouze pro vysokou selektivitu 10\%. S rostoucím K = 50 (viz Obrázek \ref{graf_filtr_k50}) je impl. KNNFilter rychlejší až do selektivity  25\%. Při K = 100 (viz Obrázek \ref{graf_filtr_k100}) je impl. F rychlejší až do selektivity 50\% a nakonec u K = 200 (viz Obrázek \ref{graf_filtr_k200}) je impl. KNNFilter rychlejší až do 75\% s tím že u selektivity 90\% mají impl. KNNFilter i KNN relativně srovnatelné časy 3,05ms (KNNFilter) a 2,81ms (KNN). Každopádně pro vysoké selektivity okolo 10\% je impl. KNNFilter vždy rychlejší pro jakékoliv K než impl. KNN i když známe potřebné Kb a Ef pro impl. KNN.
 		
-		Dále lze vidět že s rostoucím K a konstantním Ef se stává že získaný počet KNN v implementaci F je o něco málo menší než bylo požadované K a je proto potřeba Ef postupně zvyšovat při rostoucím K (viz Kapitola \ref{FP}). Implementace s filtrem vrací obdobné výsledky jako ta bez filtru, pokud se získané výsledky liší tak kvůli tomu že implementace bez filtru vyhledává až příliš prvků (může mít mnohem vyšší Ef) a tím pádem zahodí ty prvky které jsou daleko od $Q$ a implementace s filtrem si tyto prvky ponechala a ukončila se jakmile našla požadované K v Ef prvcích.
+		Dále lze vidět že s rostoucím K a konstantním Ef se stává že získaný počet KNN v implementaci KNNFilter je o něco málo menší než bylo požadované K a je proto potřeba Ef postupně zvyšovat při rostoucím K (viz Kapitola \ref{FP}). Implementace s filtrem vrací obdobné výsledky jako ta bez filtru, pokud se získané výsledky liší tak kvůli tomu že implementace bez filtru vyhledává až příliš prvků (může mít mnohem vyšší Ef) a tím pádem zahodí ty prvky které jsou daleko od $Q$ a implementace s filtrem si tyto prvky ponechala a ukončila se jakmile našla požadované K v Ef prvcích.
 		
 		\newpage
 		
@@ -201,7 +201,7 @@
 				\\
 			\end{tabular}
 			
-			{\footnotesize *F = impl. KNN s filtrem, B = impl. KNN bez filtru, sel = selektivita filtru, tF = prům. čas F, tB = průměrný čas B, Shoda FB = shoda získaných prvků z F a B, Získ. KNN u F = prům. počet získaných prvků ze zvoleného K u F, Prům. potř. Kb u B = průměrný počet zadaného Kb v B pro získání K prvků}\\
+			{\footnotesize *F = impl. KNNFilter, B = impl. KNN, sel = selektivita filtru, tF = prům. čas F, tB = průměrný čas B, Shoda FB = shoda získaných prvků z F a B, Získ. KNN u F = prům. počet získaných prvků ze zvoleného K u F, Prům. potř. Kb u B = průměrný počet zadaného Kb v B pro získání K prvků}\\
 			
 			\captionof{table}{Porovnání vlastností u implementase KNN s filtrem a bez filtru}
 			
@@ -211,28 +211,28 @@
 		\begin{figure}
 			\centering
 			\includegraphics[scale=0.8]{Figures/graf_filtr_k10.png}
-			\caption{Porovnání průměrného času operace u implementací F a B, K: 10}
+			\caption{Porovnání průměrného času operace u implementací KNNFilter a KNN, K: 10}
 			\label{graf_filtr_k10}
 		\end{figure}
 	
 		\begin{figure}
 			\centering
 			\includegraphics[scale=0.8]{Figures/graf_filtr_k50.png}
-			\caption{Porovnání průměrného času operace u implementací F a B, K: 50}
+			\caption{Porovnání průměrného času operace u implementací KNNFilter a KNN, K: 50}
 			\label{graf_filtr_k50}
 		\end{figure}
 	
 		\begin{figure}
 			\centering
 			\includegraphics[scale=0.8]{Figures/graf_filtr_k100.png}
-			\caption{Porovnání průměrného času operace u implementací F a B, K: 100}
+			\caption{Porovnání průměrného času operace u implementací KNNFilter a KNN, K: 100}
 			\label{graf_filtr_k100}
 		\end{figure}
 	
 		\begin{figure}
 			\centering
 			\includegraphics[scale=0.8]{Figures/graf_filtr_k200.png}
-			\caption{Porovnání průměrného času operace u implementací F a B, K: 200}
+			\caption{Porovnání průměrného času operace u implementací KNNFilter a KNN, K: 200}
 			\label{graf_filtr_k200}
 		\end{figure}
 		

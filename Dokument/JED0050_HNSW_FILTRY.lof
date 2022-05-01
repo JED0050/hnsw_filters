@@ -12,10 +12,10 @@
 \contentsline {figure}{\numberline {3.3}{\ignorespaces Pseudokód metody KNN\relax }}{13}{figure.caption.7}%
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Graf závislosti průměrného času jednoho dotazu na přesnosti\relax }}{14}{figure.caption.8}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Porovnání průměrného času operace u implementací F a B, K: 10\relax }}{19}{figure.caption.9}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Porovnání průměrného času operace u implementací F a B, K: 50\relax }}{19}{figure.caption.10}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Porovnání průměrného času operace u implementací F a B, K: 100\relax }}{20}{figure.caption.11}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Porovnání průměrného času operace u implementací F a B, K: 200\relax }}{20}{figure.caption.12}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Porovnání průměrného času operace u implementací KNNFilter a KNN, K: 10\relax }}{19}{figure.caption.9}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Porovnání průměrného času operace u implementací KNNFilter a KNN, K: 50\relax }}{19}{figure.caption.10}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Porovnání průměrného času operace u implementací KNNFilter a KNN, K: 100\relax }}{20}{figure.caption.11}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Porovnání průměrného času operace u implementací KNNFilter a KNN, K: 200\relax }}{20}{figure.caption.12}%
 \addvspace {10\p@ }
 \babel@toc {english}{}\relax 
 \babel@toc {czech}{}\relax 
