@@ -1,0 +1,23 @@
+\frametitle{Distribuce dat - JSON předpověď}
+			
+			\begin{itemize}
+				\item \textbf{json}?lon=\textbf{18.262524}\&lat=\textbf{49.820923}
+				\&time=\textbf{2021-04-29T16:00:00}\&loaders=\textbf{weun,yrno}
+			\end{itemize}
+			
+			\begin{exampleblock}{Ukázka JSON předpovědi}
+				\begin{verbatim}
+					{
+					    "DataSources":["WeatherUnlocked","Yr.no"],
+					    "Forecasts":
+					      [{
+					        "Time":"2021-04-29T16:00:00",
+					        "Temperature":15.0,
+					        "Precipitation":0.0,
+					        "Humidity":66.0,
+					        "Pressure":1007.5
+				       }],
+					    "Coord":{"Lon":18.262524,"Lat":49.820923}
+					}
+				\end{verbatim}
+			\end{exampleblock}
