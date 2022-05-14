@@ -40,6 +40,7 @@
 		\begin{itemize}
 			\item Vyhledávání K nejbližších sousedů od dotazu Q v n dimenzionálním prostoru
 			\item Vzdálenost mezi body v prostoru definována metrikou (Euklidova, Hammingova, Minkowského atd.)
+			\item U velkých dimenzí je pro většinu technik rychlejší sekvenční průchod
 			\item Přibližné vyhledávání (ANN)
 			\item Porovnávání vektorizovaných dat, hledání shluků, podobných vlastností (například vyhledávání sémanticky podobných dokumentů)
 		\end{itemize}
@@ -74,7 +75,7 @@
 			\item Hierarchical Navigable Small Worlds
 			\item Řešení KNN problému, přibližné vyhledávání s využitím vícevrstvých grafů
 			\item Výsledek poskytován s určitou přesností zvanou Recall
-			\item Přesnost se dá zvýšit navýšením parametru Ef, stejně tak poroste ale i čas vykonání dotazu
+			\item Přesnost se dá zvýšit navýšením hodnoty parametru Ef, stejně tak poroste ale i čas vykonání dotazu
 		\end{itemize}
 		
 	\end{frame}
@@ -110,6 +111,248 @@
 	\end{frame}
 
 	\begin{frame}
+		\frametitle{HNSW}
+		
+		\begin{figure}
+			\includegraphics[scale=0.34]{figures/HNSW_b1.png}
+		\end{figure}
+		
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{HNSW}
+		
+		\begin{columns}[T] % align columns
+			\begin{column}{.6\textwidth}
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/HNSW_b2.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item ep = \{m4\}
+					\item[]
+					\item V = \{m4\}
+					\item[]
+					\item W = \{m4\}
+					\item C = \{m4\}
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+		
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{HNSW}
+		\begin{columns}[T] % align columns
+			\begin{column}{.6\textwidth}
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/HNSW_b3.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1\}
+					\item[]
+					\item W = \{m1,m4\}
+					\item C = \{m1\}
+					\item[]
+					\item f = m4
+					\item c = m4
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{HNSW}
+		\begin{columns}[T] % align columns
+			\begin{column}{.6\textwidth}
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/HNSW_b4.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1,m7\}
+					\item[]
+					\item W = \{m1,m7,m4\}
+					\item C = \{m1,m7\}
+					\item[]
+					\item f = m4
+					\item c = m4
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{HNSW}
+		\begin{columns}[T] % align columns
+			\begin{column}{.6\textwidth}
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/HNSW_b5.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1,m7\}
+					\item[]
+					\item W = \{m1,m7,m4\}
+					\item C = \{m7\}
+					\item[]
+					\item f = m4
+					\item c = m1
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{HNSW}
+		\begin{columns}[T] % align columns
+			\begin{column}{.6\textwidth}
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/HNSW_b6.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1,m7,m2\}
+					\item[]
+					\item W = \{m1,m2,m7\}
+					\item C = \{m2,m7\}
+					\item[]
+					\item f = m7
+					\item c = m1
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{HNSW}
+		\begin{columns}[T] % align columns
+			\begin{column}{.6\textwidth}
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/HNSW_b7.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1,m7,m2\}
+					\item[]
+					\item W = \{m1,m2,m7\}
+					\item C = \{m7\}
+					\item[]
+					\item f = m7
+					\item c = m2
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{HNSW}
+		\begin{columns}[T] % align columns
+			\begin{column}{.6\textwidth}
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/HNSW_b8.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1,m7,m2,m3\}
+					\item[]
+					\item W = \{m1,m2,m3\}
+					\item C = \{m3,m7\}
+					\item[]
+					\item f = m3
+					\item c = m2
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{HNSW}
+		\begin{columns}[T] % align columns
+			\begin{column}{.6\textwidth}
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/HNSW_b9.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1,m7,m2,m3\}
+					\item[]
+					\item W = \{m1,m2,m3\}
+					\item C = \{m7\}
+					\item[]
+					\item f = m3
+					\item c = m3
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{HNSW}
+		\begin{columns}[T] % align columns
+			\begin{column}{.6\textwidth}
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/HNSW_b10.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1,m7,m2,m3,m6\}
+					\item[]
+					\item W = \{m1,m2,m3\}
+					\item C = \{m7,m6\}
+					\item[]
+					\item f = m3
+					\item c = m3
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{HNSW}
+		\begin{columns}[T] % align columns
+			\begin{column}{.6\textwidth}
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/HNSW_b11.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1,m7,m2,m3,m6\}
+					\item[]
+					\item W = \{m1,m2,m3\}
+					\item C = \{m6\}
+					\item[]
+					\item f = m3
+					\item c = m7
+					\item[]
+					\item $dist(c,q) > dist(c,f)$
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
 		\frametitle{Filtr}
 		
 		\begin{itemize}
@@ -118,6 +361,19 @@
 			\item Nemusíme omezovat všechny atribury
 			\item Selektivita filtru $<0,1>$ udává procentuální počet uzlů z celé množiny všech uzlů, které filtr přijme
 			
+		\end{itemize}
+		
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Filtr}
+		
+		\begin{itemize}
+			\item 72: $<51.32,143.87>$; 88: $<3>$; 110: $<72.40,106.84>$;
+			\item[]
+			\item vec[72] $\in$ $<51.32,143.87>$
+			\item vec[88] = 3
+			\item vec[110]  $\in$ $<72.40,106.84>$
 		\end{itemize}
 		
 	\end{frame}

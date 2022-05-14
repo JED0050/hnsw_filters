@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.5.13)  13 MAY 2022 17:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.5.13)  14 MAY 2022 17:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1322,7 +1322,7 @@ Package pdftex.def Info: figures/vsb logo.jpg  used on input line 24.
 <figures/KNN_b1.jpg, id=117, 1304.875pt x 899.36pt>
 File: figures/KNN_b1.jpg Graphic file (type jpg)
 <use figures/KNN_b1.jpg>
-Package pdftex.def Info: figures/KNN_b1.jpg  used on input line 54.
+Package pdftex.def Info: figures/KNN_b1.jpg  used on input line 55.
 (pdftex.def)             Requested size: 260.97038pt x 179.8688pt.
  [4
 
@@ -1330,7 +1330,7 @@ Package pdftex.def Info: figures/KNN_b1.jpg  used on input line 54.
 <figures/KNN_b2.jpg, id=144, 1304.875pt x 899.36pt>
 File: figures/KNN_b2.jpg Graphic file (type jpg)
 <use figures/KNN_b2.jpg>
-Package pdftex.def Info: figures/KNN_b2.jpg  used on input line 61.
+Package pdftex.def Info: figures/KNN_b2.jpg  used on input line 62.
 (pdftex.def)             Requested size: 260.97038pt x 179.8688pt.
  [5
 
@@ -1338,7 +1338,7 @@ Package pdftex.def Info: figures/KNN_b2.jpg  used on input line 61.
 <figures/KNN_b3.jpg, id=171, 1304.875pt x 899.36pt>
 File: figures/KNN_b3.jpg Graphic file (type jpg)
 <use figures/KNN_b3.jpg>
-Package pdftex.def Info: figures/KNN_b3.jpg  used on input line 68.
+Package pdftex.def Info: figures/KNN_b3.jpg  used on input line 69.
 (pdftex.def)             Requested size: 260.97038pt x 179.8688pt.
  [6
 
@@ -1348,7 +1348,7 @@ Package pdftex.def Info: figures/KNN_b3.jpg  used on input line 68.
 <figures/hnsw_layers.png, id=225, 365.11406pt x 372.64218pt>
 File: figures/hnsw_layers.png Graphic file (type png)
 <use figures/hnsw_layers.png>
-Package pdftex.def Info: figures/hnsw_layers.png  used on input line 90.
+Package pdftex.def Info: figures/hnsw_layers.png  used on input line 91.
 (pdftex.def)             Requested size: 146.04303pt x 149.05423pt.
 
 [8
@@ -1357,7 +1357,7 @@ Package pdftex.def Info: figures/hnsw_layers.png  used on input line 90.
 <figures/hnsw_search.png, id=254, 529.98pt x 525.46312pt>
 File: figures/hnsw_search.png Graphic file (type png)
 <use figures/hnsw_search.png>
-Package pdftex.def Info: figures/hnsw_search.png  used on input line 100.
+Package pdftex.def Info: figures/hnsw_search.png  used on input line 101.
 (pdftex.def)             Requested size: 158.99521pt x 157.64015pt.
  [9
 
@@ -1365,63 +1365,211 @@ Package pdftex.def Info: figures/hnsw_search.png  used on input line 100.
 <figures/graf_hnsw.png, id=282, 1002.74625pt x 456.20438pt>
 File: figures/graf_hnsw.png Graphic file (type png)
 <use figures/graf_hnsw.png>
-Package pdftex.def Info: figures/graf_hnsw.png  used on input line 110.
+Package pdftex.def Info: figures/graf_hnsw.png  used on input line 111.
 (pdftex.def)             Requested size: 340.92921pt x 155.10742pt.
  [10
 
  <./figures/graf_hnsw.png>]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 123
+<figures/HNSW_b1.png, id=310, 702.625pt x 401.5pt>
+File: figures/HNSW_b1.png Graphic file (type png)
+<use figures/HNSW_b1.png>
+Package pdftex.def Info: figures/HNSW_b1.png  used on input line 120.
+(pdftex.def)             Requested size: 238.88933pt x 136.50818pt.
+ [11
+
+ <./figures/HNSW_b1.png>]
+<figures/HNSW_b2.png, id=337, 702.625pt x 401.5pt>
+File: figures/HNSW_b2.png Graphic file (type png)
+<use figures/HNSW_b2.png>
+Package pdftex.def Info: figures/HNSW_b2.png  used on input line 144.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 144--144
+ [] 
+ []
+
+LaTeX Font Info:    Trying to load font information for OMS+cmss on input line 
+144.
+LaTeX Font Info:    No file OMScmss.fd. on input line 144.
+
+LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbraceleft' on input line 144.
+
+[12
+
+ <./figures/HNSW_b2.png>]
+<figures/HNSW_b3.png, id=366, 702.625pt x 401.5pt>
+File: figures/HNSW_b3.png Graphic file (type png)
+<use figures/HNSW_b3.png>
+Package pdftex.def Info: figures/HNSW_b3.png  used on input line 167.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 167--167
+ [] 
+ []
+
+[13
+
+ <./figures/HNSW_b3.png>]
+<figures/HNSW_b4.png, id=395, 702.625pt x 401.5pt>
+File: figures/HNSW_b4.png Graphic file (type png)
+<use figures/HNSW_b4.png>
+Package pdftex.def Info: figures/HNSW_b4.png  used on input line 190.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 190--190
+ [] 
+ []
+
+[14
+
+ <./figures/HNSW_b4.png>]
+<figures/HNSW_b5.png, id=423, 702.625pt x 401.5pt>
+File: figures/HNSW_b5.png Graphic file (type png)
+<use figures/HNSW_b5.png>
+Package pdftex.def Info: figures/HNSW_b5.png  used on input line 213.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 213--213
+ [] 
+ []
+
+[15
+
+ <./figures/HNSW_b5.png>]
+<figures/HNSW_b6.png, id=451, 702.625pt x 401.5pt>
+File: figures/HNSW_b6.png Graphic file (type png)
+<use figures/HNSW_b6.png>
+Package pdftex.def Info: figures/HNSW_b6.png  used on input line 236.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 236--236
+ [] 
+ []
+
+[16
+
+ <./figures/HNSW_b6.png>]
+<figures/HNSW_b7.png, id=479, 702.625pt x 401.5pt>
+File: figures/HNSW_b7.png Graphic file (type png)
+<use figures/HNSW_b7.png>
+Package pdftex.def Info: figures/HNSW_b7.png  used on input line 259.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 259--259
+ [] 
+ []
+
+[17
+
+ <./figures/HNSW_b7.png>]
+<figures/HNSW_b8.png, id=507, 702.625pt x 401.5pt>
+File: figures/HNSW_b8.png Graphic file (type png)
+<use figures/HNSW_b8.png>
+Package pdftex.def Info: figures/HNSW_b8.png  used on input line 282.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 282--282
+ [] 
+ []
+
+[18
+
+ <./figures/HNSW_b8.png>]
+<figures/HNSW_b9.png, id=535, 702.625pt x 401.5pt>
+File: figures/HNSW_b9.png Graphic file (type png)
+<use figures/HNSW_b9.png>
+Package pdftex.def Info: figures/HNSW_b9.png  used on input line 305.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 305--305
+ [] 
+ []
+
+[19
+
+ <./figures/HNSW_b9.png>]
+<figures/HNSW_b10.png, id=564, 702.625pt x 401.5pt>
+File: figures/HNSW_b10.png Graphic file (type png)
+<use figures/HNSW_b10.png>
+Package pdftex.def Info: figures/HNSW_b10.png  used on input line 328.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 328--328
+ [] 
+ []
+
+[20
+
+ <./figures/HNSW_b10.png>]
+<figures/HNSW_b11.png, id=592, 702.625pt x 401.5pt>
+File: figures/HNSW_b11.png Graphic file (type png)
+<use figures/HNSW_b11.png>
+Package pdftex.def Info: figures/HNSW_b11.png  used on input line 353.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 353--353
+ [] 
+ []
+
+LaTeX Font Info:    Trying to load font information for U+msa on input line 353
 .
- (D:\Skola-SW\MikTex\tex/latex/amsfonts\umsa.fd
+(D:\Skola-SW\MikTex\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 123
+LaTeX Font Info:    Trying to load font information for U+msb on input line 353
 .
 
 (D:\Skola-SW\MikTex\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on inp
-ut line 123.
+ut line 353.
 
 (D:\Skola-SW\MikTex\tex/latex/sansmathaccent\ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/ma
 thkerncmss.
-) [11
+) [21
+
+ <./figures/HNSW_b11.png>] [22
+
+] [23
 
 ]
-<figures/graf_filtr_k10.png, id=337, 599.99156pt x 240.14719pt>
+<figures/graf_filtr_k10.png, id=674, 599.99156pt x 240.14719pt>
 File: figures/graf_filtr_k10.png Graphic file (type png)
 <use figures/graf_filtr_k10.png>
-Package pdftex.def Info: figures/graf_filtr_k10.png  used on input line 136.
+Package pdftex.def Info: figures/graf_filtr_k10.png  used on input line 392.
 (pdftex.def)             Requested size: 239.99237pt x 96.05716pt.
-<figures/graf_filtr_k50.png, id=338, 601.4972pt x 240.14719pt>
+<figures/graf_filtr_k50.png, id=675, 601.4972pt x 240.14719pt>
 File: figures/graf_filtr_k50.png Graphic file (type png)
 <use figures/graf_filtr_k50.png>
-Package pdftex.def Info: figures/graf_filtr_k50.png  used on input line 136.
+Package pdftex.def Info: figures/graf_filtr_k50.png  used on input line 392.
 (pdftex.def)             Requested size: 240.59462pt x 96.05716pt.
- [12
+ [24
 
  <./figures/graf_filtr_k10.png> <./figures/graf_filtr_k50.png>]
-<figures/graf_filtr_k100.png, id=367, 606.76688pt x 246.1697pt>
+<figures/graf_filtr_k100.png, id=704, 606.76688pt x 246.1697pt>
 File: figures/graf_filtr_k100.png Graphic file (type png)
 <use figures/graf_filtr_k100.png>
-Package pdftex.def Info: figures/graf_filtr_k100.png  used on input line 149.
+Package pdftex.def Info: figures/graf_filtr_k100.png  used on input line 405.
 (pdftex.def)             Requested size: 242.70245pt x 98.46613pt.
-<figures/graf_filtr_k200.png, id=368, 605.26125pt x 245.41687pt>
+<figures/graf_filtr_k200.png, id=705, 605.26125pt x 245.41687pt>
 File: figures/graf_filtr_k200.png Graphic file (type png)
 <use figures/graf_filtr_k200.png>
-Package pdftex.def Info: figures/graf_filtr_k200.png  used on input line 149.
+Package pdftex.def Info: figures/graf_filtr_k200.png  used on input line 405.
 (pdftex.def)             Requested size: 242.1002pt x 98.165pt.
- [13
+ [25
 
- <./figures/graf_filtr_k100.png> <./figures/graf_filtr_k200.png>] [14
+ <./figures/graf_filtr_k100.png> <./figures/graf_filtr_k200.png>] [26
 
-] [15
+] [27
 
-] [16
+] [28
 
- <D:/Skola-SW/MikTex/tex/latex/beamer/beamericonarticle.pdf>] [17
+ <D:/Skola-SW/MikTex/tex/latex/beamer/beamericonarticle.pdf>]
+[29
 
 
 ]
@@ -1434,8 +1582,10 @@ Package pdftex.def Info: figures/graf_filtr_k200.png  used on input line 149.
 \tf@snm=\write9
 \openout9 = `JED0050_HNSW_Filters_Prezentace.snm'.
 
+ (JED0050_HNSW_Filters_Prezentace.aux)
 
-(JED0050_HNSW_Filters_Prezentace.aux)
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
 
 LaTeX Warning: There were undefined references.
 
@@ -1451,10 +1601,10 @@ ml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 30643 strings out of 478552
- 602340 string characters out of 2854123
+ 30780 strings out of 478552
+ 604652 string characters out of 2854123
  1092859 words of memory out of 3000000
- 48231 multiletter control sequences out of 15000+600000
+ 48331 multiletter control sequences out of 15000+600000
  477450 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,16n,122p,1847b,4793s stack positions out of 10000i,1000n,20000p,200000b,80000s
@@ -1464,11 +1614,12 @@ public/amsfonts/cm/cmss12.pfb><D:/Skola-SW/MikTex/fonts/type1/public/amsfonts/c
 m/cmss17.pfb><D:/Skola-SW/MikTex/fonts/type1/public/amsfonts/cm/cmss8.pfb><D:/S
 kola-SW/MikTex/fonts/type1/public/amsfonts/cm/cmss9.pfb><D:/Skola-SW/MikTex/fon
 ts/type1/public/amsfonts/cm/cmssi10.pfb><D:/Skola-SW/MikTex/fonts/type1/public/
-amsfonts/cm/cmtt10.pfb>
-Output written on JED0050_HNSW_Filters_Prezentace.pdf (17 pages, 663052 bytes).
-
+amsfonts/cm/cmsy10.pfb><D:/Skola-SW/MikTex/fonts/type1/public/amsfonts/cm/cmtt1
+0.pfb>
+Output written on JED0050_HNSW_Filters_Prezentace.pdf (29 pages, 1034879 bytes)
+.
 PDF statistics:
- 575 PDF objects out of 1000 (max. 8388607)
- 44 named destinations out of 1000 (max. 500000)
- 148 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 922 PDF objects out of 1000 (max. 8388607)
+ 68 named destinations out of 1000 (max. 500000)
+ 203 words of extra memory for PDF output out of 10000 (max. 10000000)
 
