@@ -345,8 +345,31 @@
 					\item[]
 					\item f = m3
 					\item c = m7
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{HNSW}
+		\begin{columns}[T] % align columns
+			\begin{column}{.6\textwidth}
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/HNSW_b12.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1,m7,m2,m3,m6\}
 					\item[]
-					\item $dist(c,q) > dist(c,f)$
+					\item \textcolor{teal}{W = \{m1,m2,m3\}}
+					\item C = \{m6\}
+					\item[]
+					\item f = m3
+					\item c = m7
+					\item[]
+					\item \textcolor{teal}{$dist(c,q) > dist(f,q)$}
 				\end{itemize}
 			\end{column}%
 		\end{columns}
@@ -376,6 +399,209 @@
 			\item vec[110]  $\in$ $<72.40,106.84>$
 		\end{itemize}
 		
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Filtr}
+		\begin{columns}[T] % align columns
+			
+			\begin{column}{.6\textwidth}
+				
+				\begin{itemize}
+					\item[] Filtr: vec[0] $\in$ $<50,100>$
+				\end{itemize}
+				
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/Filtry_b1.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1,m7,m2,m3,m6\}
+					\item[]
+					\item W = \{m1,m2,m3\}
+					\item C = \{m6\}
+					\item[]
+					\item f = m3
+					\item c = m7
+					\item[]
+					\item $dist(c,q) > dist(f,q) $
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Filtr}
+		\begin{columns}[T] % align columns
+			
+			\begin{column}{.6\textwidth}
+				
+				\begin{itemize}
+					\item[] Filtr: vec[0] $\in$ $<50,100>$
+				\end{itemize}
+				
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/Filtry_b2.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1,m7,m2,m3,m6\}
+					\item[]
+					\item F = \{m3,m6\}
+					\item W = \{m1,m2,m3\}
+					\item C = \{m6\}
+					\item[]
+					\item f = m3
+					\item c = m7
+					\item[]
+					\item $dist(c,q) > dist(f,q)$
+					\item $|F| == K$
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Filtr}
+		\begin{columns}[T] % align columns
+			\begin{column}{.6\textwidth}
+				\begin{itemize}
+					\item[] Filtr: vec[0] $\in$ $<50,100>$
+				\end{itemize}
+				
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/Filtry_b3.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1,m7,m2,m3,m6, m8\}
+					\item[]
+					\item F = \{m3,m6\}
+					\item W = \{m1,m2,m3\}
+					\item C = \{m6,m8\}
+					\item[]
+					\item f = m3
+					\item c = m7
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Filtr}
+		\begin{columns}[T] % align columns
+			\begin{column}{.6\textwidth}
+				\begin{itemize}
+					\item[] Filtr: vec[0] $\in$ $<50,100>$
+				\end{itemize}
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/Filtry_b4.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1,m7,m2,m3,m6, m8\}
+					\item[]
+					\item F = \{m3,m6\}
+					\item W = \{m1,m2,m3\}
+					\item C = \{m8\}
+					\item[]
+					\item f = m3
+					\item c = m6
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Filtr}
+		\begin{columns}[T] % align columns
+			\begin{column}{.6\textwidth}
+				\begin{itemize}
+					\item[] Filtr: vec[0] $\in$ $<50,100>$
+				\end{itemize}
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/Filtry_b5.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1,m7,m2,m3,m6, m8,m5\}
+					\item[]
+					\item F = \{m3,m6,m5\}
+					\item W = \{m1,m2,m3\}
+					\item C = \{m5,m8\}
+					\item[]
+					\item f = m3
+					\item c = m6
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Filtr}
+		\begin{columns}[T] % align columns
+			\begin{column}{.6\textwidth}
+				\begin{itemize}
+					\item[] Filtr: vec[0] $\in$ $<50,100>$
+				\end{itemize}
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/Filtry_b6.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1,m7,m2,m3,m6, m8,m5\}
+					\item[]
+					\item F = \{m3,m6,m5\}
+					\item W = \{m1,m2,m3\}
+					\item C = \{m8\}
+					\item[]
+					\item f = m3
+					\item c = m5
+				\end{itemize}
+			\end{column}%
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Filtr}
+		\begin{columns}[T] % align columns
+			\begin{column}{.6\textwidth}
+				\begin{itemize}
+					\item[] Filtr: vec[0] $\in$ $<50,100>$
+				\end{itemize}
+				\begin{figure}
+					\includegraphics[scale=0.3]{figures/Filtry_b7.png}
+				\end{figure}
+			\end{column}%
+			\hfill%
+			\begin{column}{.4\textwidth}
+				\begin{itemize}
+					\item V = \{m4,m1,m7,m2,m3,m6, m8,m5\}
+					\item[]
+					\item \textcolor{teal}{F = \{m3,m6,m5\}}
+					\item W = \{m1,m2,m3\}
+					\item C = \{m8\}
+					\item[]
+					\item f = m3
+					\item c = m5
+					\item[]
+					\item \textcolor{teal}{$dist(c,q) > dist(f,q)$}
+					\item \textcolor{teal}{$|F| == K$}
+				\end{itemize}
+			\end{column}%
+		\end{columns}
 	\end{frame}
 
 	\begin{frame}

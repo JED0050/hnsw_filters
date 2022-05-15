@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.5.13)  14 MAY 2022 17:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.5.13)  15 MAY 2022 16:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1506,70 +1506,173 @@ Overfull \hbox (5.40987pt too wide) in paragraph at lines 328--328
 <figures/HNSW_b11.png, id=592, 702.625pt x 401.5pt>
 File: figures/HNSW_b11.png Graphic file (type png)
 <use figures/HNSW_b11.png>
-Package pdftex.def Info: figures/HNSW_b11.png  used on input line 353.
+Package pdftex.def Info: figures/HNSW_b11.png  used on input line 351.
 (pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
 
-Overfull \hbox (5.40987pt too wide) in paragraph at lines 353--353
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 351--351
  [] 
  []
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 353
+[21
+
+ <./figures/HNSW_b11.png>]
+<figures/HNSW_b12.png, id=620, 702.625pt x 401.5pt>
+File: figures/HNSW_b12.png Graphic file (type png)
+<use figures/HNSW_b12.png>
+Package pdftex.def Info: figures/HNSW_b12.png  used on input line 376.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 376--376
+ [] 
+ []
+
+LaTeX Font Info:    Trying to load font information for U+msa on input line 376
 .
 (D:\Skola-SW\MikTex\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 353
+LaTeX Font Info:    Trying to load font information for U+msb on input line 376
 .
 
 (D:\Skola-SW\MikTex\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on inp
-ut line 353.
+ut line 376.
 
 (D:\Skola-SW\MikTex\tex/latex/sansmathaccent\ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/ma
 thkerncmss.
-) [21
+) [22
 
- <./figures/HNSW_b11.png>] [22
+ <./figures/HNSW_b12.png>] [23
 
-] [23
+] [24
 
 ]
-<figures/graf_filtr_k10.png, id=674, 599.99156pt x 240.14719pt>
+<figures/Filtry_b1.png, id=702, 702.625pt x 401.5pt>
+File: figures/Filtry_b1.png Graphic file (type png)
+<use figures/Filtry_b1.png>
+Package pdftex.def Info: figures/Filtry_b1.png  used on input line 433.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 433--433
+ [] 
+ []
+
+[25
+
+ <./figures/Filtry_b1.png>]
+<figures/Filtry_b2.png, id=731, 702.625pt x 401.5pt>
+File: figures/Filtry_b2.png Graphic file (type png)
+<use figures/Filtry_b2.png>
+Package pdftex.def Info: figures/Filtry_b2.png  used on input line 466.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 466--466
+ [] 
+ []
+
+[26
+
+ <./figures/Filtry_b2.png>]
+<figures/Filtry_b3.png, id=759, 702.625pt x 401.5pt>
+File: figures/Filtry_b3.png Graphic file (type png)
+<use figures/Filtry_b3.png>
+Package pdftex.def Info: figures/Filtry_b3.png  used on input line 494.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 494--494
+ [] 
+ []
+
+[27
+
+ <./figures/Filtry_b3.png>]
+<figures/Filtry_b4.png, id=787, 702.625pt x 401.5pt>
+File: figures/Filtry_b4.png Graphic file (type png)
+<use figures/Filtry_b4.png>
+Package pdftex.def Info: figures/Filtry_b4.png  used on input line 521.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 521--521
+ [] 
+ []
+
+[28
+
+ <./figures/Filtry_b4.png>]
+<figures/Filtry_b5.png, id=815, 702.625pt x 401.5pt>
+File: figures/Filtry_b5.png Graphic file (type png)
+<use figures/Filtry_b5.png>
+Package pdftex.def Info: figures/Filtry_b5.png  used on input line 548.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 548--548
+ [] 
+ []
+
+[29
+
+ <./figures/Filtry_b5.png>]
+<figures/Filtry_b6.png, id=843, 702.625pt x 401.5pt>
+File: figures/Filtry_b6.png Graphic file (type png)
+<use figures/Filtry_b6.png>
+Package pdftex.def Info: figures/Filtry_b6.png  used on input line 575.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 575--575
+ [] 
+ []
+
+[30
+
+ <./figures/Filtry_b6.png>]
+<figures/Filtry_b7.png, id=871, 702.625pt x 401.5pt>
+File: figures/Filtry_b7.png Graphic file (type png)
+<use figures/Filtry_b7.png>
+Package pdftex.def Info: figures/Filtry_b7.png  used on input line 605.
+(pdftex.def)             Requested size: 210.78912pt x 120.45091pt.
+
+Overfull \hbox (5.40987pt too wide) in paragraph at lines 605--605
+ [] 
+ []
+
+[31
+
+ <./figures/Filtry_b7.png>]
+<figures/graf_filtr_k10.png, id=900, 599.99156pt x 240.14719pt>
 File: figures/graf_filtr_k10.png Graphic file (type png)
 <use figures/graf_filtr_k10.png>
-Package pdftex.def Info: figures/graf_filtr_k10.png  used on input line 392.
+Package pdftex.def Info: figures/graf_filtr_k10.png  used on input line 618.
 (pdftex.def)             Requested size: 239.99237pt x 96.05716pt.
-<figures/graf_filtr_k50.png, id=675, 601.4972pt x 240.14719pt>
+<figures/graf_filtr_k50.png, id=901, 601.4972pt x 240.14719pt>
 File: figures/graf_filtr_k50.png Graphic file (type png)
 <use figures/graf_filtr_k50.png>
-Package pdftex.def Info: figures/graf_filtr_k50.png  used on input line 392.
+Package pdftex.def Info: figures/graf_filtr_k50.png  used on input line 618.
 (pdftex.def)             Requested size: 240.59462pt x 96.05716pt.
- [24
+ [32
 
  <./figures/graf_filtr_k10.png> <./figures/graf_filtr_k50.png>]
-<figures/graf_filtr_k100.png, id=704, 606.76688pt x 246.1697pt>
+<figures/graf_filtr_k100.png, id=930, 606.76688pt x 246.1697pt>
 File: figures/graf_filtr_k100.png Graphic file (type png)
 <use figures/graf_filtr_k100.png>
-Package pdftex.def Info: figures/graf_filtr_k100.png  used on input line 405.
+Package pdftex.def Info: figures/graf_filtr_k100.png  used on input line 631.
 (pdftex.def)             Requested size: 242.70245pt x 98.46613pt.
-<figures/graf_filtr_k200.png, id=705, 605.26125pt x 245.41687pt>
+<figures/graf_filtr_k200.png, id=931, 605.26125pt x 245.41687pt>
 File: figures/graf_filtr_k200.png Graphic file (type png)
 <use figures/graf_filtr_k200.png>
-Package pdftex.def Info: figures/graf_filtr_k200.png  used on input line 405.
+Package pdftex.def Info: figures/graf_filtr_k200.png  used on input line 631.
 (pdftex.def)             Requested size: 242.1002pt x 98.165pt.
- [25
+ [33
 
- <./figures/graf_filtr_k100.png> <./figures/graf_filtr_k200.png>] [26
+ <./figures/graf_filtr_k100.png> <./figures/graf_filtr_k200.png>] [34
 
-] [27
+] [35
 
-] [28
+] [36
 
- <D:/Skola-SW/MikTex/tex/latex/beamer/beamericonarticle.pdf>]
-[29
+ <D:/Skola-SW/MikTex/tex/latex/beamer/beamericonarticle.pdf>] [37
 
 
 ]
@@ -1601,10 +1704,10 @@ ml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 30780 strings out of 478552
- 604652 string characters out of 2854123
+ 30868 strings out of 478552
+ 606285 string characters out of 2854123
  1092859 words of memory out of 3000000
- 48331 multiletter control sequences out of 15000+600000
+ 48395 multiletter control sequences out of 15000+600000
  477450 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,16n,122p,1847b,4793s stack positions out of 10000i,1000n,20000p,200000b,80000s
@@ -1616,10 +1719,10 @@ kola-SW/MikTex/fonts/type1/public/amsfonts/cm/cmss9.pfb><D:/Skola-SW/MikTex/fon
 ts/type1/public/amsfonts/cm/cmssi10.pfb><D:/Skola-SW/MikTex/fonts/type1/public/
 amsfonts/cm/cmsy10.pfb><D:/Skola-SW/MikTex/fonts/type1/public/amsfonts/cm/cmtt1
 0.pfb>
-Output written on JED0050_HNSW_Filters_Prezentace.pdf (29 pages, 1034879 bytes)
+Output written on JED0050_HNSW_Filters_Prezentace.pdf (37 pages, 1301921 bytes)
 .
 PDF statistics:
- 922 PDF objects out of 1000 (max. 8388607)
- 68 named destinations out of 1000 (max. 500000)
- 203 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1153 PDF objects out of 1200 (max. 8388607)
+ 84 named destinations out of 1000 (max. 500000)
+ 243 words of extra memory for PDF output out of 10000 (max. 10000000)
 
